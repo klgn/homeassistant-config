@@ -1,0 +1,7 @@
+---
+platform: "mqtt"
+name: "Living Room Sonos Bulp Brightness"
+state_topic: "zigbee2mqtt/living_room_sonos_bulp"
+availability_topic: "zigbee2mqtt/bridge/state"
+icon: "mdi:brightness-5"
+value_template: "{{ value_json.brightness }}"

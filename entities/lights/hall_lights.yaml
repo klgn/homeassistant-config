@@ -1,0 +1,7 @@
+---
+platform: group
+name: hall Lights
+entities:
+  - light.hall_light_entre
+  - light.hall_light_toilet
+  - light.hall_light_living_room

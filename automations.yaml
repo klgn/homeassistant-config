@@ -1,0 +1,630 @@
+- id: '1614005832226'
+  alias: Snapshot backup
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:00
+  condition: []
+  action:
+  - service: hassio.snapshot_full
+    data: {}
+  mode: single
+- id: '1637165999775'
+  alias: Office Bulp ON
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: a4349614b9b2d4c4cfa0265e9d9e12d8
+    type: action
+    subtype: 'on'
+    discovery_id: 0x680ae2fffebea32b action_on
+    id: ikea_office_button_on
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 0cf41b64387deec9027c8b199266e37c
+    entity_id: light.office_bulp
+    domain: light
+  mode: single
+- id: '1637166238295'
+  alias: Office Bulp Off
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: a4349614b9b2d4c4cfa0265e9d9e12d8
+    type: action
+    subtype: 'off'
+    discovery_id: 0x680ae2fffebea32b action_off
+    id: office_bulp_off
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 0cf41b64387deec9027c8b199266e37c
+    entity_id: light.office_bulp
+    domain: light
+  mode: single
+- id: '1637166311288'
+  alias: Office control unit on
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: a4349614b9b2d4c4cfa0265e9d9e12d8
+    type: action
+    subtype: brightness_move_up
+    discovery_id: 0x680ae2fffebea32b action_brightness_move_up
+    id: office_control_unit_on
+  condition: []
+  action:
+  - type: turn_on
+    device_id: c76654443adde9a1fc9c60f992c81066
+    entity_id: switch.office_control_unit
+    domain: switch
+  mode: single
+- id: '1637166384367'
+  alias: Office control unit off
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: a4349614b9b2d4c4cfa0265e9d9e12d8
+    type: action
+    subtype: brightness_move_down
+    discovery_id: 0x680ae2fffebea32b action_brightness_move_down
+    id: office_control_unit_offoffice
+  condition: []
+  action:
+  - type: turn_off
+    device_id: c76654443adde9a1fc9c60f992c81066
+    entity_id: switch.office_control_unit
+    domain: switch
+  mode: single
+- id: '1637166529226'
+  alias: Living Room Button Click
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: c4f087de0ad09986e31f72209053b4de
+    type: action
+    subtype: 'on'
+    discovery_id: 0x680ae2fffe3a90a6 action_on
+    id: living_room_botton_toggle
+  condition: []
+  action:
+  - type: toggle
+    device_id: 2e75f3b69f02a3823f346289fee93234
+    entity_id: switch.living_room_control_unit
+    domain: switch
+  mode: single
+- id: '1637166606328'
+  alias: Utility Room button click
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: ddbefd3efb1db8615802dc4c233bd426
+    type: action
+    subtype: 'on'
+    discovery_id: 0x588e81fffe29b687 action_on
+    id: utility_room_button_click
+  condition: []
+  action:
+  - type: toggle
+    device_id: 0f45e8ffebf2fd795841ed3d4eaefa8d
+    entity_id: light.utility_room_light
+    domain: light
+  mode: single
+- id: '1637166730519'
+  alias: Hall dimmer on
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 3bac6fbe59073a305a85cdb1ff39c761
+    type: action
+    subtype: 'on'
+    discovery_id: 0x842e14fffe7ca468 action_on
+    id: hall_dimmer_on
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 49dc758cc7f5c5b9587aacf88b28df58
+    entity_id: light.hall_light_entre
+    domain: light
+  - type: turn_on
+    device_id: e9e223a134bae3fb7d8c6a67c706423f
+    entity_id: light.hall_light_living_room
+    domain: light
+  - type: turn_on
+    device_id: f1f8419d9c94f1529f9686e202ef87d6
+    entity_id: light.hall_light_toilet
+    domain: light
+  mode: single
+- id: '1637166990769'
+  alias: Hall dimmer off
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 3bac6fbe59073a305a85cdb1ff39c761
+    type: action
+    subtype: 'off'
+    discovery_id: 0x842e14fffe7ca468 action_off
+    id: hall_dimmer_off
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 49dc758cc7f5c5b9587aacf88b28df58
+    entity_id: light.hall_light_entre
+    domain: light
+  - type: turn_off
+    device_id: f1f8419d9c94f1529f9686e202ef87d6
+    entity_id: light.hall_light_toilet
+    domain: light
+  - type: turn_off
+    device_id: e9e223a134bae3fb7d8c6a67c706423f
+    entity_id: light.hall_light_living_room
+    domain: light
+  mode: single
+- id: '1637169455515'
+  alias: Bedroom dimmer on
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: dfdc5899de506cef5124f8a248c7a700
+    type: action
+    subtype: 'on'
+    discovery_id: 0xbc33acfffea35a22 action_on
+    id: bedroom_dimmer_on
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 755330e081498714f964a9b71afb11e5
+    entity_id: light.bedroom_bulp_1
+    domain: light
+  - type: turn_on
+    device_id: 37f042cb23528c1546c994228b315356
+    entity_id: light.bedroom_bulp_2
+    domain: light
+  - type: turn_on
+    device_id: 80b9ed2027c1a9bf1abae02154b8e664
+    entity_id: light.bedroom_bulp_3
+    domain: light
+  mode: single
+- id: '1637169498837'
+  alias: Bedroom dimmer off
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: dfdc5899de506cef5124f8a248c7a700
+    type: action
+    subtype: 'off'
+    discovery_id: 0xbc33acfffea35a22 action_off
+    id: bedroom_dimmer_off
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 755330e081498714f964a9b71afb11e5
+    entity_id: light.bedroom_bulp_1
+    domain: light
+  - type: turn_off
+    device_id: 37f042cb23528c1546c994228b315356
+    entity_id: light.bedroom_bulp_2
+    domain: light
+  - type: turn_off
+    device_id: 80b9ed2027c1a9bf1abae02154b8e664
+    entity_id: light.bedroom_bulp_3
+    domain: light
+  mode: single
+- id: '1637252728467'
+  alias: Turn lights in living room when dark outside
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    below: '1.0'
+  condition:
+  - condition: or
+    conditions:
+    - condition: device
+      device_id: cc56fea456ee08cbb78ef9c6ae4b1c86
+      domain: device_tracker
+      entity_id: device_tracker.mai_britt_e_s_a40
+      type: is_home
+    - condition: device
+      device_id: 28dc3800bd7cfb3d1ac9fa6f65431bf2
+      domain: device_tracker
+      entity_id: device_tracker.klgn_2
+      type: is_home
+  action:
+  - type: turn_on
+    device_id: 2e75f3b69f02a3823f346289fee93234
+    entity_id: switch.living_room_control_unit
+    domain: switch
+  - type: turn_on
+    device_id: b88bdf8b885050c655adb6063731a759
+    entity_id: light.living_room_sonos_bulp
+    domain: light
+  mode: single
+- id: '1637400577010'
+  alias: Kids' Internet Schedule
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+    id: morning-curfew
+  - platform: time
+    at: '21:30:00'
+    id: evening-curfew
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: morning-curfew
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id:
+          - switch.emmas_laptop
+          - switch.laurits_laptop
+          - switch.astrids_laptop
+    - conditions:
+      - condition: trigger
+        id: evening-curfew
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id:
+          - switch.emmas_laptop
+          - switch.laurits_laptop
+          - switch.astrids_laptop
+    default: []
+  mode: single
+- id: '1637487417013'
+  alias: Living Room morning schedule
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:15:00
+    id: morning-start
+  - platform: time
+    at: 07:30:00
+    id: morning-end
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: morning-start
+      sequence:
+      - type: turn_on
+        device_id: 2e75f3b69f02a3823f346289fee93234
+        entity_id: switch.living_room_control_unit
+        domain: switch
+      - type: turn_on
+        device_id: b88bdf8b885050c655adb6063731a759
+        entity_id: light.living_room_sonos_bulp
+        domain: light
+    - conditions:
+      - condition: trigger
+        id: morning-end
+      sequence:
+      - type: turn_off
+        device_id: 2e75f3b69f02a3823f346289fee93234
+        entity_id: switch.living_room_control_unit
+        domain: switch
+      - type: turn_off
+        device_id: b88bdf8b885050c655adb6063731a759
+        entity_id: light.living_room_sonos_bulp
+        domain: light
+    default: []
+  mode: single
+- id: '1637488024258'
+  alias: 'Sonos: Living Room morning schedule '
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:40:00
+    id: 'morning-start '
+  - platform: time
+    at: 07:30:00
+    id: morning-end
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: 'morning-start '
+        - condition: device
+          device_id: 95f57bf49d1cc9274e1f8e2c1228f026
+          domain: device_tracker
+          entity_id: device_tracker.klgn_mobile
+          type: is_home
+      sequence:
+      - service: automation.trigger
+        target:
+          entity_id: automation.start_playing_p4_kobenhavn_in_living_room
+    - conditions:
+      - condition: trigger
+        id: morning-end
+      - condition: and
+        conditions:
+        - condition: device
+          device_id: bdc8526ffab367bf7d6e5572014cad1a
+          domain: media_player
+          entity_id: media_player.living_room
+          type: is_playing
+      sequence:
+      - service: media_player.media_stop
+        target:
+          entity_id: media_player.living_room
+    default: []
+  mode: single
+- id: '1637503978676'
+  alias: Astrid Morning Alarm
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:30:00
+    id: 'morning-start '
+  - platform: time
+    at: 07:10:00
+    id: morning-end
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'morning-start '
+      sequence:
+      - service: automation.trigger
+        target:
+          entity_id: automation.start_astrid_sonos
+      - service: media_player.select_source
+        data:
+          source: Today's Top Hits
+        target:
+          entity_id: media_player.astrids_sonos
+    - conditions:
+      - condition: trigger
+        id: morning-end
+      - condition: and
+        conditions:
+        - condition: device
+          device_id: 3696ce59f94aeaf88451fe18f7eb3033
+          domain: media_player
+          entity_id: media_player.astrids_sonos
+          type: is_playing
+      sequence:
+      - service: media_player.media_stop
+        target:
+          entity_id: media_player.office
+    default: []
+  mode: single
+- id: '1637504493969'
+  alias: 'Sonos: Stop Kids'' players at 22:30'
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:30:00'
+  condition: []
+  action:
+  - service: media_player.media_stop
+    target:
+      entity_id:
+      - media_player.laurits_sonos
+      - media_player.astrids_sonos
+      - media_player.emmas_vaerelse
+  mode: single
+- id: '1637504595947'
+  alias: Turn off charging unit at 23:30
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:30:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l1
+    domain: switch
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l2
+    domain: switch
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l3
+    domain: switch
+  mode: single
+- id: '1637505940188'
+  alias: 'Telegram: Start Astrid Alarm'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /upAstrid
+  condition: []
+  action:
+  - service: automation.trigger
+    target:
+      entity_id: automation.start_astrid_sonos
+  mode: single
+  hide_entity: true
+- id: '1637507386659'
+  alias: 'Sonos: Start Astrid Alarm'
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.2
+    target:
+      entity_id: media_player.astrids_sonos
+  - service: media_player.shuffle_set
+    data:
+      shuffle: true
+    target:
+      entity_id: media_player.astrids_sonos
+  - service: media_player.select_source
+    data:
+      source: Today's Top Hits
+    target:
+      entity_id: media_player.astrids_sonos
+  - service: media_player.media_play
+    target:
+      entity_id: media_player.astrids_sonos
+  mode: single
+- id: '1637508623722'
+  alias: 'Sonos: Start playing P4 København in Living Room'
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.2
+    target:
+      entity_id: media_player.living_room
+  - service: media_player.select_source
+    data:
+      source: DR P4 København
+    target:
+      entity_id: media_player.living_room
+  - service: media_player.media_play
+    target:
+      entity_id: media_player.living_room
+  mode: single
+- id: '1637508747001'
+  alias: 'Telegram: Start Living Room Sonos'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /goodmorning
+  condition: []
+  action:
+  - service: automation.trigger
+    target:
+      entity_id: automation.start_playing_p4_kobenhavn_in_living_room
+  mode: single
+  hide_entity: true
+- id: '1637508916107'
+  alias: 'Telegram: Start Charging Mower'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /chargeMower
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 1e3a4056280cb4e5ce28fb4c1a7fd288
+    entity_id: switch.control_unit_1
+    domain: switch
+  - service: telegram_bot.send_message
+    data:
+      message: Started charging the mower
+  - delay:
+      hours: 3
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 1e3a4056280cb4e5ce28fb4c1a7fd288
+    entity_id: switch.control_unit_1
+    domain: switch
+  mode: single
+  hide_entity: true
+- id: '1637510324604'
+  alias: Turn everything off
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: media_player.media_stop
+    target:
+      entity_id:
+      - media_player.astrids_sonos
+      - media_player.living_room
+      - media_player.laurits_sonos
+      - media_player.emmas_vaerelse
+      - media_player.office
+  - type: turn_off
+    device_id: c76654443adde9a1fc9c60f992c81066
+    entity_id: switch.office_control_unit
+    domain: switch
+  - type: turn_off
+    device_id: 0cf41b64387deec9027c8b199266e37c
+    entity_id: light.office_bulp
+    domain: light
+  - type: turn_off
+    device_id: b88bdf8b885050c655adb6063731a759
+    entity_id: light.living_room_sonos_bulp
+    domain: light
+  - type: turn_off
+    device_id: 2e75f3b69f02a3823f346289fee93234
+    entity_id: switch.living_room_control_unit
+    domain: switch
+  - type: turn_off
+    device_id: e762d2883920411a620f3c8f73ec3062
+    entity_id: switch.banquet_hall_control_unit
+    domain: switch
+  - type: turn_off
+    device_id: 1e3a4056280cb4e5ce28fb4c1a7fd288
+    entity_id: switch.control_unit_1
+    domain: switch
+  - type: turn_off
+    device_id: 20412286d57aa3547f228cf845c876ff
+    entity_id: light.hall_lights_3
+    domain: light
+  - type: turn_off
+    device_id: edbe8143bc82c267c6a51e097e3720f9
+    entity_id: light.bedside_bulb
+    domain: light
+  - type: turn_off
+    device_id: ea7730578d1918c7cf60f61c49048ce5
+    entity_id: light.bedroom_lights_2
+    domain: light
+  - type: turn_off
+    device_id: 0f45e8ffebf2fd795841ed3d4eaefa8d
+    entity_id: light.utility_room_light
+    domain: light
+  - type: turn_off
+    device_id: 847af76b50c55631fae8f036676f4d85
+    entity_id: light.pantry_light
+    domain: light
+  mode: single
+- id: '1637510507797'
+  alias: 'Telegram: Kill all'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /kill
+  condition: []
+  action:
+  - service: automation.trigger
+    target:
+      entity_id: automation.turn_everything_off
+  mode: single
+  hide_entity: true

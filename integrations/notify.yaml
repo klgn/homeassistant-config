@@ -1,0 +1,5 @@
+---
+notify:
+    name: klgn
+    platform: telegram
+    chat_id: !secret telegram_user_1

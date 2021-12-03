@@ -1,0 +1,7 @@
+---
+platform: group
+name: bedroom Lights
+entities:
+  - light.bedroom_bulp_1
+  - light.bedroom_bulp_2
+  - light.bedroom_bulp_3

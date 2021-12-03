@@ -1,0 +1,9 @@
+'1':
+    friendly_name: bedroom_lights
+    retain: false
+    transition: 1
+    optimistic: true
+    devices:
+        -   bedroom_bulp_1
+        -   bedroom_bulp_2
+        -   bedroom_bulp_3

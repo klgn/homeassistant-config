@@ -1,0 +1,6 @@
+---
+name: Hall Charger
+entities:
+  - switch.charge_unit_l1
+  - switch.charge_unit_l2
+  - switch.charge_unit_l3
