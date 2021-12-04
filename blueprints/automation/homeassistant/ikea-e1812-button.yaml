@@ -1,3 +1,4 @@
+---
 blueprint:
   name: Ikea Shortcut button automation
   description: Toggle a device when pressing the button
@@ -8,23 +9,20 @@ blueprint:
       description: This button will toggle the device when pressing it
       selector:
         entity:
-          domain: sensor
+          domain: sensor 
     target_light:
-      name: Lights
+      name: Lights 
       description: The lights to toggle when pressing the button
       selector:
-        target:
-          entity:
-            domain: light
+        entity:
+          domain: light
 trigger:
-  - platform: device
-    domain: mqtt
-    device_id: !input button
-    type: action
-    subtype: 'on'
-condition: []
+  platform: state
+  entity_id: !input button 
+  to: "on"
+
 action:
-  - type: toggle
-    entity_id: !input target_light
-    domain: light
-mode: single
+  - service: light.toggle
+    target:
+      entity_id: !input target_light
+
