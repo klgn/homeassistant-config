@@ -1,6 +1,6 @@
 ---
 blueprint:
-  name: Ikea Shortcut button automation
+  name: Ikea Shortcut button automation that toggles a switch
   description: Toggle a device when pressing the button
   domain: automation
   input:
