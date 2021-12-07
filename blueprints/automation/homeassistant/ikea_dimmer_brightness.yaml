@@ -19,7 +19,7 @@ blueprint:
 
 trigger:
   - platform: state
-    entity_id: sensor.hall_dimmer_brightness
+    entity_id: !input button
 condition:
   - condition: and
     conditions:
