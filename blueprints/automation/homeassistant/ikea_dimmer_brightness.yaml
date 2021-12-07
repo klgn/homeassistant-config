@@ -23,8 +23,8 @@ trigger:
 condition:
   - condition: and
     conditions:
-      - condition: device
-        type: is_on
+      - condition: state
+        state: 'on'
         entity_id: !input 'target_light'
         domain: light
       - condition: numeric_state
