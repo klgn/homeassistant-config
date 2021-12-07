@@ -17,8 +17,6 @@ blueprint:
         entity:
           domain: light
 
-alias: Hall dimmer brightness
-description: ''
 trigger:
   - platform: state
     entity_id: sensor.hall_dimmer_brightness
