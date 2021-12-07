@@ -26,7 +26,6 @@ condition:
       - condition: state
         state: 'on'
         entity_id: !input 'target_light'
-        domain: light
       - condition: numeric_state
         entity_id: !input 'button'
         above: '0'
