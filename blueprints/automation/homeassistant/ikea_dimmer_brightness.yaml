@@ -19,16 +19,16 @@ blueprint:
 
 trigger:
   - platform: state
-    entity_id: !input button
+    entity_id: !input 'button'
 condition:
   - condition: and
     conditions:
       - condition: device
         type: is_on
-        entity_id: !input target_light
+        entity_id: !input 'target_light'
         domain: light
       - condition: numeric_state
-        entity_id: !input button
+        entity_id: !input 'button'
         above: '0'
 action:
   - service: light.turn_on
@@ -36,5 +36,5 @@ action:
       brightness: |
         {{ trigger.to_state.state }}
     target:
-      entity_id: !input target_light
+      entity_id: !input 'target_light'
 mode: single
