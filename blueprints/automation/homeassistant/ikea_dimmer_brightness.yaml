@@ -1,6 +1,6 @@
 ---
 blueprint:
-  name: Ikea dimmer turn on/off light
+  name: Ikea dimmer brightness of light
   description: Turns a light on or off from an IKEA dimmer
   domain: automation
   input:
@@ -27,11 +27,10 @@ condition:
     conditions:
       - condition: device
         type: is_on
-        device_id: 20412286d57aa3547f228cf845c876ff
-        entity_id: light.hall_lights_3
+        entity_id: !input target_light
         domain: light
       - condition: numeric_state
-        entity_id: sensor.hall_dimmer_brightness
+        entity_id: !input button
         above: '0'
 action:
   - service: light.turn_on
@@ -39,5 +38,5 @@ action:
       brightness: |
         {{ trigger.to_state.state }}
     target:
-      entity_id: light.hall_lights
+      entity_id: !input target_light
 mode: single
