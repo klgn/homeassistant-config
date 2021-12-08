@@ -1,0 +1,9 @@
+---
+platform: mqtt
+state_topic: "zigbee2mqtt/power_meter"
+name: "Power Usage Total"
+unit_of_measurement: "kWh"
+value_template: '{{ float(value_json.energy) | round(0)  }}'
+icon: mdi:flash-circle
+state_class: measurement
+device_class: energy
