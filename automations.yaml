@@ -9,218 +9,6 @@
   - service: hassio.snapshot_full
     data: {}
   mode: single
-- id: '1637165999775'
-  alias: Office Bulp ON
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: a4349614b9b2d4c4cfa0265e9d9e12d8
-    type: action
-    subtype: 'on'
-    discovery_id: 0x680ae2fffebea32b action_on
-    id: ikea_office_button_on
-  condition: []
-  action:
-  - type: turn_on
-    device_id: 0cf41b64387deec9027c8b199266e37c
-    entity_id: light.office_bulp
-    domain: light
-  mode: single
-- id: '1637166238295'
-  alias: Office Bulp Off
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: a4349614b9b2d4c4cfa0265e9d9e12d8
-    type: action
-    subtype: 'off'
-    discovery_id: 0x680ae2fffebea32b action_off
-    id: office_bulp_off
-  condition: []
-  action:
-  - type: turn_off
-    device_id: 0cf41b64387deec9027c8b199266e37c
-    entity_id: light.office_bulp
-    domain: light
-  mode: single
-- id: '1637166311288'
-  alias: Office control unit on
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: a4349614b9b2d4c4cfa0265e9d9e12d8
-    type: action
-    subtype: brightness_move_up
-    discovery_id: 0x680ae2fffebea32b action_brightness_move_up
-    id: office_control_unit_on
-  condition: []
-  action:
-  - type: turn_on
-    device_id: c76654443adde9a1fc9c60f992c81066
-    entity_id: switch.office_control_unit
-    domain: switch
-  mode: single
-- id: '1637166384367'
-  alias: Office control unit off
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: a4349614b9b2d4c4cfa0265e9d9e12d8
-    type: action
-    subtype: brightness_move_down
-    discovery_id: 0x680ae2fffebea32b action_brightness_move_down
-    id: office_control_unit_offoffice
-  condition: []
-  action:
-  - type: turn_off
-    device_id: c76654443adde9a1fc9c60f992c81066
-    entity_id: switch.office_control_unit
-    domain: switch
-  mode: single
-- id: '1637166529226'
-  alias: Living Room Button Click
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: c4f087de0ad09986e31f72209053b4de
-    type: action
-    subtype: 'on'
-    discovery_id: 0x680ae2fffe3a90a6 action_on
-    id: living_room_botton_toggle
-  condition: []
-  action:
-  - type: toggle
-    device_id: 2e75f3b69f02a3823f346289fee93234
-    entity_id: switch.living_room_control_unit
-    domain: switch
-  mode: single
-- id: '1637166606328'
-  alias: Utility Room button click
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: ddbefd3efb1db8615802dc4c233bd426
-    type: action
-    subtype: 'on'
-    discovery_id: 0x588e81fffe29b687 action_on
-    id: utility_room_button_click
-  condition: []
-  action:
-  - type: toggle
-    device_id: 0f45e8ffebf2fd795841ed3d4eaefa8d
-    entity_id: light.utility_room_light
-    domain: light
-  mode: single
-- id: '1637166730519'
-  alias: Hall dimmer on
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: 3bac6fbe59073a305a85cdb1ff39c761
-    type: action
-    subtype: 'on'
-    discovery_id: 0x842e14fffe7ca468 action_on
-    id: hall_dimmer_on
-  condition: []
-  action:
-  - type: turn_on
-    device_id: 49dc758cc7f5c5b9587aacf88b28df58
-    entity_id: light.hall_light_entre
-    domain: light
-  - type: turn_on
-    device_id: e9e223a134bae3fb7d8c6a67c706423f
-    entity_id: light.hall_light_living_room
-    domain: light
-  - type: turn_on
-    device_id: f1f8419d9c94f1529f9686e202ef87d6
-    entity_id: light.hall_light_toilet
-    domain: light
-  mode: single
-- id: '1637166990769'
-  alias: Hall dimmer off
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: 3bac6fbe59073a305a85cdb1ff39c761
-    type: action
-    subtype: 'off'
-    discovery_id: 0x842e14fffe7ca468 action_off
-    id: hall_dimmer_off
-  condition: []
-  action:
-  - type: turn_off
-    device_id: 49dc758cc7f5c5b9587aacf88b28df58
-    entity_id: light.hall_light_entre
-    domain: light
-  - type: turn_off
-    device_id: f1f8419d9c94f1529f9686e202ef87d6
-    entity_id: light.hall_light_toilet
-    domain: light
-  - type: turn_off
-    device_id: e9e223a134bae3fb7d8c6a67c706423f
-    entity_id: light.hall_light_living_room
-    domain: light
-  mode: single
-- id: '1637169455515'
-  alias: Bedroom dimmer on
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: dfdc5899de506cef5124f8a248c7a700
-    type: action
-    subtype: 'on'
-    discovery_id: 0xbc33acfffea35a22 action_on
-    id: bedroom_dimmer_on
-  condition: []
-  action:
-  - type: turn_on
-    device_id: 755330e081498714f964a9b71afb11e5
-    entity_id: light.bedroom_bulp_1
-    domain: light
-  - type: turn_on
-    device_id: 37f042cb23528c1546c994228b315356
-    entity_id: light.bedroom_bulp_2
-    domain: light
-  - type: turn_on
-    device_id: 80b9ed2027c1a9bf1abae02154b8e664
-    entity_id: light.bedroom_bulp_3
-    domain: light
-  mode: single
-- id: '1637169498837'
-  alias: Bedroom dimmer off
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: dfdc5899de506cef5124f8a248c7a700
-    type: action
-    subtype: 'off'
-    discovery_id: 0xbc33acfffea35a22 action_off
-    id: bedroom_dimmer_off
-  condition: []
-  action:
-  - type: turn_off
-    device_id: 755330e081498714f964a9b71afb11e5
-    entity_id: light.bedroom_bulp_1
-    domain: light
-  - type: turn_off
-    device_id: 37f042cb23528c1546c994228b315356
-    entity_id: light.bedroom_bulp_2
-    domain: light
-  - type: turn_off
-    device_id: 80b9ed2027c1a9bf1abae02154b8e664
-    entity_id: light.bedroom_bulp_3
-    domain: light
-  mode: single
 - id: '1637252728467'
   alias: Turn lights in living room when dark outside
   description: ''
@@ -628,3 +416,152 @@
       entity_id: automation.turn_everything_off
   mode: single
   hide_entity: true
+- id: '1638640096170'
+  alias: Light utility room toggle
+  description: ''
+  use_blueprint:
+    path: homeassistant/ikea-e1812-button.yaml
+    input:
+      button: sensor.utility_room_button_action
+      target_light: light.utility_room_light
+- id: '1638640791930'
+  alias: Control Unit living room toggle
+  description: ''
+  use_blueprint:
+    path: homeassistant/ikea-e1812-button-switch.yaml
+    input:
+      target_switch: switch.living_room_control_unit
+      button: sensor.living_room_button_action
+- id: '1638642087573'
+  alias: 'Light office desk toggle '
+  description: ''
+  use_blueprint:
+    path: klgn/ikea-dimmer-on-off.yml.yaml
+    input:
+      button: sensor.office_dimmer_action
+      target_light: light.office_bulp
+- id: '1638642167595'
+  alias: Lights bedroom toggle
+  description: ''
+  use_blueprint:
+    path: klgn/ikea-dimmer-on-off.yml.yaml
+    input:
+      button: sensor.bedroom_dimmer_action
+      target_light: light.bedroom_lights
+- id: '1638653868849'
+  alias: Lights hall toggle
+  description: ''
+  use_blueprint:
+    path: klgn/ikea-dimmer-on-off.yml.yaml
+    input:
+      button: sensor.hall_dimmer_action
+      target_light: light.hall_lights
+- id: '1638654220328'
+  alias: 'Control Unit office toggle '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.office_dimmer_action
+    id: Turn-on
+    to: brightness_move_up
+  - platform: state
+    entity_id: sensor.office_dimmer_action
+    id: Turn-off
+    to: brightness_move_down
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: Turn-on
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.office_control_unit
+    - conditions:
+      - condition: trigger
+        id: Turn-off
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.office_control_unit
+    default: []
+  mode: single
+- id: '1638897300751'
+  alias: Light bedroom dim
+  description: ''
+  use_blueprint:
+    path: homeassistant/ikea_dimmer_brightness.yaml
+    input:
+      button: sensor.bedroom_dimmer_brightness
+      target_light: light.bedroom_lights
+- id: '1638897587288'
+  alias: Ikea dimmer brightness of light
+  description: ''
+  use_blueprint:
+    path: homeassistant/ikea_dimmer_brightness.yaml
+    input:
+      button: sensor.bedroom_dimmer_brightness
+      target_light: light.bedroom_lights
+- id: '1638897667401'
+  alias: Light hall dimm
+  description: ''
+  use_blueprint:
+    path: homeassistant/ikea_dimmer_brightness.yaml
+    input:
+      button: sensor.hall_dimmer_brightness
+      target_light: light.hall_lights
+- id: '1638897667429'
+  # Automation for sending MQTT message on input select change
+  alias: Zigbee2mqtt Log Level
+  initial_state: "on"
+  trigger:
+    platform: state
+    entity_id: input_select.zigbee2mqtt_log_level
+  action:
+    - service: mqtt.publish
+      data:
+        payload_template: "{{ states('input_select.zigbee2mqtt_log_level') }}"
+        topic: zigbee2mqtt/bridge/config/log_level
+# Automation to start timer when enable join is turned on
+- id: zigbee_join_enabled
+  alias: Zigbee Join Enabled
+  trigger:
+    platform: state
+    entity_id: switch.zigbee2mqtt_main_join
+    to: "on"
+  action:
+    service: timer.start
+    entity_id: timer.zigbee_permit_join
+# Automation to stop timer when switch turned off and turn off switch when timer finished
+- id: zigbee_join_disabled
+  alias: Zigbee Join Disabled
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.zigbee_permit_join
+    - platform: state
+      entity_id: switch.zigbee2mqtt_main_join
+      to: "off"
+  action:
+    - service: timer.cancel
+      data:
+        entity_id: timer.zigbee_permit_join
+    - service: switch.turn_off
+      entity_id: switch.zigbee2mqtt_main_join
+- id: "zigbee2mqtt_create_notification_on_successfull_interview"
+  alias: Zigbee Device Joined Notification
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/bridge/log'
+  condition:
+    condition: template
+    value_template: '{{trigger.payload_json.type == "pairing" and trigger.payload_json.message == "interview_successful"}}'
+  action:
+    - service: persistent_notification.create
+      data_template:
+        title: Device joined the zigbee2mqtt network
+        message: "Name: {{trigger.payload_json.meta.friendly_name}},
+                  Vendor: {{trigger.payload_json.meta.vendor}},
+                  Description: {{trigger.payload_json.meta.description}}"
