@@ -21,7 +21,7 @@ action:
     sequence:
     - service: automation.trigger
       target:
-        entity_id: automation.start_astrid_sonos
+        entity_id: automation.sonos_start_astrid_alarm
     - service: media_player.select_source
       data:
         source: Today's Top Hits

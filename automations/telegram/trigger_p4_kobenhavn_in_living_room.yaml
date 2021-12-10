@@ -11,5 +11,5 @@ condition: []
 action:
 - service: automation.trigger
   target:
-    entity_id: automation.start_playing_p4_kobenhavn_in_living_room
+    entity_id: automation.living_room_p4_kobenhavn
 mode: single
