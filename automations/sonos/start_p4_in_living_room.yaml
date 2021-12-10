@@ -1,0 +1,21 @@
+---
+id: start_playing_p4_kobenhavn_in_living_room
+alias: 'Sonos: Start playing P4 København in Living Room'
+description: ''
+trigger: []
+condition: []
+action:
+- service: media_player.volume_set
+  data:
+    volume_level: 0.2
+  target:
+    entity_id: media_player.living_room
+- service: media_player.select_source
+  data:
+    source: DR P4 København
+  target:
+    entity_id: media_player.living_room
+- service: media_player.media_play
+  target:
+    entity_id: media_player.living_room
+mode: single

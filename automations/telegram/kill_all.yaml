@@ -1,0 +1,16 @@
+---
+id: telegram_kill_all
+alias: 'Telegram: Kill all'
+description: ''
+trigger:
+- platform: event
+  event_type: telegram_command
+  event_data:
+    command: /kill
+condition: []
+action:
+- service: automation.trigger
+  target:
+    entity_id: automation.turn_everything_off
+mode: single
+hide_entity: true

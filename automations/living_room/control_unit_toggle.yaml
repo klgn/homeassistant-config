@@ -1,0 +1,9 @@
+---
+id: control_unit_living_room_toggle
+alias: Control Unit living room toggle
+description: ''
+use_blueprint:
+  path: klgn/ikea-e1812-button-switch.yaml
+  input:
+    target_switch: switch.living_room_control_unit
+    button: sensor.living_room_button_action

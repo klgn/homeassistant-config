@@ -1,0 +1,45 @@
+---
+id: astrid_morning_alarm
+alias: Astrid Morning Alarm
+description: ''
+trigger:
+- platform: time
+  at: 06:30:00
+  id: 'morning-start '
+- platform: time
+  at: 07:10:00
+  id: morning-end
+condition:
+- condition: state
+  entity_id: binary_sensor.workday_sensor
+  state: 'on'
+action:
+- choose:
+  - conditions:
+    - condition: trigger
+      id: 'morning-start '
+    sequence:
+    - service: automation.trigger
+      target:
+        entity_id: automation.start_astrid_sonos
+    - service: media_player.select_source
+      data:
+        source: Today's Top Hits
+      target:
+        entity_id: media_player.astrids_sonos
+  - conditions:
+    - condition: trigger
+      id: morning-end
+    - condition: and
+      conditions:
+      - condition: device
+        device_id: 3696ce59f94aeaf88451fe18f7eb3033
+        domain: media_player
+        entity_id: media_player.astrids_sonos
+        type: is_playing
+    sequence:
+    - service: media_player.media_stop
+      target:
+        entity_id: media_player.office
+  default: []
+mode: single

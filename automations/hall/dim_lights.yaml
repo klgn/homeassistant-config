@@ -1,0 +1,9 @@
+---
+id: hall_lights_dim
+alias: Light hall dimm
+description: ''
+use_blueprint:
+  path: klgn/ikea_dimmer_brightness.yaml
+  input:
+    button: sensor.hall_dimmer_brightness
+    target_light: light.hall_lights

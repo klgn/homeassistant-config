@@ -1,0 +1,32 @@
+---
+id: pantry_room_toggle_light
+alias: Light Pantry light
+description: ''
+trigger:
+  - platform: state
+    entity_id: binary_sensor.pantry_room_sensor_occupancy
+    id: turn-on
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.pantry_room_sensor_occupancy
+    id: turn-off
+    to: 'off'
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: turn-on
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.pantry_light
+      - conditions:
+          - condition: trigger
+            id: turn-off
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: light.pantry_light
+    default: []
+mode: single

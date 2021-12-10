@@ -1,0 +1,26 @@
+---
+id: sonos_start_astrid_alarm
+alias: 'Sonos: Start Astrid Alarm'
+description: ''
+trigger: []
+condition: []
+action:
+- service: media_player.volume_set
+  data:
+    volume_level: 0.2
+  target:
+    entity_id: media_player.astrids_sonos
+- service: media_player.shuffle_set
+  data:
+    shuffle: true
+  target:
+    entity_id: media_player.astrids_sonos
+- service: media_player.select_source
+  data:
+    source: Today's Top Hits
+  target:
+    entity_id: media_player.astrids_sonos
+- service: media_player.media_play
+  target:
+    entity_id: media_player.astrids_sonos
+mode: single

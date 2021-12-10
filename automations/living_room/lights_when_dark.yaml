@@ -1,0 +1,31 @@
+---
+id: living_room_lights_when_dark
+alias: Turn on lights in living room when dark outside
+description: ''
+trigger:
+- platform: numeric_state
+  entity_id: sensor.sun_elevation
+  below: '1.0'
+condition:
+- condition: or
+  conditions:
+  - condition: device
+    device_id: cc56fea456ee08cbb78ef9c6ae4b1c86
+    domain: device_tracker
+    entity_id: device_tracker.mai_britt_e_s_a40
+    type: is_home
+  - condition: device
+    device_id: 28dc3800bd7cfb3d1ac9fa6f65431bf2
+    domain: device_tracker
+    entity_id: device_tracker.klgn_2
+    type: is_home
+action:
+- type: turn_on
+  device_id: 2e75f3b69f02a3823f346289fee93234
+  entity_id: switch.living_room_control_unit
+  domain: switch
+- type: turn_on
+  device_id: b88bdf8b885050c655adb6063731a759
+  entity_id: light.living_room_sonos_bulp
+  domain: light
+mode: single

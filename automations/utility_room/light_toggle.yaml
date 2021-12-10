@@ -1,0 +1,9 @@
+---
+id: utility_room_light_toggle
+alias: Light utility room toggle
+description: ''
+use_blueprint:
+  path: klgn/ikea-e1812-button.yaml
+  input:
+    button: sensor.utility_room_button_action
+    target_light: light.utility_room_light

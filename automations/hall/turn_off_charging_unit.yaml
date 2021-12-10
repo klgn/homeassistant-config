@@ -1,0 +1,22 @@
+---
+id: turn_off_charging_unit
+alias: Turn off charging unit at 23:30
+description: ''
+trigger:
+- platform: time
+  at: '23:30:00'
+condition: []
+action:
+- type: turn_off
+  device_id: 9ba1e1178dd56b582d4de26be35124f3
+  entity_id: switch.charge_unit_l1
+  domain: switch
+- type: turn_off
+  device_id: 9ba1e1178dd56b582d4de26be35124f3
+  entity_id: switch.charge_unit_l2
+  domain: switch
+- type: turn_off
+  device_id: 9ba1e1178dd56b582d4de26be35124f3
+  entity_id: switch.charge_unit_l3
+  domain: switch
+mode: single

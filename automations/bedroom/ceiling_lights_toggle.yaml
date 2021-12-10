@@ -1,0 +1,9 @@
+---
+id: bedroom_ceiling_lights_toggle
+alias: Lights bedroom toggle
+description: ''
+use_blueprint:
+  path: klgn/ikea-dimmer-on-off.yml.yaml
+  input:
+    button: sensor.bedroom_dimmer_action
+    target_light: light.bedroom_lights

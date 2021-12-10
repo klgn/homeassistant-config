@@ -1,0 +1,9 @@
+---
+id: hall_lights_toggle
+alias: Lights hall toggle
+description: ''
+use_blueprint:
+  path: klgn/ikea-dimmer-on-off.yml.yaml
+  input:
+    button: sensor.hall_dimmer_action
+    target_light: light.hall_lights

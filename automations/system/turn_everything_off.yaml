@@ -1,0 +1,39 @@
+---
+id: turn_everything_off
+alias: Turn everything off
+description: ''
+trigger: []
+condition: []
+action:
+- service: media_player.media_stop
+  target:
+    entity_id:
+    - media_player.astrids_sonos
+    - media_player.living_room
+    - media_player.laurits_sonos
+    - media_player.emmas_vaerelse
+    - media_player.office
+- service: switch.turn_off
+  target:
+    entity_id:
+      - switch.office_control_unit
+      - switch.control_unit_1
+      - switch.living_room_control_unit
+      - switch.banquet_hall_control_unit
+- service: light.turn_off
+  target:
+    entity_id:
+      - light.office_bulp
+      - light.bedside_bulb
+      - light.bedroom_bulp_1
+      - light.bedroom_bulp_2
+      - light.bedroom_bulp_3
+      - light.hall_light_entre
+      - light.hall_light_living_room
+      - light.hall_light_toilet
+      - light.pantry_light
+      - light.utility_room_light
+      - light.astrid_ceiling_1
+      - light.astrid_ceiling_2
+      - light.living_room_sonos_bulp
+mode: single

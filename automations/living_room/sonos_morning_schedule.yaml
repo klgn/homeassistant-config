@@ -1,0 +1,47 @@
+---
+id: sonos_living_room_morning_schedule
+alias: 'Sonos: Living Room morning schedule '
+description: ''
+trigger:
+- platform: time
+  at: 06:40:00
+  id: 'morning-start '
+- platform: time
+  at: 07:30:00
+  id: morning-end
+condition:
+- condition: state
+  entity_id: binary_sensor.workday_sensor
+  state: 'on'
+action:
+- choose:
+  - conditions:
+    - condition: and
+      conditions:
+      - condition: trigger
+        id: 'morning-start '
+      - condition: device
+        device_id: 95f57bf49d1cc9274e1f8e2c1228f026
+        domain: device_tracker
+        entity_id: device_tracker.klgn_mobile
+        type: is_home
+    sequence:
+    - service: automation.trigger
+      target:
+        entity_id: automation.start_playing_p4_kobenhavn_in_living_room
+  - conditions:
+    - condition: trigger
+      id: morning-end
+    - condition: and
+      conditions:
+      - condition: device
+        device_id: bdc8526ffab367bf7d6e5572014cad1a
+        domain: media_player
+        entity_id: media_player.living_room
+        type: is_playing
+    sequence:
+    - service: media_player.media_stop
+      target:
+        entity_id: media_player.living_room
+  default: []
+mode: single

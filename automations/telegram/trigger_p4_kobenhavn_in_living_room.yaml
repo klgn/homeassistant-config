@@ -1,0 +1,16 @@
+---
+id: telegram_trigger_p4_kobenhavn_in_living_room
+alias: 'Telegram: Start Living Room Sonos'
+description: ''
+trigger:
+- platform: event
+  event_type: telegram_command
+  event_data:
+    command: /goodmorning
+condition: []
+action:
+- service: automation.trigger
+  target:
+    entity_id: automation.start_playing_p4_kobenhavn_in_living_room
+mode: single
+hide_entity: true

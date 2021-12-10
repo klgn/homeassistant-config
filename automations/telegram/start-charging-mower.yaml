@@ -1,0 +1,26 @@
+---
+id: telegram_start_charging_mower
+alias: 'Telegram: Start Charging Mower'
+description: ''
+trigger:
+- platform: event
+  event_type: telegram_command
+  event_data:
+    command: /chargeMower
+condition: []
+action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.control_unit_1
+  - service: telegram_bot.send_message
+    data:
+      message: Started charging the mower
+  - delay:
+      hours: 3
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    target:
+      entity_id: switch.control_unit_1
+mode: single
