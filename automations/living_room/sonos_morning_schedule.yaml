@@ -20,11 +20,9 @@ action:
       conditions:
       - condition: trigger
         id: 'morning-start '
-      - condition: device
-        device_id: 95f57bf49d1cc9274e1f8e2c1228f026
-        domain: device_tracker
+      - condition: state
         entity_id: device_tracker.klgn_mobile
-        type: is_home
+        state: home
     sequence:
     - service: automation.trigger
       target:
@@ -32,13 +30,6 @@ action:
   - conditions:
     - condition: trigger
       id: morning-end
-    - condition: and
-      conditions:
-      - condition: device
-        device_id: bdc8526ffab367bf7d6e5572014cad1a
-        domain: media_player
-        entity_id: media_player.living_room
-        type: is_playing
     sequence:
     - service: media_player.media_stop
       target:
