@@ -13,4 +13,3 @@ action:
   target:
     entity_id: automation.start_playing_p4_kobenhavn_in_living_room
 mode: single
-hide_entity: true

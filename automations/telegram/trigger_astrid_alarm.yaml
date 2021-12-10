@@ -13,4 +13,3 @@ action:
   target:
     entity_id: automation.sonos_start_astrid_alarm
 mode: single
-hide_entity: true

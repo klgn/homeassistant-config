@@ -13,4 +13,3 @@ action:
   target:
     entity_id: automation.turn_everything_off
 mode: single
-hide_entity: true
