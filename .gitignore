@@ -18,3 +18,4 @@ __pycache__
 deps
 *.log
 .HA_VERSION
+blueprints/automation/homeassistant
