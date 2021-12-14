@@ -1,3 +1,4 @@
+id: backup_stale_notification
 alias: Notify when backup stale
 description: ''
 mode: single
