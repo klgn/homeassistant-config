@@ -4,10 +4,10 @@ alias: Living Room morning schedule
 description: ''
 trigger:
 - platform: time
-  at: 06:15:00
+  at: input_datetime.living_room_light_morning_schedule_start
   id: morning-start
 - platform: time
-  at: 07:30:00
+  at: input_datetime.living_room_light_morning_schedule_end
   id: morning-end
 condition: []
 action:
@@ -16,25 +16,21 @@ action:
     - condition: trigger
       id: morning-start
     sequence:
-    - type: turn_on
-      device_id: 2e75f3b69f02a3823f346289fee93234
-      entity_id: switch.living_room_control_unit
-      domain: switch
-    - type: turn_on
-      device_id: b88bdf8b885050c655adb6063731a759
-      entity_id: light.living_room_sonos_bulp
-      domain: light
+      - service: switch.turn_on
+        target:
+          entity_id: switch.living_room_control_unit
+      - service: light.turn_on
+        target:
+          entity_id: light.living_room_sonos_bulp
   - conditions:
     - condition: trigger
       id: morning-end
     sequence:
-    - type: turn_off
-      device_id: 2e75f3b69f02a3823f346289fee93234
-      entity_id: switch.living_room_control_unit
-      domain: switch
-    - type: turn_off
-      device_id: b88bdf8b885050c655adb6063731a759
-      entity_id: light.living_room_sonos_bulp
-      domain: light
+      - service: switch.turn_off
+        target:
+          entity_id: switch.living_room_control_unit
+      - service: light.turn_off
+        target:
+          entity_id: light.living_room_sonos_bulp
   default: []
 mode: single
