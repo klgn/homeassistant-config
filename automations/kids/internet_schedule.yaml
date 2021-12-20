@@ -4,10 +4,10 @@ alias: Kids' Internet Schedule
 description: ''
 trigger:
 - platform: time
-  at: 07:00:00
+  at: input_datetime.kids_internet_curfew_end
   id: morning-curfew
 - platform: time
-  at: '21:30:00'
+  at: input_datetime.kids_internet_curfew_start
   id: evening-curfew
 condition: []
 action:
