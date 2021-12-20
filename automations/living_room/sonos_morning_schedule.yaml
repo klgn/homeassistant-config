@@ -4,10 +4,10 @@ alias: 'Sonos: Living Room morning schedule '
 description: ''
 trigger:
 - platform: time
-  at: 06:40:00
-  id: 'morning-start '
+  at: input_datetime.living_room_sonos_morning_start
+  id: morning-start
 - platform: time
-  at: 07:30:00
+  at: input_datetime.living_room_sonos_morning_end
   id: morning-end
 condition:
 - condition: state
@@ -19,7 +19,7 @@ action:
     - condition: and
       conditions:
       - condition: trigger
-        id: 'morning-start '
+        id: morning-start
       - condition: state
         entity_id: device_tracker.klgn_mobile
         state: home
