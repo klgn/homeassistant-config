@@ -4,10 +4,10 @@ alias: Astrid Morning Alarm
 description: ''
 trigger:
 - platform: time
-  at: 06:30:00
-  id: 'morning-start '
+  at: input_datetime.astrid_alarm_start
+  id: 'morning-start'
 - platform: time
-  at: 07:10:00
+  at: input_datetime.astrid_alarm_end
   id: morning-end
 condition:
 - condition: state
@@ -17,7 +17,7 @@ action:
 - choose:
   - conditions:
     - condition: trigger
-      id: 'morning-start '
+      id: 'morning-start'
     sequence:
     - service: automation.trigger
       target:
