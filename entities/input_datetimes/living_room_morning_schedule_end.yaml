@@ -1,0 +1,5 @@
+--
+id: living_room_morning_schedule_end
+name: Living Room Morning Schedule End
+has_date: false
+has_time: true
