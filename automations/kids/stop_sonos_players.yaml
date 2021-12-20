@@ -1,6 +1,6 @@
 ---
 id: sonos_stop_kids_players
-alias: 'Sonos: Stop Kids'' players at 22:30'
+alias: 'Sonos: Stop Kids'' players at night'
 description: ''
 trigger:
 - platform: time
