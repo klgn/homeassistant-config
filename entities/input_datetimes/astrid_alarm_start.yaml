@@ -1,5 +1,4 @@
 ---
-id: astrid_alarm_start
 name: Astrid Alarm Start
 has_date: false
 has_time: true
