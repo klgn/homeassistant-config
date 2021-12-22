@@ -4,7 +4,7 @@ alias: 'Sonos: Stop Kids'' players at night'
 description: ''
 trigger:
 - platform: time
-  at: '22:30:00'
+  at: input_datetime.kids_sonos_players_stop
 condition: []
 action:
 - service: media_player.media_stop

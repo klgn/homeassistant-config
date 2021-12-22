@@ -4,7 +4,7 @@ alias: Turn off charging unit at 23:30
 description: ''
 trigger:
 - platform: time
-  at: '23:30:00'
+  at: input_datetime.turn_off_hall_charger_at
 condition: []
 action:
 - type: turn_off
