@@ -1,6 +1,6 @@
 ---
 id: turn_off_charging_unit
-alias: Turn off charging unit at 23:30
+alias: Turn off charging unit at night
 description: ''
 trigger:
 - platform: time
