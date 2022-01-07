@@ -15,12 +15,4 @@ action:
   - service: telegram_bot.send_message
     data:
       message: Started charging the mower
-  - delay:
-      hours: 3
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
-  - service: switch.turn_off
-    target:
-      entity_id: switch.control_unit_1
 mode: single
