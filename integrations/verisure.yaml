@@ -1,8 +1,8 @@
-#---
-#verisure:
-#  username: !secret verisure_username
-#  password: !secret verisure_password
-#  thermometers: 1
-#  hygrometers: 1
-#  smartplugs: 1
-#  alarm: 1
+---
+verisure:
+  username: !secret verisure_username
+  password: !secret verisure_password
+  thermometers: 1
+  hygrometers: 1
+  smartplugs: 1
+  alarm: 1
