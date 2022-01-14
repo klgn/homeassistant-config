@@ -24,7 +24,7 @@ action:
           - condition: trigger
             id: paper-collected
         sequence:
-          - service: notify.mobile_app_ klgn_phone
+          - service: notify.mobile_app_klgn_phone
             data:
               title: Waste is collected today
               message: Paper waste is being collected today
