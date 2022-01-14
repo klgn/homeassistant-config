@@ -24,7 +24,7 @@ action:
           - condition: trigger
             id: paper-collected
         sequence:
-          - service: notify.mobile_app_oneplus_a5010
+          - service: notify.mobile_app_ klgn_phone
             data:
               title: Waste is collected today
               message: Paper waste is being collected today
@@ -32,7 +32,7 @@ action:
           - condition: trigger
             id: glass-collected
         sequence:
-          - service: notify.mobile_app_oneplus_a5010
+          - service: notify.mobile_app_klgn_phone
             data:
               title: Waste is collected today
               message: Glass and metal waste is being collected today
@@ -40,7 +40,7 @@ action:
           - condition: trigger
             id: general-collected
         sequence:
-          - service: notify.mobile_app_oneplus_a5010
+          - service: notify.mobile_app_klgn_phone
             data:
               title: Waste is collected today
               message: General waste is being collected today
