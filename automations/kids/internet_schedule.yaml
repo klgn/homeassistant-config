@@ -20,7 +20,7 @@ action:
       target:
         entity_id:
         - switch.emmas_laptop
-        - switch.laurits_laptop
+        - switch.laptop_qlf522q3
         - switch.astrids_laptop
   - conditions:
     - condition: trigger
@@ -30,7 +30,7 @@ action:
       target:
         entity_id:
         - switch.emmas_laptop
-        - switch.laurits_laptop
+        - switch.laptop_qlf522q3
         - switch.astrids_laptop
   default: []
 mode: single
