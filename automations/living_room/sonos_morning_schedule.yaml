@@ -21,7 +21,7 @@ action:
       - condition: trigger
         id: morning-start
       - condition: state
-        entity_id: device_tracker.klgn_mobile
+        entity_id: device_tracker.oneplus_9_pro
         state: home
     sequence:
     - service: automation.trigger
