@@ -1,5 +1,4 @@
 ---
-platform: group
 name: All Switches
 entities:
   - switch.smartplug
