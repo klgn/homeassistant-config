@@ -1,5 +1,7 @@
 ---
-name: All Windows And Doors
+platform: group
+device_class: opening
+name: All windows And Doors
 entities:
   - binary_sensor.sovevaerelse
   - binary_sensor.badevaerelsesvindue_h
