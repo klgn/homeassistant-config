@@ -1,0 +1,6 @@
+---
+platform: group
+name: Astrid's Lights
+entities:
+  - light.astrid_ceiling_1
+  - light.astrid_ceiling_2
