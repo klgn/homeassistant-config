@@ -1,0 +1,22 @@
+---
+name: All Windows And Doors
+entities:
+  - binary_sensor.sovevaerelse
+  - binary_sensor.badevaerelsesvindue_h
+  - binary_sensor.badevaerelsesvindue_v
+  - binary_sensor.laurits_vaerelse
+  - binary_sensor.kokkenvindue
+  - binary_sensor.kontor
+  - binary_sensor.stue_lille_vindue
+  - binary_sensor.stue_stort_vindue
+  - binary_sensor.terrassedor
+  - binary_sensor.astrids_vaerelse
+  - binary_sensor.kaelderdor
+  - binary_sensor.toilet
+  - binary_sensor.emmas_vaerelse
+  - binary_sensor.trappe_vindue
+  - binary_sensor.bryggersvindue
+  - binary_sensor.vindue_ved_indkorsel
+  - binary_sensor.vaerksted
+  - binary_sensor.gildesalen_h_vindue
+  - binary_sensor.gildesalen_v_vindue
