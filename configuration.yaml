@@ -15,4 +15,3 @@ homeassistant:
     currency: DKK
 
 scene: !include scenes.yaml
-frontend:
