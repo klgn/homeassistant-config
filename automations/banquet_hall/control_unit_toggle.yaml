@@ -1,0 +1,9 @@
+---
+id: control_unit_banquet_hall_toggle
+alias: Control Unit living room toggle
+description: ''
+use_blueprint:
+  path: klgn/ikea-e1812-button-switch.yaml
+  input:
+    target_switch: switch.banquet_hall_control_unit
+    button: sensor.banquet_hall_button_action
