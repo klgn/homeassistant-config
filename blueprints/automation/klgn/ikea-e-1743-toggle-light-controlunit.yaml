@@ -11,7 +11,7 @@ blueprint:
         device:
           integration: mqtt
           manufacturer: IKEA
-          model: 	TRADFRI ON/OFF switch (E1743)
+          model: TRADFRI ON/OFF switch (E1743)
     light:
       name: Light(s)
       description: The light(s) to toggle
