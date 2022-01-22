@@ -5,5 +5,5 @@ description: ''
 use_blueprint:
   path: klgn/ikea-dimmer-on-off.yml.yaml
   input:
-    button: sensor.kicten_dimmer_action
+    button: sensor.kitchen_dimmer_action
     target_light: light.kitchen_strip
