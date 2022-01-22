@@ -1,0 +1,8 @@
+---
+devices:
+  '0x680ae2fffe55192b':
+    friendly_name: kitchen_dimmer
+    legacy: false
+    simulated_brightness:
+    delta: 20 # delta per interval, default = 20
+    interval: 200 # interval in milliseconds, default = 200
