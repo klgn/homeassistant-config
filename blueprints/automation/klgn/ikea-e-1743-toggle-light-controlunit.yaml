@@ -1,0 +1,89 @@
+---
+blueprint:
+  name: ikea dimmer toggle bulp and control unit
+  description: Toggles a bulb when clicking on/off on dimmer. Toggle switch when holdning on/off button
+  domain: automation
+  input:
+    dimmer:
+      name: Dimmer
+      description: Ikea Dimmer to use
+      selector:
+        device:
+          integration: mqtt
+          manufacturer: IKEA
+          model: 	TRADFRI ON/OFF switch (E1743)
+    light:
+      name: Light(s)
+      description: The light(s) to toggle
+      selector:
+        entity:
+          domain: light
+    control_unit:
+      name: Control Unit
+      description: The control unit to toggle
+      selector:
+        entity:
+          domain: switch
+description: ''
+trigger:
+  - platform: device
+    domain: mqtt
+    device_id: !input remote
+    type: click
+    subtype: 'on'
+    discovery_id: 0x680ae2fffebea32b click_on
+    id: click-on
+  - platform: device
+    domain: mqtt
+    device_id: !input remote
+    type: action
+    subtype: 'off'
+    discovery_id: 0x680ae2fffebea32b action_off
+    id: click-off
+  - platform: device
+    domain: mqtt
+    device_id: !input remote
+    type: action
+    subtype: brightness_move_up
+    discovery_id: 0x680ae2fffebea32b action_brightness_move_up
+    id: click-brightness-up
+  - platform: device
+    domain: mqtt
+    device_id: !input remote
+    type: action
+    subtype: brightness_move_down
+    discovery_id: 0x680ae2fffebea32b action_brightness_move_down
+    id: click-brightness-down
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: click-off
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: !input light
+      - conditions:
+          - condition: trigger
+            id: click-on
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: !input light
+      - conditions:
+          - condition: trigger
+            id: click-brightness-up
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id: !input control_unit
+      - conditions:
+          - condition: trigger
+            id: click-brightness-down
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: !input control_unit
+    default: []
+mode: single
