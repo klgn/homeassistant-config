@@ -1,0 +1,9 @@
+---
+id: kitchen_strip_toggle
+alias: Kitchen strip toggle
+description: ''
+use_blueprint:
+  path: klgn/ikea-dimmer-on-off.yml.yaml
+  input:
+    button: sensor.kicten_dimmer_action
+    target_light: light.kitchen_strip
