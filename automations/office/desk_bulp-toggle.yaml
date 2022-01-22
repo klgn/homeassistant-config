@@ -1,9 +1,0 @@
----
-id: office_desk_light_toggle
-alias: 'Light office desk toggle '
-description: ''
-use_blueprint:
-  path: klgn/ikea-dimmer-on-off.yml.yaml
-  input:
-    button: sensor.office_dimmer_action
-    target_light: light.office_bulp
