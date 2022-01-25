@@ -16,3 +16,5 @@ entities:
   - light.utility_room_light
   - light.pantry_light
   - light.workshop_strip
+  - light.toilet_bulb1
+  - light.toilet_bulb2
