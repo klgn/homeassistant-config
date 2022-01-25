@@ -1,0 +1,32 @@
+---
+id: toilet_toggle_lights
+alias: Toggle toilet lights
+description: ''
+trigger:
+  - platform: state
+    entity_id: binary_sensor.toilet_sensor_occupancy
+    id: turn-on
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.toilet_sensor_occupancy
+    id: turn-off
+    to: 'off'
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: turn-on
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.toilet_bulbs
+      - conditions:
+          - condition: trigger
+            id: turn-off
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: light.toilet_bulbs
+    default: []
+mode: single
