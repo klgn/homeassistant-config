@@ -1,0 +1,6 @@
+---
+platform: group
+name: Toilet bulbs
+entities:
+  - light.toilet_bulb1
+  - light.toilet_bulb2
