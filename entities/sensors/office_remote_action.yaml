@@ -1,0 +1,7 @@
+---
+platform: "mqtt"
+name: "Office Remote Action"
+state_topic: "zigbee2mqtt/office_remote"
+availability_topic: "zigbee2mqtt/bridge/state"
+icon: "mdi:gesture-double-tap"
+value_template: "{{ value_json.action }}"
