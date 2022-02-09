@@ -19,3 +19,4 @@ entities:
   - light.toilet_bulb1
   - light.toilet_bulb2
   - light.emmas_strip
+  - light.office_strip
