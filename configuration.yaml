@@ -16,5 +16,5 @@ homeassistant:
 
 scene: !include scenes.yaml
 frontend:
-extra_module_url:
-  - /hacsfiles/hass-hue-icons/hass-hue-icons.js
+    extra_module_url:
+    - /hacsfiles/hass-hue-icons/hass-hue-icons.js
