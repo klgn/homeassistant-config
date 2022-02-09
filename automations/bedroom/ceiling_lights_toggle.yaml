@@ -6,4 +6,4 @@ use_blueprint:
   path: klgn/ikea-dimmer-on-off.yml.yaml
   input:
     button: sensor.bedroom_dimmer_action
-    target_light: light.bedroom_lights
+    target_light: light.bedroom_bulp_1

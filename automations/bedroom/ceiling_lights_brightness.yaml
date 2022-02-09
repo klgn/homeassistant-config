@@ -6,4 +6,4 @@ use_blueprint:
   path: klgn/ikea_dimmer_brightness.yaml
   input:
     button: sensor.bedroom_dimmer_brightness
-    target_light: light.bedroom_lights
+    target_light: light.bedroom_bulp_1
