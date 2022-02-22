@@ -11,7 +11,7 @@ condition:
   - condition: or
     conditions:
       - condition: state
-        entity_id: device_tracker.klgn_mobile
+        entity_id: device_tracker.oneplus_9_pro_2
         state: home
       - condition: state
         entity_id: device_tracker.mai_britt_e_s_a40
