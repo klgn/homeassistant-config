@@ -1,0 +1,124 @@
+---
+alias: Office Styrbar
+description: ''
+trigger:
+  - platform: state
+    entity_id: sensor.office_styrbar_brightness
+    id: brightness
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'on'
+    to: 'on'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'off'
+    to: 'off'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'up-hold'
+    to: 'brightness_move_up'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'down-hold'
+    to: 'brightness_move_down'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'left-hold'
+    to: 'arrow_left_hold'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'right-hold'
+    to: 'arrow_left_hold'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: left-click
+    to: arrow_left_click
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: right-click
+    to: arrow_right_click
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: 'on'
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.office_bulp
+            data: {}
+      - conditions:
+          - condition: trigger
+            id: 'off'
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: light.office_bulp
+            data: {}
+      - conditions:
+          - condition: trigger
+            id: 'up-hold'
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id: switch.office_control_unit
+            data: {}
+      - conditions:
+          - condition: trigger
+            id: 'down-hold'
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: switch.office_control_unit
+            data: {}
+      - conditions:
+          - condition: trigger
+            id: brightness
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.office_bulp
+            data:
+              brightness: |
+                {{ trigger.to_state.state }}
+      - conditions:
+          - condition: trigger
+            id: left-click
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.office_bulp
+            data:
+              hs_color:
+                - |-
+                  {% if state_attr(var_light, "hs_color")[0] - 18 < 0 %}
+                    {{ 360 - state_attr(var_light, "hs_color")[0] - 18 }}
+                  {% else %}
+                    {{ state_attr(var_light, "hs_color")[0] - 18 }}
+                  {% endif %}
+                - '{{ state_attr(var_light, "hs_color")[1] }}'
+              transition: 0.5
+          - delay:
+              milliseconds: 500
+      - conditions:
+          - condition: trigger
+            id: right-click
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.office_bulp
+            data:
+              hs_color:
+                - |-
+                  {% if state_attr(var_light, "hs_color")[0] + 18 > 360 %}
+                    {{ state_attr(var_light, "hs_color")[0] + 18 - 360 }}
+                  {% else %}
+                    {{ state_attr(var_light, "hs_color")[0] + 18 }}
+                  {% endif %}
+                - '{{ state_attr(var_light, "hs_color")[1] }}'
+              transition: 0.5
+    default: []
+mode: single
+variables:
+  var_light: light.office_bulp
