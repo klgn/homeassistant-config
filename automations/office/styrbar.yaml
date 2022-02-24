@@ -1,5 +1,6 @@
 ---
 alias: Office Styrbar
+id: 'office-styrbar'
 description: ''
 trigger:
   - platform: state
