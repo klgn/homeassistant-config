@@ -59,7 +59,7 @@ action:
             data: {}
       - conditions:
           - condition: trigger
-            id: 'up-hold'
+            id: 'right-hold'
         sequence:
           - service: switch.turn_on
             target:
@@ -67,7 +67,7 @@ action:
             data: {}
       - conditions:
           - condition: trigger
-            id: 'down-hold'
+            id: 'left-hold'
         sequence:
           - service: switch.turn_off
             target:
@@ -122,4 +122,4 @@ action:
     default: []
 mode: single
 variables:
-  var_light: light.office_bulp
+  var_light: light.office_strip
