@@ -29,7 +29,7 @@ trigger:
   - platform: state
     entity_id: sensor.office_styrbar_action
     id: 'right-hold'
-    to: 'arrow_left_hold'
+    to: 'arrow_right_hold'
   - platform: state
     entity_id: sensor.office_styrbar_action
     id: left-click
