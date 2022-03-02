@@ -26,12 +26,12 @@ action:
         data: {}
   - conditions:
     - condition: or
-        conditions:
-        - condition: trigger
-          id: morning-end
-        - condition: trigger
-          id: sun-up
-    sequence:
+      conditions:
+      - condition: trigger
+        id: morning-end
+      - condition: trigger
+        id: sun-up
+      sequence:
       - service: switch.turn_off
         target:
           entity_id: switch.living_room_control_unit
