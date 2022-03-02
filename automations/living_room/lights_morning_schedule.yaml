@@ -19,18 +19,26 @@ action:
       - service: switch.turn_on
         target:
           entity_id: switch.living_room_control_unit
+        data: {}
       - service: light.turn_on
         target:
           entity_id: light.living_room_sonos_bulp
+        data: {}
   - conditions:
-    - condition: trigger
-      id: morning-end
+    - condition: or
+        conditions:
+        - condition: trigger
+          id: morning-end
+        - condition: trigger
+          id: sun-up
     sequence:
       - service: switch.turn_off
         target:
           entity_id: switch.living_room_control_unit
+        data: {}
       - service: light.turn_off
         target:
           entity_id: light.living_room_sonos_bulp
+        data: {}
   default: []
 mode: single
