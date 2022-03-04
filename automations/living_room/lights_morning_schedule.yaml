@@ -19,7 +19,7 @@ action:
   - conditions:
     - condition: trigger
       id: morning-start
-    sequence:
+      sequence:
       - service: switch.turn_on
         target:
           entity_id: switch.living_room_control_unit
