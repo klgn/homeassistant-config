@@ -3,46 +3,58 @@ id: living_room_lights_morning_scheduled
 alias: Living Room morning schedule
 description: ''
 trigger:
-- platform: time
-  at: input_datetime.living_room_light_morning_schedule_start
-  id: morning-start
-- platform: time
-  at: input_datetime.living_room_light_morning_schedule_end
-  id: morning-end
-- platform: state
-  entity_id: sensor.sun_elevation
-  id: sun-up
-  to: '1'
+  - platform: time
+    at: input_datetime.living_room_light_morning_schedule_start
+    id: morning-start
+  - platform: time
+    at: input_datetime.living_room_light_morning_schedule_end
+    id: morning-end
+  - platform: state
+    entity_id: sensor.sun_elevation
+    id: sun-up
+    to: '1'
 condition: []
 action:
-- choose:
-  - conditions:
-    - condition: trigger
-      id: morning-start
-      sequence:
-      - service: switch.turn_on
-        target:
-          entity_id: switch.living_room_control_unit
-        data: {}
-      - service: light.turn_on
-        target:
-          entity_id: light.living_room_sonos_bulp
-        data: {}
-  - conditions:
-    - condition: or
-      conditions:
-      - condition: trigger
-        id: morning-end
-      - condition: trigger
-        id: sun-up
-      sequence:
-      - service: switch.turn_off
-        target:
-          entity_id: switch.living_room_control_unit
-        data: {}
-      - service: light.turn_off
-        target:
-          entity_id: light.living_room_sonos_bulp
-        data: {}
-  default: []
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: morning-start
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id: switch.living_room_control_unit
+            data: {}
+          - service: light.turn_on
+            target:
+              entity_id: light.living_room_sonos_bulp
+            data: {}
+      - conditions:
+          - condition: trigger
+            id: morning-end
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: switch.living_room_control_unit
+            data: {}
+          - service: light.turn_off
+            target:
+              entity_id: light.living_room_sonos_bulp
+            data: {}
+      - conditions:
+          - condition: or
+            conditions:
+              - condition: trigger
+                id: morning-end
+              - condition: trigger
+                id: sun-up
+        sequence:
+          - service: switch.turn_off
+            data: {}
+            target:
+              entity_id: switch.living_room_control_unit
+          - service: light.turn_off
+            data: {}
+            target:
+              entity_id: light.living_room_sonos_bulp
+    default: []
 mode: single
