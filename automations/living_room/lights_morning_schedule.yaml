@@ -9,6 +9,10 @@ trigger:
 - platform: time
   at: input_datetime.living_room_light_morning_schedule_end
   id: morning-end
+- platform: state
+  entity_id: sensor.sun_elevation
+  id: sun-up
+  to: '1'
 condition: []
 action:
 - choose:
