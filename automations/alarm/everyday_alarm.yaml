@@ -18,7 +18,7 @@ action:
           - condition: trigger
             id: alarm-start
         sequence:
-          - service: alarm_control_panel.alarm_arm_night
+          - service: alarm_control_panel.alarm_arm_home
             data:
               code: !secret verisure_pin
             target:
