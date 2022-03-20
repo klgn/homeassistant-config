@@ -1,4 +1,5 @@
 alias: Everyday alarm
+id: everyday_alarm
 description: ''
 trigger:
   - platform: time
