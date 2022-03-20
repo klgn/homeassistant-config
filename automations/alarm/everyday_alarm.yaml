@@ -6,7 +6,7 @@ trigger:
     at: input_datetime.home_alarm_on_at_night
     id: alarm-start
   - platform: time
-    at: input_datetime.home_alarm_on_at_night
+    at: input_datetime.home_alarm_off_in_the_morning
     id: alarm-end
 condition:
   - condition: state
