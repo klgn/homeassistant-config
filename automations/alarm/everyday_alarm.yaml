@@ -1,0 +1,34 @@
+alias: Everyday alarm
+description: ''
+trigger:
+  - platform: time
+    at: input_datetime.home_alarm_on_at_night
+    id: alarm-start
+  - platform: time
+    at: input_datetime.home_alarm_on_at_night
+    id: alarm-end
+condition:
+  - condition: state
+    entity_id: input_boolean.house_mode_away
+    state: 'off'
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: alarm-start
+        sequence:
+          - service: alarm_control_panel.alarm_arm_night
+            data:
+              code: !secret verisure_pin
+            target:
+              entity_id: alarm_control_panel.verisure_alarm
+      - conditions:
+          - condition: trigger
+            id: alarm-end
+        sequence:
+          - service: alarm_control_panel.alarm_disarm
+            data:
+              code: !secret verisure_pin
+            target:
+              entity_id: alarm_control_panel.verisure_alarm
+    default: []

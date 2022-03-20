@@ -1,7 +1,7 @@
 ---
 platform: "mqtt"
-name: "Emma Remote Action"
-state_topic: "zigbee2mqtt/emma_remote"
+name: "Office Styrbar Action"
+state_topic: "zigbee2mqtt/office_styrbar"
 availability_topic: "zigbee2mqtt/bridge/state"
 icon: "mdi:toggle-switch"
 unit_of_measurement: "lqi"

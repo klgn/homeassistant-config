@@ -1,0 +1,12 @@
+---
+alias: "Alarm status changed"
+trigger:
+  - platform: state
+    entity_id: alarm_control_panel.alarm_1
+action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: >
+        Alarm changed from {{ trigger.from_state.state }}
+        to {{ trigger.to_state.state }}
+        by {{ trigger.to_state.attributes.changed_by }}
