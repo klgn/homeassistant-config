@@ -1,1 +1,85 @@
-[]
+- id: '1643822863833'
+  alias: Emmas remote
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.emma_remote_brightness
+    id: brightness
+  - platform: state
+    entity_id: sensor.emma_remote_action
+    id: 'on'
+    to: 'on'
+  - platform: state
+    entity_id: sensor.emma_remote_action
+    id: 'off'
+    to: 'off'
+  - platform: state
+    entity_id: sensor.emma_remote_action
+    id: left-click
+    to: arrow_left_click
+  - platform: state
+    entity_id: sensor.emma_remote_action
+    id: right-click
+    to: arrow_right_click
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.emmas_strip
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.emmas_strip
+    - conditions:
+      - condition: trigger
+        id: brightness
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.emmas_strip
+        data:
+          brightness: '{{ trigger.to_state.state }}
+
+            '
+    - conditions:
+      - condition: trigger
+        id: left-click
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.emmas_strip
+        data:
+          hs_color:
+          - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -\
+            \ state_attr(var_light, \"hs_color\")[0] - 18 }}\n{% else %}\n  {{ state_attr(var_light,\
+            \ \"hs_color\")[0] - 18 }}\n{% endif %}"
+          - '{{ state_attr(var_light, "hs_color")[1] }}'
+          transition: 0.5
+      - delay:
+          milliseconds: 500
+    - conditions:
+      - condition: trigger
+        id: right-click
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.emmas_strip
+        data:
+          hs_color:
+          - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,\
+            \ \"hs_color\")[0] + 18 - 360 }}\n{% else %}\n  {{ state_attr(var_light,\
+            \ \"hs_color\")[0] + 18 }}\n{% endif %}"
+          - '{{ state_attr(var_light, "hs_color")[1] }}'
+          transition: 0.5
+    default: []
+  mode: single
+  variables:
+    var_light: light.emmas_strip
