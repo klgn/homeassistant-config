@@ -1,0 +1,26 @@
+---
+alias: Ask if working remotely
+description: ''
+trigger:
+  - platform: time
+    at: input_datetime.ask_working_remote_time
+condition:
+  - condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.vacation
+        state: 'off'
+action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Are you working remotely today?
+      data:
+        actions:
+          - action: WORK_REMOTELY_YES
+            title: 'YES'
+          - action: WORK_REMOTELY_NO
+            title: 'NO'
+mode: single
