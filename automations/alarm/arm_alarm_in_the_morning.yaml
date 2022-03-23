@@ -1,0 +1,25 @@
+---
+alias: Arm Alarm in the morning
+description: ''
+mode: single
+trigger:
+  - platform: time
+    at: input_datetime.arm_alarm_workday_time
+condition:
+  - condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.work_from_home_today
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.vacation
+        state: 'off'
+action:
+  - service: alarm_control_panel.alarm_arm_away
+    data:
+      code: !secret verisure_pin
+    target:
+      entity_id: alarm_control_panel.verisure_alarm
