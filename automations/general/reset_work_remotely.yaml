@@ -1,0 +1,10 @@
+---
+alias: Reset work remotely
+trigger:
+  - platform: time
+    at: input_datetime.reset_work_remotely_time
+action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.work_from_home_today
