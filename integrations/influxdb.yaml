@@ -7,3 +7,6 @@ influxdb:
   password: !secret influxdb_password
   max_retries: 3
   default_measurement: state
+  include:
+    entities:
+      - sensor.power_meter_energy
