@@ -1,0 +1,47 @@
+---
+alias: Toggle Home/Away Using Alarm
+description: ''
+mode: single
+trigger:
+  - platform: state
+    entity_id: alarm_control_panel.verisure_alarm
+    id: home
+    to: disarmed
+  - platform: state
+    entity_id: alarm_control_panel.verisure_alarm
+    id: away
+    to: armed_away
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: trigger
+                id: home
+              - condition: not
+                conditions:
+                  - condition: state
+                    entity_id: input_boolean.house_mode_away
+                    state: 'off'
+        sequence:
+          - service: input_boolean.turn_off
+            data: {}
+            target:
+              entity_id: input_boolean.house_mode_away
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: trigger
+                id: away
+              - condition: not
+                conditions:
+                  - condition: state
+                    entity_id: alarm_control_panel.verisure_alarm
+                    state: armed_away
+        sequence:
+          - service: input_boolean.turn_on
+            data: {}
+            target:
+              entity_id: input_boolean.house_mode_away
+    default: []

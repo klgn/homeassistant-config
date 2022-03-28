@@ -1,0 +1,47 @@
+---
+alias: Control alarm with home/away button
+description: ''
+mode: single
+trigger:
+  - platform: state
+    entity_id: input_boolean.house_mode_away
+    to: 'on'
+    id: away
+  - platform: state
+    entity_id: input_boolean.house_mode_away
+    id: home
+    to: 'off'
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: trigger
+                id: away
+              - condition: not
+                conditions:
+                  - condition: state
+                    entity_id: alarm_control_panel.verisure_alarm
+                    state: armed_away
+        sequence:
+          - service: alarm_control_panel.alarm_arm_away
+            data:
+              code: !secret verisure_pin
+            target:
+              entity_id: alarm_control_panel.verisure_alarm
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: trigger
+                id: home
+          - condition: state
+            entity_id: alarm_control_panel.verisure_alarm
+            state: armed_away
+        sequence:
+          - service: alarm_control_panel.alarm_arm_home
+            data:
+              code: !secret verisure_pin
+            target:
+              entity_id: alarm_control_panel.verisure_alarm
+    default: []
