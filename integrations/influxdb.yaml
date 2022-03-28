@@ -10,3 +10,4 @@ influxdb:
   include:
     entities:
       - sensor.power_meter_energy
+      - sensor.power_meter_power
