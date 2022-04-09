@@ -1,8 +1,18 @@
 ---
+id: reset_work_remotely
 alias: Reset work remotely
 trigger:
   - platform: time
     at: input_datetime.reset_work_remotely_time
+condition:
+  - condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.vacation
+        state: 'off'
 action:
   - service: input_boolean.turn_off
     data: {}
