@@ -1,4 +1,5 @@
 ---
+id: wait_for_mobile_response
 alias: Wait for mobile response
 description: ''
 trigger:
@@ -12,7 +13,10 @@ trigger:
     id: work-remotely-no
     event_data:
       action: WORK_REMOTELY_NO
-condition: []
+condition:
+  - condition: state
+    entity_id: input_boolean.vacation
+    state: 'off'
 action:
   - choose:
       - conditions:
