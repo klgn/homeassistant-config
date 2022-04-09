@@ -1,0 +1,8 @@
+---
+platform: "mqtt"
+name: "Rotater Brightness"
+state_topic: "zigbee2mqtt/rotater"
+availability_topic: "zigbee2mqtt/bridge/state"
+icon: "mdi:brightness-5"
+unit_of_measurement: "lqi"
+value_template: "{{ value_json.brightness }}"
