@@ -11,7 +11,7 @@ entities:
   - light.astrid_ceiling_1
   - light.astrid_ceiling_2
   - light.bedside_bulb
-  - light.office_bulb
+  - light.office_bulp
   - light.sonos_bulp
   - light.utility_room_light
   - light.pantry_light
