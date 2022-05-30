@@ -1,0 +1,8 @@
+---
+logger:
+  default: info
+#  logs:
+#    aiounifi: debug
+#    homeassistant.components.unifi: debug
+#    homeassistant.components.device_tracker.unifi: info
+#    homeassistant.components.switch.unifi: debug

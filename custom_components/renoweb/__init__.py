@@ -86,13 +86,13 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry) -> bool
         _LOGGER.error(
             "Could not Authorize against Weatherflow Server. Please reinstall integration."
         )
-        return
+        return False
     except (ResultError, ServerDisconnectedError) as err:
         _LOGGER.warning(str(err))
-        raise ConfigEntryNotReady
+        raise ConfigEntryNotReady from err
     except RequestError as err:
-        _LOGGER.error(f"Error occured: {err}")
-        return
+        _LOGGER.error("Error occured: %s", err)
+        raise ConfigEntryNotReady from err
 
     # Fetch initial data so we have data when entities subscribe
     await coordinator.async_refresh()
@@ -121,7 +121,7 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry) -> bool
 async def _async_get_or_create_renoweb_device_in_registry(
     hass: HomeAssistantType, entry: ConfigEntry, address_id
 ) -> None:
-    device_registry = await dr.async_get_registry(hass)
+    device_registry = dr.async_get(hass)
     device_key = f"{address_id}"
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
