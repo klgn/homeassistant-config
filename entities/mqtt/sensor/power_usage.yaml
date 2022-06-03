@@ -2,7 +2,7 @@
 state_topic: "zigbee2mqtt/power_meter"
 name: "Power usage"
 unit_of_measurement: "W"
-value_template: '{{ float(value_json.power) | round(0)  }}'
-icon: mdi:flash-circle
+value_template: "{{ float(value_json.power) | round(0)  }}"
+icon: mdi:lightning-bolt-circle
 state_class: measurement
 device_class: power
