@@ -2,3 +2,4 @@
 mqtt:
   sensor: !include_dir_list ../entities/mqtt/sensor
   binary_sensor: !include_dir_list ../entities/mqtt/binary_sensor
+  switch: !include_dir_list ../entities/mqtt/switch
