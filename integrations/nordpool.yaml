@@ -1,5 +1,0 @@
----
-nordpool:
-sensor:
-  - platform: nordpool
-    region: DK2
