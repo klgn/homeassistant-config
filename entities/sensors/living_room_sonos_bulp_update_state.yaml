@@ -1,7 +1,0 @@
----
-platform: "mqtt"
-state_topic: "zigbee2mqtt/living_room_sonos_bulp"
-name: "Living Room Sonos Bulp Update State"
-availability_topic: "zigbee2mqtt/bridge/state"
-icon: "mdi:update"
-value_template: "{{ value_json['update']['state'] }}"

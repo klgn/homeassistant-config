@@ -1,8 +1,0 @@
----
-platform: "mqtt"
-name: "Emma Remote Brightness"
-state_topic: "zigbee2mqtt/emma_remote"
-availability_topic: "zigbee2mqtt/bridge/state"
-icon: "mdi:brightness-5"
-unit_of_measurement: "lqi"
-value_template: "{{ value_json.brightness }}"

@@ -1,7 +1,0 @@
----
-platform: "mqtt"
-name: "Living Room Sonos Bulp Color"
-state_topic: "zigbee2mqtt/living_room_sonos_bulp"
-availability_topic: "zigbee2mqtt/bridge/state"
-icon: "mdi:palette"
-value_template: "{{ value_json.color }}"

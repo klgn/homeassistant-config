@@ -1,7 +1,0 @@
----
-platform: "mqtt"
-name: "Office Remote Brightness"
-state_topic: "zigbee2mqtt/office_remote"
-availability_topic: "zigbee2mqtt/bridge/state"
-icon: "mdi:brightness-5"
-value_template: "{{ value_json.brightness }}"

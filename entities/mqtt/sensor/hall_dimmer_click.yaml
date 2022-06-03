@@ -1,0 +1,6 @@
+---
+name: "Hall Dimmer Click"
+state_topic: "zigbee2mqtt/hall_dimmer"
+availability_topic: "zigbee2mqtt/bridge/state"
+icon: "mdi:toggle-switch"
+value_template: "{{ value_json.action }}"

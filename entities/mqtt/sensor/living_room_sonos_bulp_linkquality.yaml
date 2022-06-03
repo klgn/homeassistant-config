@@ -1,0 +1,7 @@
+---
+state_topic: "zigbee2mqtt/living_room_sonos_bulp"
+name: "Living Room Sonos Bulp Linkquality"
+availability_topic: "zigbee2mqtt/bridge/state"
+unit_of_measurement: "lqi"
+value_template: "{{ value_json.linkquality }}"
+icon: "mdi:signal"

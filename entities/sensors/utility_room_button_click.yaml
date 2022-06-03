@@ -1,8 +1,0 @@
----
-platform: "mqtt"
-name: "Utility Room Button Click"
-unique_id: 133c9772-b30d-4e0e-9315-95dfea297b34
-state_topic: "zigbee2mqtt/utlity_room_button"
-availability_topic: "zigbee2mqtt/bridge/state"
-icon: "mdi:toggle-switch"
-value_template: "{{ value_json.action }}"

@@ -1,0 +1,7 @@
+---
+name: "Office Dimmer Signal"
+state_topic: "zigbee2mqtt/office_dimmer"
+availability_topic: "zigbee2mqtt/bridge/state"
+unit_of_measurement: "lqi"
+value_template: "{{ value_json.linkquality }}"
+icon: "mdi:signal"
