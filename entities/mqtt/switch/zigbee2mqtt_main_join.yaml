@@ -1,5 +1,4 @@
 ---
-platform: mqtt
 name: "Zigbee2mqtt Main join"
 state_topic: "zigbee2mqtt/bridge/config/permit_join"
 command_topic: "zigbee2mqtt/bridge/config/permit_join"
