@@ -1,7 +1,7 @@
 ---
 id: sonos_living_room_morning_schedule
-alias: 'Sonos: Living Room morning schedule '
-description: ''
+alias: "Sonos: Living Room morning schedule "
+description: ""
 trigger:
   - platform: time
     at: input_datetime.living_room_sonos_morning_start
@@ -14,10 +14,10 @@ condition:
     conditions:
       - condition: state
         entity_id: binary_sensor.workday_sensor
-        state: 'on'
+        state: "on"
       - condition: state
         entity_id: input_boolean.vacation
-        state: 'off'
+        state: "off"
 action:
   - choose:
       - conditions:
@@ -26,7 +26,7 @@ action:
               - condition: trigger
                 id: morning-start
               - condition: state
-                entity_id: device_tracker.oneplus_9_pro_2
+                entity_id: device_tracker.oneplus_9_pro
                 state: home
         sequence:
           - service: automation.trigger
