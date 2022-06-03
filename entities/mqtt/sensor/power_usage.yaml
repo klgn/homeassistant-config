@@ -1,5 +1,4 @@
 ---
-platform: mqtt
 state_topic: "zigbee2mqtt/power_meter"
 name: "Power usage"
 unit_of_measurement: "W"
