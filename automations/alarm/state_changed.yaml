@@ -2,7 +2,7 @@
 alias: "Alarm status changed"
 trigger:
   - platform: state
-    entity_id: alarm_control_panel.alarm_1
+    entity_id: alarm_control_panel.verisure_alarm
 action:
   - service: notify.mobile_app_klgn_phone
     data:

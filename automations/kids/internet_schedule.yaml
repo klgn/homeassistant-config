@@ -1,36 +1,36 @@
 ---
 id: kids_internet_schedule
 alias: Kids' Internet Schedule
-description: ''
+description: ""
 trigger:
-- platform: time
-  at: input_datetime.kids_internet_curfew_end
-  id: morning-curfew
-- platform: time
-  at: input_datetime.kids_internet_curfew_start
-  id: evening-curfew
+  - platform: time
+    at: input_datetime.kids_internet_curfew_end
+    id: morning-curfew
+  - platform: time
+    at: input_datetime.kids_internet_curfew_start
+    id: evening-curfew
 condition: []
 action:
-- choose:
-  - conditions:
-    - condition: trigger
-      id: morning-curfew
-    sequence:
-    - service: switch.turn_on
-      target:
-        entity_id:
-        - switch.emmas_laptop
-        - switch.laptop_qlf522q3
-        - switch.astrids_laptop
-  - conditions:
-    - condition: trigger
-      id: evening-curfew
-    sequence:
-    - service: switch.turn_off
-      target:
-        entity_id:
-        - switch.emmas_laptop
-        - switch.laptop_qlf522q3
-        - switch.astrids_laptop
-  default: []
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: morning-curfew
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id:
+                - switch.emmas_laptop
+                - switch.laptop_qlf522q3
+                - switch.astrids_laptop
+      - conditions:
+          - condition: trigger
+            id: evening-curfew
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id:
+                - switch.emmas_laptop
+                - switch.laurits_laptop
+                - switch.astrids_laptop
+    default: []
 mode: single

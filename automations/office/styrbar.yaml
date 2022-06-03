@@ -1,35 +1,35 @@
 ---
 alias: Office Styrbar
-id: 'office-styrbar'
-description: ''
+id: "office-styrbar"
+description: ""
 trigger:
   - platform: state
     entity_id: sensor.office_styrbar_brightness
     id: brightness
   - platform: state
     entity_id: sensor.office_styrbar_action
-    id: 'on'
-    to: 'on'
+    id: "on"
+    to: "on"
   - platform: state
     entity_id: sensor.office_styrbar_action
-    id: 'off'
-    to: 'off'
+    id: "off"
+    to: "off"
   - platform: state
     entity_id: sensor.office_styrbar_action
-    id: 'up-hold'
-    to: 'brightness_move_up'
+    id: "up-hold"
+    to: "brightness_move_up"
   - platform: state
     entity_id: sensor.office_styrbar_action
-    id: 'down-hold'
-    to: 'brightness_move_down'
+    id: "down-hold"
+    to: "brightness_move_down"
   - platform: state
     entity_id: sensor.office_styrbar_action
-    id: 'left-hold'
-    to: 'arrow_left_hold'
+    id: "left-hold"
+    to: "arrow_left_hold"
   - platform: state
     entity_id: sensor.office_styrbar_action
-    id: 'right-hold'
-    to: 'arrow_right_hold'
+    id: "right-hold"
+    to: "arrow_right_hold"
   - platform: state
     entity_id: sensor.office_styrbar_action
     id: left-click
@@ -43,7 +43,7 @@ action:
   - choose:
       - conditions:
           - condition: trigger
-            id: 'on'
+            id: "on"
         sequence:
           - service: light.turn_on
             target:
@@ -51,7 +51,7 @@ action:
             data: {}
       - conditions:
           - condition: trigger
-            id: 'off'
+            id: "off"
         sequence:
           - service: light.turn_off
             target:
@@ -59,7 +59,7 @@ action:
             data: {}
       - conditions:
           - condition: trigger
-            id: 'right-hold'
+            id: "right-hold"
         sequence:
           - service: switch.turn_on
             target:
@@ -67,7 +67,7 @@ action:
             data: {}
       - conditions:
           - condition: trigger
-            id: 'left-hold'
+            id: "left-hold"
         sequence:
           - service: switch.turn_off
             target:

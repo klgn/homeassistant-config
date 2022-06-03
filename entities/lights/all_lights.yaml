@@ -12,7 +12,7 @@ entities:
   - light.astrid_ceiling_2
   - light.bedside_bulb
   - light.office_bulp
-  - light.sonos_bulp
+  - light.living_room_sonos_bulp
   - light.utility_room_light
   - light.pantry_light
   - light.workshop_strip
