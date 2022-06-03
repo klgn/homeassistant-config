@@ -1,5 +1,4 @@
 ---
-platform: "mqtt"
 name: "Hall Dimmer Update Available"
 state_topic: "zigbee2mqtt/hall_dimmer"
 availability_topic: "zigbee2mqtt/bridge/state"

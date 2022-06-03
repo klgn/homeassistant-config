@@ -1,5 +1,4 @@
 ---
-platform: "mqtt"
 name: "Office Remote Update Available"
 state_topic: "zigbee2mqtt/office_remote"
 availability_topic: "zigbee2mqtt/bridge/state"
