@@ -1,0 +1,170 @@
+title: Alarm
+path: "alarm"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template:
+      - "icon_info_bg"
+      - "green"
+    tap_action:
+      action: more-info
+    entity: alarm_control_panel.verisure_alarm
+    icon: mdi:shield-home
+    state:
+      - value: "disarmed"
+        styles:
+          label:
+            - color: green
+          icon:
+            - color: green
+      - value: "armed_away"
+        styles:
+          label:
+            - color: red
+          icon:
+            - color: red
+      - value: "armed_home"
+        styles:
+          label:
+            - color: orange
+          icon:
+            - color: orange
+    name: Alarm
+    show_state: false
+    show_label: true
+    label: |
+      [[[
+        var state = states['alarm_control_panel.verisure_alarm'].state;
+        return state
+      ]]]
+    show_name: true
+  - type: "custom:button-card"
+    template: card_title
+    label: Doors and windows
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.sovevaerelse
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.stue_lille_vindue
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.stue_stort_vindue
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.terrassedor
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.kontor
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.kokkenvindue
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.badevaerelsesvindue_h
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.badevaerelsesvindue_v
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.laurits_vaerelse
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.hoveddor
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.trappe_vindue
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.bryggersvindue
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.emmas_vaerelse
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.toilet
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.astrids_vaerelse
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.kaelderdor
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.vaerksted
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.vindue_ved_indkorsel
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.gildesalen_v_vindue
+        show_last_changed: true
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.gildesalen_h_vindue
+        show_last_changed: true

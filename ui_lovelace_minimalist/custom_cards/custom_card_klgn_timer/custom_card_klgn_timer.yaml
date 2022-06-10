@@ -1,0 +1,20 @@
+---
+card_klgn_timer:
+  template:
+    - "icon_info_bg"
+    - "yellow"
+  show_label: true
+  show_icon: true
+  show_state: 1
+  triggers_update:
+    - "[[[return entity.attributes.remaining]]]"
+  label: |
+    [[[
+      let ret = ""
+      if(entity.attributes.remaining) {
+        ret = entity.attributes.remaining
+      } else {
+        ret = "idle"
+      }
+      return ret;
+    ]]]

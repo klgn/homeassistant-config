@@ -1,0 +1,52 @@
+---
+title: Bedroom
+path: "bedroom"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: Bedroom
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_graph
+        variables:
+          ulm_card_graph_color: "var(--google-blue)"
+          ulm_card_graph_name: Temperature
+          ulm_card_graph_entity: sensor.bedroom_temp_temperature
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+      - type: "custom:button-card"
+        template: card_graph
+        variables:
+          ulm_card_graph_color: "var(--google-red)"
+          ulm_card_graph_name: Humidity
+          ulm_card_graph_entity: sensor.bedroom_temp_humidity
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+  - type: "custom:button-card"
+    template: card_title
+    label: Lights
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.bedroom_lights
+        variables:
+          ulm_card_light_name: "Ceiling light"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.bedside_bulb
+        variables:
+          ulm_card_light_name: "Bedside bulb"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true

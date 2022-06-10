@@ -1,0 +1,146 @@
+---
+title: Lights
+path: "lights"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: Lights
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: custom_card_yagrasdemonde_lights_count
+        entity: sensor.lights_on
+
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.living_room_sonos_bulp
+        variables:
+          ulm_card_light_name: "Living Room Sonos Bulb"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.living_room_control_unit
+        variables:
+          ulm_card_light_name: "Living Room Table Lights"
+          ulm_card_light_enable_slider: false
+          ulm_card_light_enable_color: false
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.hall_lights
+        variables:
+          ulm_card_light_name: "Hall Ceiling Lights"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.bedroom_lights
+        variables:
+          ulm_card_light_name: "Bedroom Ceiling light"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.bedside_bulb
+        variables:
+          ulm_card_light_name: "Bedside bulb"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.office_bulp
+        variables:
+          ulm_card_light_name: "Office Desk light"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.office_strip
+        variables:
+          ulm_card_light_name: "Office Light Strip"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.toilet_bulbs
+        variables:
+          ulm_card_light_name: "Toilet"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.workshop_strip
+        variables:
+          ulm_card_light_name: "Workshop"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.utility_room_light
+        variables:
+          ulm_card_light_name: "Utility Room"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.pantry_light
+        variables:
+          ulm_card_light_name: "Pantry"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.astrid_s_lights
+        variables:
+          ulm_card_light_name: "Astrid"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.emmas_strip
+        variables:
+          ulm_card_light_name: "Emma"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.kitchen_strip
+        variables:
+          ulm_card_light_name: "Kitchen"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false

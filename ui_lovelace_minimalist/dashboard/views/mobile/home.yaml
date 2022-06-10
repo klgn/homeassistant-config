@@ -1,0 +1,112 @@
+---
+title: home
+path: "home"
+cards:
+  - type: "custom:button-card"
+    template: "card_esh_welcome"
+    triggers_update: "input_boolean.minimalist_dropdown"
+    variables:
+      ulm_card_esh_welcome_collapse: input_boolean.minimalist_dropdown
+      ulm_weather: "weather.magevej"
+      entity_1:
+        nav: "house"
+        icon: "mdi:home"
+        name: "House"
+        color: "blue"
+      entity_2:
+        nav: "lights"
+        icon: "mdi:lightbulb"
+        name: "Lights"
+        color: "yellow"
+      entity_3:
+        nav: "alarm"
+        icon: "mdi:shield"
+        name: Alarm
+        color: "green"
+      entity_4:
+        nav: "energy"
+        icon: "mdi:lightning-bolt-circle"
+        name: Energy
+        color: "purple"
+      entity_5:
+        nav: "switches"
+        icon: "hue:plug-eu"
+        name: Switches
+        color: "red"
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: custom_card_imswel_person
+        variables:
+          ulm_card_imswel_person_entity: person.kristian_l_g_nielsen
+          ulm_card_imswel_person_wifi_tracker: device_tracker.klgn_phone
+          ulm_card_imswel_person_gps_tracker: device_tracker.klgn_phone
+          #           ulm_card_imswel_person_findmy_script: script.find_my_oneplus_6t
+          ulm_card_imswel_person_use_entity_picture: true
+      - type: "custom:button-card"
+        template: card_person
+        variables:
+          ulm_card_person_entity: person.mai_britt
+          ulm_card_person_use_entity_picture: true
+  - type: "custom:button-card"
+    template: card_title
+    name: Rooms
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: "custom:button-card"
+        template:
+          - card_esh_room
+          - yellow_on
+        name: Living Room
+        entity: light.living_room_lights
+        icon: mdi:sofa-outline
+        tap_action:
+          action: navigate
+          navigation_path: "living_room"
+        label: '[[[ return states["sensor.living_room_temp_temperature"].state + "°C" ]]]'
+      - type: "custom:button-card"
+        template:
+          - card_esh_room
+          - yellow_on
+        name: Bedroom
+        entity: light.bedroom_lights
+        icon: mdi:bed-double-outline
+        tap_action:
+          action: navigate
+          navigation_path: "bedroom"
+        label: '[[[ return states["sensor.bedroom_temp_temperature"].state + "°C" ]]]'
+      - type: "custom:button-card"
+        template:
+          - card_esh_room
+          - yellow_on
+        name: Office
+        entity: light.office_bulp
+        icon: mdi:desk
+        tap_action:
+          action: navigate
+          navigation_path: "office"
+        label: "Kristian's place"
+      - type: "custom:button-card"
+        template:
+          - card_esh_room
+          - yellow_on
+        name: Basement
+        entity: light.utility_room_light
+        icon: mdi:bed-double-outline
+        tap_action:
+          action: navigate
+          navigation_path: "basement"
+        label: '[[[ return states["sensor.gangareal_kaelder_temperature"].state + "°C" ]]]'
+      - type: "custom:button-card"
+        name: Hall
+        entity: light.hall_lights
+        template:
+          - card_esh_room
+          - yellow_on
+        tap_action:
+          action: navigate
+          navigation_path: "hall"
+        icon: mdi:coat-rack
+        label: '[[[ return states["sensor.gang_ved_kokkenet_temperature"].state + "°C" ]]]'

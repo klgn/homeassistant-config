@@ -1,0 +1,112 @@
+title: House
+path: "house"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: House
+  - type: "custom:button-card"
+    template: card_title
+    label: Waste
+  - type: grid
+    square: false
+    columns: 2
+    cards:
+      - type: custom:button-card
+        template:
+          - custom_card_paddy_waste_collection
+        entity: sensor.renoweb_rod_boks
+        name: Red box
+      - type: custom:button-card
+        template:
+          - custom_card_paddy_waste_collection
+        entity: sensor.renoweb_tekstilposer
+        name: Textile bags
+      - type: custom:button-card
+        template:
+          - custom_card_paddy_waste_collection
+        entity: sensor.renoweb_240_l_glas_metal
+        name: Glass+metal
+      - type: custom:button-card
+        template:
+          - custom_card_paddy_waste_collection
+        entity: sensor.renoweb_240_l_rest_mad_14_dag
+        name: General waste
+      - type: custom:button-card
+        template:
+          - custom_card_paddy_waste_collection
+        entity: sensor.renoweb_370_l_to_delt_pappi
+        name: Paper+plastic
+  - type: "custom:button-card"
+    template: card_title
+    label: Misc
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      - show_name: true
+        template:
+          - "icon_info_bg"
+          - "green"
+        show_label: false
+        show_icon: true
+        type: custom:button-card
+        name: |
+          [[[
+            var state = states['input_boolean.work_from_home_today'].state;
+            return (state == 'on' ? 'Home' : 'Office');
+          ]]]
+        icon: |
+          [[[
+            var state = states['input_boolean.work_from_home_today'].state;
+            return (state == 'on' ? 'mdi:home' : 'mdi:home-outline');
+          ]]]
+        state:
+          - value: "off"
+            styles:
+              state:
+                - color: red
+              icon:
+                - color: red
+        tap_action:
+          action: toggle
+        entity: input_boolean.work_from_home_today
+      - show_name: true
+        show_label: false
+        template:
+          - "icon_info_bg"
+          - "yellow"
+        name: Vacationing
+        show_icon: true
+        type: custom:button-card
+        state:
+          - value: "off"
+            styles:
+              state:
+                - color: grey
+              icon:
+                - color: grey
+        tap_action:
+          action: toggle
+        entity: input_boolean.vacation
+      - show_name: true
+        show_label: false
+        template:
+          - "icon_info_bg"
+          - "yellow"
+        name: Partying
+        show_icon: true
+        type: custom:button-card
+        state:
+          - value: "off"
+            styles:
+              state:
+                - color: grey
+              icon:
+                - color: grey
+        tap_action:
+          action: toggle
+        entity: input_boolean.party_mode

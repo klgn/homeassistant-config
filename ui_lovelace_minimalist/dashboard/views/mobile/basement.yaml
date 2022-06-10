@@ -1,0 +1,151 @@
+---
+title: Basement
+path: "basement"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: Basement
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_graph
+        variables:
+          ulm_card_graph_color: "var(--google-blue)"
+          ulm_card_graph_name: Temperature
+          ulm_card_graph_entity: sensor.gangareal_kaelder_temperature
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+      - type: "custom:button-card"
+        template: card_graph
+        variables:
+          ulm_card_graph_color: "var(--google-red)"
+          ulm_card_graph_name: Humidity
+          ulm_card_graph_entity: sensor.gangareal_kaelder_humidity
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+  - type: "custom:button-card"
+    template: card_title
+    label: Lights
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.toilet_bulbs
+        variables:
+          ulm_card_light_name: "Toilet"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.workshop_strip
+        variables:
+          ulm_card_light_name: "Workshop"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.utility_room_light
+        variables:
+          ulm_card_light_name: "Utility Room"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.pantry_light
+        variables:
+          ulm_card_light_name: "Pantry"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.astrid_s_lights
+        variables:
+          ulm_card_light_name: "Astrid"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: false
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.emmas_strip
+        variables:
+          ulm_card_light_name: "Emma"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: false
+  - type: "custom:button-card"
+    template: card_title
+    label: Sensors
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: "custom:button-card"
+        template: card_binary_sensor_alert
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.toilet
+        show_last_changed: true
+        name: Toilet presence
+      - type: "custom:button-card"
+        template: card_battery
+        entity: sensor.toilet_sensor_battery
+        variables:
+          ulm_card_battery_charger_type_entity_id: sensor.toilet_sensor_battery
+          ulm_card_battery_battery_level_danger: 10
+          ulm_card_battery_battery_level_warning: 30
+        name: Toilet
+      - type: "custom:button-card"
+        template: card_binary_sensor_alert
+        variables:
+          - ulm_card_binary_sensor_alert: true
+        entity: binary_sensor.workshop_sensor_occupancy
+        show_last_changed: true
+        name: Workshop presence
+      - type: "custom:button-card"
+        template: card_battery
+        entity: sensor.workshop_sensor_battery
+        variables:
+          ulm_card_battery_charger_type_entity_id: sensor.workshop_sensor_battery
+          ulm_card_battery_battery_level_danger: 10
+          ulm_card_battery_battery_level_warning: 30
+        name: Workshop
+
+  - type: "custom:button-card"
+    template: card_title
+    label: Media Players
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_media_player
+        entity: media_player.astrids_sonos
+        name: Astrid
+        variables:
+          ulm_card_media_player_enable_controls: true
+          ulm_card_media_player_enable_volume_slider: true
+          ulm_card_media_player_collapsible: true
+          ulm_card_media_player_enable_popup: true
+      - type: "custom:button-card"
+        template: card_media_player
+        entity: media_player.emmas_vaerelse
+        name: Emma
+        variables:
+          ulm_card_media_player_enable_controls: true
+          ulm_card_media_player_enable_volume_slider: true
+          ulm_card_media_player_collapsible: true
+          ulm_card_media_player_enable_popup: true

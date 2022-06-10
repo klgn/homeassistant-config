@@ -1,0 +1,83 @@
+---
+title: Living Room
+path: "living_room"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: Living Room
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_graph
+        variables:
+          ulm_card_graph_color: "var(--google-blue)"
+          ulm_card_graph_name: Temperature
+          ulm_card_graph_entity: sensor.living_room_temp_temperature
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+      - type: "custom:button-card"
+        template: card_graph
+        variables:
+          ulm_card_graph_color: "var(--google-red)"
+          ulm_card_graph_name: Humidity
+          ulm_card_graph_entity: sensor.living_room_temp_humidity
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+  - type: "custom:button-card"
+    template: card_title
+    label: Lights
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.living_room_sonos_bulp
+        variables:
+          ulm_card_light_name: "Sonos Bulb"
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_color: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_force_background_color: true
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.living_room_control_unit
+        variables:
+          ulm_card_light_name: "Table Lights"
+          ulm_card_light_enable_slider: false
+          ulm_card_light_enable_color: false
+          ulm_card_light_force_background_color: false
+  - type: "custom:button-card"
+    template: card_title
+    label: Switches
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_power_outlet
+        entity: switch.smartplug
+        name: Living Room TV
+  - type: "custom:button-card"
+    template: card_title
+    label: Media Players
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_media_player
+        entity: media_player.living_room
+        name: Sonos
+        variables:
+          ulm_card_media_player_enable_controls: true
+          ulm_card_media_player_enable_volume_slider: true
+          ulm_card_media_player_collapsible: true
+          ulm_card_media_player_enable_popup: true
+      - type: "custom:button-card"
+        template: card_media_player
+        entity: media_player.living_room_google_tv
+        name: Sonos
+        variables:
+          ulm_card_media_player_enable_controls: true
+          ulm_card_media_player_enable_volume_slider: true
+          ulm_card_media_player_collapsible: true
+          ulm_card_media_player_enable_popup: true
