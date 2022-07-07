@@ -1,0 +1,7 @@
+---
+name: Today's minimum electricity price
+unique_id: today_min_electricity_price
+unit_of_measurement: DKK
+state: >
+  {% set minimum = state_attr('sensor.energi_data_service', 'today_min') %}
+  {{minimum['price']}}

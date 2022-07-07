@@ -1,5 +1,5 @@
 ---
-name: Hall Charger
+name: Kitchen Charger
 entities:
   - switch.charge_unit_l1
   - switch.charge_unit_l2

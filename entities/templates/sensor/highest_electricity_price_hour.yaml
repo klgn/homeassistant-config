@@ -1,0 +1,6 @@
+---
+name: "Most expensive electricity price hour"
+unique_id: electricity_price_max_hour
+icon: mdi:lightning-bolt
+state: >
+  {{ as_timestamp(state_attr('sensor.energi_data_service', 'today_max')['hour']) | timestamp_custom("%H:%M") }}

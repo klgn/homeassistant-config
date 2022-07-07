@@ -1,0 +1,6 @@
+---
+name: "Cheapest electricity price"
+unique_id: electricity_price_min
+icon: mdi:lightning-bolt
+state: >
+  {{ state_attr('sensor.energi_data_service', 'today_min')['price'] }}

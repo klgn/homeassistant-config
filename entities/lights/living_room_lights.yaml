@@ -1,0 +1,6 @@
+---
+platform: group
+name: Living Room Lights
+entities:
+  - light.living_room_control_unit
+  - light.living_room_sonos_bulp

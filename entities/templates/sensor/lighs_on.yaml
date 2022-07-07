@@ -1,0 +1,27 @@
+---
+name: "lights on"
+unique_id: lights_on
+icon: mdi:lightbulb-on-outline
+state: >
+  {% set lights = [
+      states.light.bedroom_bulp_1,
+      states.light.bedroom_bulp_2,
+      states.light.bedroom_bulp_3,
+      states.light.hall_light_entre,
+      states.light.hall_light_toilet,
+      states.light.hall_light_living_room,
+      states.light.astrid_ceiling_1,
+      states.light.astrid_ceiling_2,
+      states.light.bedside_bulb,
+      states.light.office_bulp,
+      states.light.living_room_sonos_bulp,
+      states.light.living_room_control_unit,
+      states.light.utility_room_light,
+      states.light.pantry_light,
+      states.light.workshop_strip,
+      states.light.toilet_bulbs,
+      states.light.emmas_strip,
+      states.light.office_strip,
+      states.light.kitchen_strip,
+      ] %}
+  {{ lights | selectattr('state','eq','on') | list | count }}

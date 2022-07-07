@@ -1,0 +1,6 @@
+---
+name: "Most expensive electricity price"
+unique_id: electricity_price_max
+icon: mdi:lightning-bolt
+state: >
+  {{ state_attr('sensor.energi_data_service', 'today_max')['price'] }}

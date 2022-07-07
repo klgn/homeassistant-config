@@ -1,0 +1,12 @@
+---
+name: "Switches on"
+unique_id: switches_on
+icon: hue:switch
+state: >
+  {% set switches = [
+      states.switch.control_unit_1,
+      states.switch.office_control_unit,
+      states.switch.smartplug,
+      states.group.hall_charger,
+      ] %}
+  {{ switches | selectattr('state','eq','on') | list | count }}

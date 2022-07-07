@@ -21,3 +21,4 @@ entities:
   - light.emmas_strip
   - light.office_strip
   - light.kitchen_strip
+  - light.living_room_control_unit
