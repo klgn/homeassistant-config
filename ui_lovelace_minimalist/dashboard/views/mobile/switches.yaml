@@ -11,31 +11,11 @@ cards:
   - type: grid
     square: false
     columns: 2
-    cards:
-      - type: "custom:button-card"
-        template: card_power_outlet
-        entity: switch.smartplug
-        name: Living Room TV
-      - type: "custom:button-card"
-        template: card_power_outlet
-        entity: switch.office_control_unit
-        name: Office
-      - type: "custom:button-card"
-        template: card_power_outlet
-        entity: group.hall_charger
-        name: Kitchen charger
-      - type: "custom:button-card"
-        template: card_klgn_switch_timer
-        variables:
-          ulm_klgn_switch_timer_switch: switch.control_unit_1
-          ulm_klgn_swicth_timer_switch_name: Workshop
-          ulm_klgn_switch_timer_timer: timer.workshop_switch
-#      - type: vertical-stack
-#       cards:
-#          - type: custom:button-card
-#            template: card_power_outlet
-#            entity: switch.control_unit_1
-#            name: Workshop
-#          - type: custom:button-card
-#            template: "card_klgn_timer"
-#            entity: timer.workshop_switch
+    cards: !include_dir_list ../common/switches
+  - type: "custom:button-card"
+    template: card_title
+    name: Kids Internet
+  - type: grid
+    square: false
+    columns: 2
+    cards: !include_dir_list ../common/kids_internet

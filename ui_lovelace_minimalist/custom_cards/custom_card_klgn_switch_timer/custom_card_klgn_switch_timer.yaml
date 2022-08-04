@@ -37,6 +37,8 @@ card_klgn_switch_timer:
         template: card_power_outlet
         entity: "[[[ return variables.ulm_klgn_switch_timer_switch ]]]"
         name: "[[[return variables.ulm_klgn_swicth_timer_switch_name ]]]"
+        variables:
+          ulm_card_power_outlet_name: "[[[return variables.ulm_klgn_swicth_timer_switch_name ]]]"
         styles:
           card:
             - box-shadow: "none"
@@ -45,7 +47,6 @@ card_klgn_switch_timer:
     item2:
       card:
         type: "custom:button-card"
-        template: "card_generic_swap"
         show_state: true
         entity: "[[[ return variables.ulm_klgn_switch_timer_timer ]]]"
         show_name: false

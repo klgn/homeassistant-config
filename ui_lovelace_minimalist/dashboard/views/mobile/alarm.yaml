@@ -53,118 +53,118 @@ cards:
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.sovevaerelse
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.stue_lille_vindue
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.stue_stort_vindue
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.terrassedor
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.kontor
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.kokkenvindue
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.badevaerelsesvindue_h
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.badevaerelsesvindue_v
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.laurits_vaerelse
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.hoveddor
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.trappe_vindue
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.bryggersvindue
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.emmas_vaerelse
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.toilet
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.astrids_vaerelse
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.kaelderdor
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.vaerksted
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.vindue_ved_indkorsel
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.gildesalen_v_vindue
-        show_last_changed: true
+        show_last_changed: false
       - type: "custom:button-card"
         template: card_binary_sensor
         variables:
           - ulm_card_binary_sensor_alert: true
         entity: binary_sensor.gildesalen_h_vindue
-        show_last_changed: true
+        show_last_changed: false
