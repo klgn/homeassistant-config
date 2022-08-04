@@ -1,0 +1,4 @@
+---
+template:
+  - sensor: !include_dir_list ../entities/templates/sensor
+  - trigger: !include_dir_list ../entites/templates/trigger

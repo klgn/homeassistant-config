@@ -1,0 +1,23 @@
+---
+lovelace:
+  mode: storage
+  # Add yaml dashboards
+  dashboards:
+    emma-minimalist:
+      mode: yaml
+      title: Emma
+      icon: mdi:face-woman-outline
+      show_in_sidebar: true
+      filename: ui_lovelace_minimalist/dashboard/emma.yaml
+    astrid-minimalist:
+      mode: yaml
+      title: Astrid
+      icon: mdi:face-woman
+      show_in_sidebar: true
+      filename: ui_lovelace_minimalist/dashboard/astrid.yaml
+    desktop-minimalist:
+      mode: yaml
+      title: Desktop
+      icon: mdi:home
+      show_in_sidebar: true
+      filename: ui_lovelace_minimalist/dashboard/desktop.yaml
