@@ -1,0 +1,12 @@
+---
+name: Tomorrow's Cheapest 3 hour window
+unique_id: cheapest_three_hours_energy_tomorrow
+icon: mdi:flash
+state: >
+  {% if state_attr('sensor.energy_price', 'tomorrow_cheapest_3_hour_interval') is string %}
+    {{ unavailable }}
+  {% else %}
+    {% set first = state_attr('sensor.energy_price', 'tomorrow_cheapest_3_hour_interval')['hours'] | first %}
+    {% set last = state_attr('sensor.energy_price', 'tomorrow_cheapest_3_hour_interval')['hours'] | last %}
+    {{ first['hour_only'] + "-" + last['hour_only'] }}
+  {% endif %}

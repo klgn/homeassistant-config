@@ -1,0 +1,9 @@
+---
+name: Today's energy consumption
+unique_id: energy_consumption_today
+device_class: energy
+icon: mdi:lightning-bolt-circle
+state: >
+  {{ states.sensor.daily_power_usage.state }}
+attributes:
+  unit_of_measurement: "kWh"

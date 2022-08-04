@@ -1,0 +1,4 @@
+---
+source: sensor.power_meter_energy
+name: Daily Power Usage
+cycle: daily

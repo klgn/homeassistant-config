@@ -1,0 +1,27 @@
+---
+name: "open windows"
+unique_id: open_windows
+icon: mdi:window-closed-variant
+state: >
+  {% set windows = [
+      states.binary_sensor.sovevaerelse,
+      states.binary_sensor.badevaerelsesvindue_h,
+      states.binary_sensor.badevaerelsesvindue_v,
+      states.binary_sensor.laurits_vaerelse,
+      states.binary_sensor.kokkenvindue,
+      states.binary_sensor.kontor,
+      states.binary_sensor.stue_lille_vindue,
+      states.binary_sensor.stue_stort_vindue,
+      states.binary_sensor.terrassedor,
+      states.binary_sensor.astrids_vaerelse,
+      states.binary_sensor.kaelderdor,
+      states.binary_sensor.toilet,
+      states.binary_sensor.emmas_vaerelse,
+      states.binary_sensor.trappe_vindue,
+      states.binary_sensor.bryggersvindue,
+      states.binary_sensor.vindue_ved_indkorsel,
+      states.binary_sensor.vaerksted,
+      states.binary_sensor.gildesalen_h_vindue,
+      states.binary_sensor.gildesalen_v_vindue
+      ] %}
+  {{ windows | selectattr('state','eq','on') | list | count }}

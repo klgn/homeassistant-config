@@ -1,0 +1,4 @@
+---
+source: sensor.power_meter_energy
+name: Hourly Power Usage
+cycle: hourly

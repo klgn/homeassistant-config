@@ -1,0 +1,8 @@
+---
+platform: time_pattern
+minutes: 1
+sensor:
+  name: Hourly Energy Price
+  unique_id: hourly_energy_price
+  state: >
+    {{ state_attr('sensor.hourly_power_usage', 'last_period') | float * states.sensor.energy_price_previous_hour | float }}
