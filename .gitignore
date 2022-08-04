@@ -22,3 +22,4 @@ blueprints/automation/homeassistant
 custom_components/
 www/community
 blueprints
+watchman_report.txt
