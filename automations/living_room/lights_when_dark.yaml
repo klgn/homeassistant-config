@@ -1,17 +1,17 @@
 ---
 id: living_room_lights_when_dark
 alias: Turn on lights in living room when dark outside
-description: ''
+description: ""
 mode: single
 trigger:
   - platform: numeric_state
     entity_id: sensor.sun_elevation
-    below: '1.0'
+    below: "1.0"
 condition:
   - condition: or
     conditions:
       - condition: state
-        entity_id: device_tracker.oneplus_9_pro_2
+        entity_id: device_tracker.oneplus_9_pro
         state: home
       - condition: state
         entity_id: device_tracker.mai_britt_e_s_a40

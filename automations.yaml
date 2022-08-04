@@ -31,6 +31,7 @@
       - service: light.turn_on
         target:
           entity_id: light.emmas_strip
+        data: {}
     - conditions:
       - condition: trigger
         id: 'off'
@@ -38,17 +39,7 @@
       - service: light.turn_off
         target:
           entity_id: light.emmas_strip
-    - conditions:
-      - condition: trigger
-        id: brightness
-      sequence:
-      - service: light.turn_on
-        target:
-          entity_id: light.emmas_strip
-        data:
-          brightness: '{{ trigger.to_state.state }}
-
-            '
+        data: {}
     - conditions:
       - condition: trigger
         id: left-click
@@ -58,9 +49,9 @@
           entity_id: light.emmas_strip
         data:
           hs_color:
-          - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -\
-            \ state_attr(var_light, \"hs_color\")[0] - 18 }}\n{% else %}\n  {{ state_attr(var_light,\
-            \ \"hs_color\")[0] - 18 }}\n{% endif %}"
+          - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -
+            state_attr(var_light, \"hs_color\")[0] - 18 }}\n{% else %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] - 18 }}\n{% endif %}"
           - '{{ state_attr(var_light, "hs_color")[1] }}'
           transition: 0.5
       - delay:
@@ -74,9 +65,9 @@
           entity_id: light.emmas_strip
         data:
           hs_color:
-          - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,\
-            \ \"hs_color\")[0] + 18 - 360 }}\n{% else %}\n  {{ state_attr(var_light,\
-            \ \"hs_color\")[0] + 18 }}\n{% endif %}"
+          - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] + 18 - 360 }}\n{% else %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] + 18 }}\n{% endif %}"
           - '{{ state_attr(var_light, "hs_color")[1] }}'
           transition: 0.5
     default: []
@@ -104,4 +95,160 @@
       - update.samba_share_update
       - update.home_assistant_google_drive_backup_update
       - update.influxdb_update
-      mobile_app_device: 058214d2beb9a6c4974ec34190cfeba4
+      mobile_app_device: 49007877174341f3f8961213599c583f
+- id: '1655043793601'
+  alias: Astrids lights
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 957414c082d6a974ad5157d047420dfb
+    type: action
+    subtype: toggle
+    discovery_id: 0xbc33acfffe83dc24 action_toggle
+    id: toggle
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    target:
+      entity_id: light.astrid_s_lights
+  mode: single
+- id: '1656424147667'
+  alias: Set Washing Machine States
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.shelly_shplg_s_f1487f_current_consumption
+    id: 'off'
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    below: '1'
+  - platform: numeric_state
+    entity_id: sensor.shelly_shplg_s_f1487f_current_consumption
+    id: running
+    above: '1'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: 'Off'
+        target:
+          entity_id: input_select.washing_machine_status
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      - condition: state
+        entity_id: input_select.washing_machine_status
+        state: Running
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Finished
+        target:
+          entity_id: input_select.washing_machine_status
+    - conditions:
+      - condition: trigger
+        id: running
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Running
+        target:
+          entity_id: input_select.washing_machine_status
+    default: []
+  mode: single
+- id: '1656424427614'
+  alias: Notify - Washing machine finished
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.washing_machine_status
+    to: 'Off'
+    from: Running
+  condition: []
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Washing machine is done
+      data:
+        persisent: true
+        tag: washing
+        actions:
+        - action: MACHINE_EMPTIED
+          title: It's done
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.washing_machine_emptied
+  mode: single
+- id: '1656424680283'
+  alias: Notify - Washing machine emptied action
+  description: ''
+  trigger:
+  - platform: event
+    event_type: mobile_app_notification
+    event_data:
+      action: MACHINE_EMPTIED
+  condition: []
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: clear_notification
+      data:
+        tag: washing
+  - service: input_boolean.turn_off
+    data: {}
+  mode: single
+- id: '1657113186860'
+  alias: Notify When general waste is collected
+  description: ''
+  use_blueprint:
+    path: klgn/renoweb_waste_blueprint.yaml
+    input:
+      waste: sensor.renoweb_240_l_rest_mad_14_dag
+      mobile_app_device: 49007877174341f3f8961213599c583f
+- id: '1659546576401'
+  alias: Update previous hour price
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '59'
+  condition: []
+  action:
+  - service: input_number.set_value
+    data:
+      value: '{% set _price_obj = state_attr(''sensor.energy_price'', ''today'') |
+        selectattr(''hour_only'', ''=='', now().timestamp() | timestamp_custom("%H"))
+        | list %} {{ _price_obj[0][''price''] }}
+
+        '
+    target:
+      entity_id: input_number.previous_hour_price
+  mode: single
+- id: '1659547210990'
+  alias: Update Hourly Electricity price
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '0'
+    seconds: '30'
+  condition: []
+  action:
+  - service: input_number.set_value
+    data:
+      value: '{{ state_attr(''sensor.hourly_power_usage'', ''last_period'') | float
+        * states.input_number.previous_hour_price.state | float }}
+
+        '
+    target:
+      entity_id: input_number.hourly_energy_price
+  mode: single
