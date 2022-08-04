@@ -1,0 +1,35 @@
+---
+type: vertical-stack
+view_layout:
+  grid-area: sidebar
+cards:
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Welcome
+      - type: "custom:button-card"
+        template: "card_homeassistant_updates"
+        variables:
+          ulm_card_homeassistant_core: "sensor.core_updates"
+          ulm_card_homeassistant_entity: "binary_sensor.updater"
+          ulm_card_homeassistant_supervisor: "sensor.supervisor_updates"
+          ulm_card_homeassistant_os: "sensor.os_updates"
+          ulm_card_homeassistant_addons: "sensor.addons_updates"
+          ulm_card_homeassistant_hacs: "sensor.hacs"
+      - type: "custom:button-card"
+        template: card_title
+        name: Waste
+      - type: grid
+        columns: 2
+        square: false
+        cards: !include_dir_list ../../common/waste
+      - type: "custom:button-card"
+        template: card_title
+        name: Switches
+      - type: grid
+        columns: 2
+        square: false
+        view_layout:
+          grid-area: plugs
+        cards: !include_dir_list ../../common/switches

@@ -1,0 +1,23 @@
+---
+type: vertical-stack
+view_layout:
+  grid-area: center_energy
+cards:
+  - type: vertical-stack
+    cards:
+      - type: "custom:apexcharts-card"
+        header:
+          show: true
+          title: Monthly Energy Usage
+        span:
+          start: day
+          offset: -12m
+        graph_span: 12m
+        series:
+          - entity: sensor.monthly_power_usage
+            type: column
+            group_by:
+              func: max
+              duration: 1m
+        all_series_config:
+          unit: kWh

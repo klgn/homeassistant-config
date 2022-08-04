@@ -1,0 +1,6 @@
+---
+type: custom:button-card
+template:
+  - custom_card_paddy_waste_collection
+entity: sensor.renoweb_370_l_to_delt_pappi
+name: Paper+plastic

@@ -1,0 +1,10 @@
+---
+type: vertical-stack
+view_layout:
+  grid-area: right_energy
+cards:
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Kids

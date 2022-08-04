@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_power_outlet
+entity: group.hall_charger
+name: Kitchen charger
+variables:
+  ulm_card_power_outlet_name: Kitchen Charger

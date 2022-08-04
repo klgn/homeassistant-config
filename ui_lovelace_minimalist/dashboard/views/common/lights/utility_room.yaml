@@ -1,0 +1,10 @@
+---
+type: "custom:button-card"
+template: card_light
+entity: light.utility_room_light
+variables:
+  ulm_card_light_name: "Utility Room"
+  ulm_card_light_enable_slider: true
+  ulm_card_light_enable_color: false
+  ulm_card_light_enable_collapse: true
+  ulm_card_light_force_background_color: false

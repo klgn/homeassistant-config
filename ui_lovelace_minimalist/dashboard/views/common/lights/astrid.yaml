@@ -1,0 +1,10 @@
+---
+type: "custom:button-card"
+template: card_light
+entity: light.astrid_s_lights
+variables:
+  ulm_card_light_name: "Astrid"
+  ulm_card_light_enable_slider: true
+  ulm_card_light_enable_color: false
+  ulm_card_light_enable_collapse: true
+  ulm_card_light_force_background_color: true

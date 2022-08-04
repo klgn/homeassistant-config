@@ -1,0 +1,5 @@
+---
+type: "custom:button-card"
+template: card_power_outlet
+entity: switch.laurits_laptop
+name: Laurits' wifi

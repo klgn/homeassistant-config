@@ -1,0 +1,9 @@
+---
+type: "custom:button-card"
+template: card_light
+entity: light.living_room_control_unit
+variables:
+  ulm_card_light_name: "Living Room Table Lights"
+  ulm_card_light_enable_slider: false
+  ulm_card_light_enable_color: false
+  ulm_card_light_force_background_color: false

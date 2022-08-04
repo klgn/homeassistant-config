@@ -1,0 +1,65 @@
+---
+type: vertical-stack
+view_layout:
+  grid-area: right_alarm
+cards:
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Kids
+      - type: vertical-stack
+        cards:
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.kids_internet_curfew_start
+            variables:
+              ulm_card_input_datetime_name: Kids' Internet curfew starts at
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.kids_internet_curfew_end
+            variables:
+              ulm_card_input_datetime_name: Kids' Internet curfew ends at
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.kids_sonos_players_stop
+            variables:
+              ulm_card_input_datetime_name: Kids' Sonos players stop at
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: automation.kids_internet_schedule_2
+            name: Kids Internet Schedule enabled?
+            variables:
+              ulm_card_power_outlet_name: Kids Internet Schedule is enabled?
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: automation.sonos_stop_kids_players_at_22_30
+            name: Kids Sonos Players Schedule Enabled?
+            variables:
+              ulm_card_power_outlet_name: Kids Sonos Players Schedule Enabled?
+      - type: "custom:button-card"
+        template: card_title
+        name: Astrid
+      - type: vertical-stack
+        cards:
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.astrid_alarm_start
+            variables:
+              ulm_card_input_datetime_name: Astrid Alarm Start
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.astrid_alarm_end
+            variables:
+              ulm_card_input_datetime_name: Astrid Alarm End
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: automation.astrid_morning_alarm_2
+            name: Astrid Morning Alarm
+            variables:
+              ulm_card_power_outlet_name: Astrid Morning Alarm

@@ -1,0 +1,54 @@
+---
+type: vertical-stack
+view_layout:
+  grid-area: left_alarm
+cards:
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Home
+      - type: vertical-stack
+        cards:
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.home_alarm_off_in_the_morning
+            variables:
+              ulm_card_input_datetime_name: Home Alarm is turned off at
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.home_alarm_on_at_night
+            variables:
+              ulm_card_input_datetime_name: Home Alarm is turned on at
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.ask_working_remote_time
+            variables:
+              ulm_card_input_datetime_name: Asked about Working remotely at
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.reset_work_remotely_time
+            variables:
+              ulm_card_input_datetime_name: Working remotely is reset at
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.arm_alarm_workday_time
+            variables:
+              ulm_card_input_datetime_name: Alarm is enabled on workdays at
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: automation.ask_if_working_remotely
+            name: Ask if working remotely enabled?
+            variables:
+              ulm_card_power_outlet_name: Ask if working remotely enabled?
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: automation.everyday_alarm
+            name: Everyday Alarm enabled
+            variables:
+              ulm_card_power_outlet_name: Everyday Alarm enabled

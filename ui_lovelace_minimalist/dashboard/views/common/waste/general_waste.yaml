@@ -1,0 +1,6 @@
+---
+type: custom:button-card
+template:
+  - custom_card_paddy_waste_collection
+entity: sensor.renoweb_240_l_rest_mad_14_dag
+name: General waste

@@ -1,0 +1,128 @@
+---
+type: vertical-stack
+cards:
+  - type: "custom:button-card"
+    template: card_title
+    name: Energy
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: chip_icon_state
+        variables:
+          ulm_chip_icon_state_icon: "🪙"
+          ulm_chip_icon_state_entity: sensor.energy_price
+      - type: "custom:button-card"
+        template: chip_icon_double_state
+        variables:
+          ulm_chip_icon_double_state_icon: "🤑"
+          ulm_chip_icon_double_state_entity_1: sensor.cheapest_electricity_price
+          ulm_chip_icon_double_state_entity_2: sensor.cheapest_electricity_price_hour
+      - type: "custom:button-card"
+        template: chip_icon_double_state
+        variables:
+          ulm_chip_icon_double_state_icon: "💸"
+          ulm_chip_icon_double_state_entity_1: sensor.most_expensive_electricity_price
+          ulm_chip_icon_double_state_entity_2: sensor.most_expensive_electricity_price_hour
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.today_s_energy_consumption
+        variables:
+          ulm_card_generic_swap_name: "Today"
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.yesterday_s_energy_consumption
+        variables:
+          ulm_card_generic_swap_name: "Yesterday"
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: custom_card_irmajavi_entities
+        variables:
+          ulm_custom_card_irmajavi_entities_entity_1: sensor.today_s_cheapest_3_hour_energy
+          ulm_custom_card_irmajavi_entities_entity_2: sensor.tomorrow_s_cheapest_3_hour_energy
+          ulm_custom_card_irmajavi_entities_entity_3: sensor.tomorrow_s_cheapest_3_hour_energy
+          ulm_custom_card_irmajavi_entities_entity_4: sensor.cheapest_6_hours
+          ulm_custom_card_irmajavi_entities_name_1: Today
+          ulm_custom_card_irmajavi_entities_name_2: Tomorrow
+          ulm_custom_card_irmajavi_entities_name_3: Rolling
+          ulm_custom_card_irmajavi_entities_name_4: 6 hours
+          ulm_custom_card_irmajavi_entities_name: Cheapest hour intervals
+          ulm_custom_card_irmajavi_entities: sensor.energy_price
+  - type: "custom:mini-graph-card"
+    hours_to_show: 24
+    entities:
+      - entity: sensor.hourly_power_usage
+    group_by: hour
+    aggregate_func: max
+    unit: kWh
+    decimals: 2
+    show:
+      graph: bar
+      icon: false
+    color_thresholds:
+      - value: 0
+        color: "#43A047"
+      - value: 2500
+        color: "#FFA600"
+      - value: 3000
+        color: "#DB4437"
+  - type: custom:apexcharts-card
+    experimental:
+      color_threshold: true
+    graph_span: 48h
+    header:
+      title: Electricity prices (kr/kWh)
+      show: true
+      show_states: true
+    span:
+      start: day
+    now:
+      show: true
+      label: Now
+    yaxis:
+      - min: 0
+        apex_config:
+          tickAmount: 5
+        max: 7
+    series:
+      - name: hax
+        entity: sensor.energy_price
+        color: rgb(33, 150, 243)
+        data_generator: |
+          return [[new Date(), entity.state]]
+        show:
+          in_chart: false
+      - name: Current
+        entity: sensor.energy_price
+        stroke_width: 2
+        type: line
+        color: rgb(33, 150, 243)
+        extend_to: false
+        show:
+          in_header: false
+        data_generator: |
+          var now = new Date()
+          now.setHours(now.getHours() - 1);
+          var data = entity.attributes.today
+            .map((start, index) => {
+              return [new Date(start["time"]).getTime(), start["price"]];
+            });
+          if (entity.attributes.tomorrow.length > 0) {
+            var tomorrow = entity.attributes.tomorrow.map((start, index) => {
+              return [new Date(start["time"]).getTime(), start["price"]];
+            });
+            var data = data.concat(tomorrow);
+          } 
+          return data;
+        float_precision: 2
+        color_threshold:
+          - value: 0
+            color: green
+          - value: 2
+            color: orange
+          - value: 3.5
+            color: red
+          - value: 5
+            color: darkred

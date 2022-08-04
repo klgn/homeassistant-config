@@ -1,0 +1,16 @@
+---
+type: custom:grid-layout
+title: home
+path: "home"
+layout:
+  grid-column-gap: 4%
+  grid-template-columns: "repeat(3, 1fr) 0"
+  grid-template-rows: "0 repeat(2, fit-content(100%)) 0fr"
+  grid-template-areas: |
+    "sidebar plugs ."
+    "sidebar plugs ."
+    "sidebar lights ."
+cards:
+  - !include home/left.yaml
+  - !include home/center.yaml
+  - !include home/right.yaml

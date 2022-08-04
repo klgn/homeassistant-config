@@ -1,0 +1,16 @@
+---
+type: custom:grid-layout
+title: House
+path: house
+layout:
+  grid-column-gap: 4%
+  grid-template-columns: "repeat(3, 1fr) 0"
+  grid-template-rows: "0 repeat(2, fit-content(100%)) 0fr"
+  grid-template-areas: |
+    "left_alarm center_alarm right_alarm"
+    "left_alarm center_alarm right_alarm"
+    "left_alarm center_alarm right_alarm"
+cards:
+  - !include house/left.yaml
+  - !include house/center.yaml
+  - !include house/right.yaml
