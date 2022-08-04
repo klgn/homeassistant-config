@@ -3,7 +3,7 @@ type: "custom:button-card"
 template: card_light
 entity: light.office_bulp
 variables:
-  ulm_card_light_name: "Office Desk light"
+  ulm_card_light_name: "Office Desk"
   ulm_card_light_enable_slider: true
   ulm_card_light_enable_color: true
   ulm_card_light_enable_collapse: true

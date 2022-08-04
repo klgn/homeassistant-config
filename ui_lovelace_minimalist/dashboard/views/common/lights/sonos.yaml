@@ -1,8 +1,9 @@
+---
 type: "custom:button-card"
 template: card_light
 entity: light.living_room_sonos_bulp
 variables:
-  ulm_card_light_name: "Living Room Sonos Bulb"
+  ulm_card_light_name: "Living Room Sonos"
   ulm_card_light_enable_slider: true
   ulm_card_light_enable_color: true
   ulm_card_light_enable_collapse: true

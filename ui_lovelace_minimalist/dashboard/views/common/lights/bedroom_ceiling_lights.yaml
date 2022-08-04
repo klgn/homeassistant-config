@@ -3,7 +3,7 @@ type: "custom:button-card"
 template: card_light
 entity: light.bedroom_lights
 variables:
-  ulm_card_light_name: "Bedroom Ceiling light"
+  ulm_card_light_name: "Bedroom Ceiling"
   ulm_card_light_enable_slider: true
   ulm_card_light_enable_color: true
   ulm_card_light_enable_collapse: true

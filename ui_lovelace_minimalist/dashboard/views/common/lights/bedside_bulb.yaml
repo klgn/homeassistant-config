@@ -3,7 +3,7 @@ type: "custom:button-card"
 template: card_light
 entity: light.bedside_bulb
 variables:
-  ulm_card_light_name: "Bedside bulb"
+  ulm_card_light_name: "Bedside"
   ulm_card_light_enable_slider: true
   ulm_card_light_enable_color: false
   ulm_card_light_enable_collapse: true
