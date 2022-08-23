@@ -1,3 +1,4 @@
 ---
 template:
   - sensor: !include_dir_list ../entities/templates/sensor
+  - !include ../entities/templates/trigger/total_energy_price.yaml
