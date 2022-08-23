@@ -21,3 +21,21 @@ cards:
               duration: 1d
         all_series_config:
           unit: kWh
+      - type: "custom:mini-graph-card"
+        hours_to_show: 24
+        entities:
+          - entity: input_number.hourly_energy_price
+        group_by: hour
+        aggregate_func: max
+        unit: kr
+        decimals: 2
+        show:
+          graph: bar
+          icon: false
+        color_thresholds:
+          - value: 0
+            color: "#43A047"
+          - value: 2500
+            color: "#FFA600"
+          - value: 3000
+            color: "#DB4437"

@@ -26,15 +26,17 @@ cards:
   - type: horizontal-stack
     cards:
       - type: "custom:button-card"
-        template: card_generic_swap
+        template: card_power_usage
         entity: sensor.today_s_energy_consumption
         variables:
-          ulm_card_generic_swap_name: "Today"
+          ulm_card_power_friendly_name: "Today"
+          ulm_card_power_usage_price_sensor: sensor.daily_energy_price_total
       - type: "custom:button-card"
-        template: card_generic_swap
+        template: card_power_usage
         entity: sensor.yesterday_s_energy_consumption
         variables:
-          ulm_card_generic_swap_name: "Yesterday"
+          ulm_card_power_friendly_name: "Yesterday"
+          ulm_card_power_usage_price_sensor: sensor.cost_of_yesterday_s_energy_consumption
   - type: vertical-stack
     cards:
       - type: custom:button-card
@@ -85,7 +87,7 @@ cards:
       - min: 0
         apex_config:
           tickAmount: 5
-        max: 7
+        max: 12
     series:
       - name: hax
         entity: sensor.energy_price
