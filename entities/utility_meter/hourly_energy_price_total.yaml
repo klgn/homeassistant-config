@@ -1,0 +1,4 @@
+---
+source: sensor.energy_price_total
+name: Hourly Energy Price Total
+cycle: hourly
