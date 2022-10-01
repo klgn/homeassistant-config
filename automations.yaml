@@ -252,3 +252,190 @@
     target:
       entity_id: input_number.hourly_energy_price
   mode: single
+- id: '1663350945169'
+  alias: Toggle Sonos from Alarm State
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - alarm_control_panel.verisure_alarm
+    id: away
+    to: armed_away
+  - platform: state
+    entity_id:
+    - alarm_control_panel.verisure_alarm
+    id: home
+    to: disarmed
+    from: armed_away
+  - platform: state
+    entity_id:
+    - alarm_control_panel.verisure_alarm
+    id: arm-home
+    to: armed_home
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: away
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.office_sonos_switch
+          - switch.shelly_shplg_s_f1a39a
+    - conditions:
+      - condition: trigger
+        id: home
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id:
+          - switch.office_sonos_switch
+          - switch.shelly_shplg_s_f1a39a
+    - conditions:
+      - condition: trigger
+        id: arm-home
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.office_sonos_switch
+          - switch.shelly_shplg_s_f1a39a
+  mode: single
+- id: '1663351083369'
+  alias: Turn off Living Sonos Bulp when switch is turned on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.shelly_shplg_s_f1a39a
+    to: 'on'
+    id: turn-on
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: turn-on
+      sequence:
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id: light.living_room_sonos_bulp
+  mode: single
+- id: '1664647979067'
+  alias: Living Room morning schedule
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.living_room_light_morning_schedule_start
+    id: morning-start
+  - platform: time
+    at: input_datetime.living_room_light_morning_schedule_end
+    id: morning-end
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    id: sun-up
+    above: '1'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: morning-start
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.living_room_control_unit
+        data: {}
+      - service: light.turn_on
+        target:
+          entity_id: light.living_room_sonos_bulp
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: morning-end
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.living_room_control_unit
+        data: {}
+      - service: light.turn_off
+        target:
+          entity_id: light.living_room_sonos_bulp
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: sun-up
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.living_room_control_unit
+        data: {}
+      - service: light.turn_off
+        target:
+          entity_id: light.living_room_sonos_bulp
+        data: {}
+    default: []
+  mode: single
+- id: sonos_living_room_morning_schedule
+  alias: 'Sonos: Living Room morning schedule '
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.living_room_sonos_morning_start
+    id: morning-start
+  - platform: time
+    at: input_datetime.living_room_sonos_morning_end
+    id: morning-end
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: morning-start
+        - condition: state
+          entity_id: device_tracker.klgn_phone
+          state: home
+      sequence:
+      - service: automation.trigger
+        target:
+          entity_id: automation.living_room_p4_kobenhavn
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: morning-end
+      sequence:
+      - service: media_player.media_stop
+        target:
+          entity_id: media_player.living_room
+        data: {}
+    default: []
+  mode: single
