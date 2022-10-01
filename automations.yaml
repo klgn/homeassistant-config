@@ -355,6 +355,9 @@
     - condition: state
       entity_id: binary_sensor.workday_sensor
       state: 'on'
+    - condition: state
+      entity_id: person.kristian_l_g_nielsen
+      state: home
   action:
   - choose:
     - conditions:
@@ -414,6 +417,9 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
+    - condition: state
+      entity_id: person.kristian_l_g_nielsen
+      state: home
   action:
   - choose:
     - conditions:
@@ -439,3 +445,73 @@
         data: {}
     default: []
   mode: single
+- id: living_room_lights_when_dark
+  alias: Turn on lights in living room when dark outside
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    below: '1.0'
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: person.kristian_l_g_nielsen
+      state: home
+    - condition: state
+      entity_id: person.mai_britt
+      state: home
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.living_room_control_unit
+  mode: single
+- id: kids_internet_schedule
+  alias: Kids' Internet Schedule
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.kids_internet_curfew_end
+    id: morning-curfew
+  - platform: time
+    at: input_datetime.kids_internet_curfew_start
+    id: evening-curfew
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: morning-curfew
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id:
+          - switch.emmas_laptop
+          - switch.laurits_laptop
+          - switch.astrids_laptop
+    - conditions:
+      - condition: trigger
+        id: evening-curfew
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id:
+          - switch.emmas_laptop
+          - switch.laurits_laptop
+          - switch.astrids_laptop
+    default: []
+  mode: single
+- id: '1664649038611'
+  alias: Alarm status changed
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.verisure_alarm
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: 'Alarm changed from {{ trigger.from_state.state }} to {{ trigger.to_state.state
+        }} by {{ trigger.to_state.attributes.changed_by }}
+
+        '
