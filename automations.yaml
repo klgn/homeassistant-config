@@ -522,3 +522,177 @@
     target:
       entity_id: media_player.living_room
   mode: single
+- id: '1665207930179'
+  alias: Pantry Room Notification
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.pantry_room_sensor_occupancy
+    to: 'on'
+    id: detected
+  condition: []
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Someone's in the Pantry Room!!!
+      title: Pantry Room activity
+  mode: single
+- id: '1665208238398'
+  alias: Toggle toilet lights
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.toilet_sensor_occupancy
+    id: turn-on
+    to: 'on'
+  - platform: state
+    entity_id:
+    - binary_sensor.toilet_sensor_occupancy
+    id: turn-off
+    to: 'off'
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    below: 2
+    id: sun-down
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    above: 2
+    id: sun-up
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: turn-off
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.toilet_bulbs
+        data: {}
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: turn-on
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: 255
+        target:
+          entity_id: light.toilet_bulbs
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: turn-on
+        - condition: trigger
+          id: sun-down
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: 10
+        target:
+          entity_id: light.toilet_bulbs
+    default: []
+  mode: single
+- id: waste_collection
+  alias: Notification Trash being collected
+  description: Sends a notification to Kristian on the day that waste is being collected
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.renoweb_370_l_to_delt_pappi
+    id: paper-collected
+    from: '2'
+    to: '1'
+  - platform: state
+    entity_id:
+    - sensor.renoweb_240_l_glas_metal
+    id: glass-collected
+    from: '2'
+    to: '1'
+  - platform: state
+    entity_id:
+    - sensor.renoweb_240_l_rest_mad_14_dag
+    id: general-collected
+    from: '2'
+    to: '1'
+  - platform: state
+    entity_id:
+    - sensor.renoweb_rod_boks
+    from: '2'
+    to: '1'
+    id: red-box
+  - platform: state
+    entity_id:
+    - sensor.renoweb_tekstilposer
+    from: '2'
+    to: '1'
+    id: textile
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: paper-collected
+      sequence:
+      - service: notify.mobile_app_klgn_phone
+        data:
+          title: Waste collection tomorrow
+          message: Paper waste is collected tomorrow
+      - service: notify.mobile_app_sm_a405fn
+        data:
+          message: Paper waste is collected tomorrow
+          title: Waste collection tomorrow
+    - conditions:
+      - condition: trigger
+        id: glass-collected
+      sequence:
+      - service: notify.mobile_app_klgn_phone
+        data:
+          title: Waste is collected tomorrow
+          message: Glass and metal waste is collected tomorrow
+      - service: notify.mobile_app_sm_a405fn
+        data:
+          title: Waste is collected tomorrow
+          message: Glass and metal waste is collected tomorrow
+    - conditions:
+      - condition: trigger
+        id: general-collected
+      sequence:
+      - service: notify.mobile_app_klgn_phone
+        data:
+          title: Waste is collected tomorrow
+          message: General waste is collected tomorrow
+      - service: notify.mobile_app_sm_a405fn
+        data:
+          message: General waste is collected tomorrow
+          title: Waste is collected tomorrow
+    - conditions:
+      - condition: trigger
+        id: red-box
+      sequence:
+      - service: notify.mobile_app_klgn_phone
+        data:
+          message: Chemical waste is collected tomorrow
+          title: Waste is collected tomorrow
+      - service: notify.mobile_app_sm_a405fn
+        data:
+          title: Waste is collected tomorrow
+          message: Chemical waste is collected tomorrow
+    - conditions:
+      - condition: trigger
+        id: textile
+      sequence:
+      - service: notify.mobile_app_klgn_phone
+        data:
+          title: Waste is collected tomorrow
+          message: Textile waste is collected tomorrow
+      - service: notify.mobile_app_sm_a405fn
+        data:
+          message: Textile waste is collected tomorrow
+          title: Waste is collected tomorrow
+    default: []
+  mode: single
