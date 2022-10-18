@@ -1,9 +1,0 @@
----
-id: kitchen_strip_dim
-alias: Kitchen Strip dimm
-description: ''
-use_blueprint:
-  path: klgn/ikea_dimmer_brightness.yaml
-  input:
-    button: sensor.kitchen_dimmer_brightness
-    target_light: light.kitchen_strip

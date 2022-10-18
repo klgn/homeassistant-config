@@ -477,6 +477,19 @@
           - switch.emmas_laptop
           - switch.laurits_laptop
           - switch.astrids_laptop
+        data: {}
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 10
+          milliseconds: 0
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id:
+          - switch.emmas_laptop
+          - switch.laurits_laptop
+          - switch.astrids_laptop
     - conditions:
       - condition: trigger
         id: evening-curfew
@@ -487,6 +500,19 @@
           - switch.emmas_laptop
           - switch.laurits_laptop
           - switch.astrids_laptop
+        data: {}
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 10
+          milliseconds: 0
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.emmas_laptop
+          - switch.astrids_laptop
+          - switch.laurits_laptop
     default: []
   mode: single
 - id: '1664649038611'
@@ -695,4 +721,800 @@
           message: Textile waste is collected tomorrow
           title: Waste is collected tomorrow
     default: []
+  mode: single
+- id: '1666078197344'
+  alias: Everyday alarm
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.home_alarm_on_at_night
+    id: alarm-start
+  - platform: time
+    at: input_datetime.home_alarm_off_in_the_morning
+    id: alarm-end
+  condition:
+  - condition: state
+    entity_id: input_boolean.house_mode_away
+    state: 'off'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: alarm-start
+      sequence:
+      - service: alarm_control_panel.alarm_arm_home
+        data:
+          code: 8532
+        target:
+          entity_id: alarm_control_panel.verisure_alarm
+    - conditions:
+      - condition: trigger
+        id: alarm-end
+      sequence:
+      - service: alarm_control_panel.alarm_disarm
+        data:
+          code: 8532
+        target:
+          entity_id: alarm_control_panel.verisure_alarm
+    default: []
+  mode: single
+- id: '1666078306630'
+  alias: Arm Alarm in the morning
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.arm_alarm_workday_time
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.work_from_home_today
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+  action:
+  - service: alarm_control_panel.alarm_arm_away
+    data:
+      code: 8532
+    target:
+      entity_id: alarm_control_panel.verisure_alarm
+  mode: single
+- id: '1666078370422'
+  alias: Ask if working remotely
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.ask_working_remote_time
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Are you working remotely today?
+      data:
+        actions:
+        - action: WORK_REMOTELY_YES
+          title: 'YES'
+        - action: WORK_REMOTELY_NO
+          title: 'NO'
+  mode: single
+- id: '1666078413588'
+  alias: Astrid Morning Alarm
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.astrid_alarm_start
+    id: morning-start
+  - platform: time
+    at: input_datetime.astrid_alarm_end
+    id: morning-end
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: morning-start
+      sequence:
+      - service: automation.trigger
+        target:
+          entity_id: automation.sonos_start_astrid_alarm
+        data: {}
+      - service: media_player.select_source
+        data:
+          source: Today's Top Hits
+        target:
+          entity_id: media_player.astrids_sonos
+    - conditions:
+      - condition: trigger
+        id: morning-end
+      - condition: and
+        conditions:
+        - condition: device
+          device_id: 3696ce59f94aeaf88451fe18f7eb3033
+          domain: media_player
+          entity_id: media_player.astrids_sonos
+          type: is_playing
+      sequence:
+      - service: media_player.media_stop
+        target:
+          entity_id: media_player.office
+        data: {}
+    default: []
+  mode: single
+- id: '1666078503672'
+  alias: Control alarm with home/away button
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.house_mode_away
+    id: away
+    to: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.house_mode_away
+    id: home
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: away
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: alarm_control_panel.verisure_alarm
+            state: armed_away
+      sequence:
+      - service: alarm_control_panel.alarm_arm_away
+        data:
+          code: 8532
+        target:
+          entity_id: alarm_control_panel.verisure_alarm
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: home
+      - condition: state
+        entity_id: alarm_control_panel.verisure_alarm
+        state: armed_away
+      sequence:
+      - service: alarm_control_panel.alarm_disarm
+        data: {}
+    default: []
+  mode: single
+- id: '1666078902479'
+  alias: Control Unit living room toggle
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.living_room_button_action
+    to: 'on'
+  condition: []
+  action:
+  - service: switch.toggle
+    target:
+      entity_id: switch.living_room_control_unit
+    data: {}
+  mode: single
+- id: '1666079096643'
+  alias: Kitchen Strip dimm
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.kitchen_dimmer_brightness
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      state: 'on'
+      entity_id: light.kitchen_strip
+    - condition: numeric_state
+      entity_id: sensor.kitchen_dimmer_brightness
+      above: '0'
+  action:
+  - service: light.turn_on
+    data:
+      brightness: '{{ trigger.to_state.state }}
+
+        '
+    target:
+      entity_id: light.kitchen_strip
+  mode: single
+- id: '1666079140789'
+  alias: Kitchen strip toggle
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.kitchen_dimmer_action
+    to: 'on'
+    id: dimmer-on
+  - platform: state
+    entity_id: sensor.kitchen_dimmer_action
+    id: dimmer-off
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: dimmer-on
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.kitchen_strip
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: dimmer-off
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.kitchen_strip
+        data: {}
+    default: []
+  mode: single
+- id: '1666079166095'
+  alias: Light Pantry light
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.pantry_room_sensor_occupancy
+    id: turn-on
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.pantry_room_sensor_occupancy
+    id: turn-off
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: turn-on
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.pantry_light
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: turn-off
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.pantry_light
+        data: {}
+    default: []
+  mode: single
+- id: '1666079193992'
+  alias: Light utility room toggle
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.utility_room_button_action
+    to: 'on'
+  condition: []
+  action:
+  - service: light.toggle
+    target:
+      entity_id: light.utility_room_light
+    data: {}
+  mode: single
+- id: '1666079237576'
+  alias: Office Styrbar
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.office_styrbar_brightness
+    id: brightness
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'on'
+    to: 'on'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'off'
+    to: 'off'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: up-hold
+    to: brightness_move_up
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: down-hold
+    to: brightness_move_down
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: left-hold
+    to: arrow_left_hold
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: right-hold
+    to: arrow_right_hold
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: left-click
+    to: arrow_left_click
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: right-click
+    to: arrow_right_click
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.office_bulp
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.office_bulp
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: right-hold
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.office_control_unit
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: left-hold
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.office_control_unit
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: left-click
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.office_bulp
+        data:
+          hs_color:
+          - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -
+            state_attr(var_light, \"hs_color\")[0] - 18 }}\n{% else %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] - 18 }}\n{% endif %}"
+          - '{{ state_attr(var_light, "hs_color")[1] }}'
+          transition: 0.5
+      - delay:
+          milliseconds: 500
+    - conditions:
+      - condition: trigger
+        id: right-click
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.office_bulp
+        data:
+          hs_color:
+          - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] + 18 - 360 }}\n{% else %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] + 18 }}\n{% endif %}"
+          - '{{ state_attr(var_light, "hs_color")[1] }}'
+          transition: 0.5
+    default: []
+  mode: single
+  variables:
+    var_light: light.office_strip
+- id: '1666079269919'
+  alias: Reset work remotely
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.reset_work_remotely_time
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.work_from_home_today
+  mode: single
+- id: '1666079312415'
+  alias: 'Sonos: Start Astrid Alarm'
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.2
+    target:
+      entity_id: media_player.astrids_sonos
+  - service: media_player.shuffle_set
+    data:
+      shuffle: true
+    target:
+      entity_id: media_player.astrids_sonos
+  - service: media_player.select_source
+    data:
+      source: Today's Top Hits
+    target:
+      entity_id: media_player.astrids_sonos
+  - service: media_player.media_play
+    target:
+      entity_id: media_player.astrids_sonos
+    data: {}
+  mode: single
+- id: '1666079336846'
+  alias: 'Sonos: Stop Kids'' players at night'
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.kids_sonos_players_stop
+  condition: []
+  action:
+  - service: media_player.media_stop
+    target:
+      entity_id:
+      - media_player.laurits_sonos
+      - media_player.astrids_sonos
+      - media_player.emmas_vaerelse
+    data: {}
+  mode: single
+- id: '1666079365648'
+  alias: 'Telegram: Start Astrid Alarm'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /upAstrid
+  condition: []
+  action:
+  - service: automation.trigger
+    target:
+      entity_id: automation.sonos_start_astrid_alarm
+    data: {}
+  mode: single
+- id: '1666079376655'
+  alias: 'Telegram: Start Charging Mower'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /chargeMower
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.control_unit_1
+    data: {}
+  - service: telegram_bot.send_message
+    data:
+      message: Started charging the mower
+  mode: single
+- id: '1666079388258'
+  alias: 'Telegram: Start Living Room Sonos'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /goodmorning
+  condition: []
+  action:
+  - service: automation.trigger
+    target:
+      entity_id: automation.living_room_p4_kobenhavn
+    data: {}
+  mode: single
+- id: '1666079439792'
+  alias: Toggle Home/Away Using Alarm
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.verisure_alarm
+    id: home
+    to: disarmed
+  - platform: state
+    entity_id: alarm_control_panel.verisure_alarm
+    id: away
+    to: armed_away
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: home
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: input_boolean.house_mode_away
+            state: 'off'
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.house_mode_away
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: away
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: alarm_control_panel.verisure_alarm
+            state: armed_away
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.house_mode_away
+    default: []
+  mode: single
+- id: '1666079560474'
+  alias: Turn everything off
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: media_player.media_stop
+    target:
+      entity_id:
+      - media_player.astrids_sonos
+      - media_player.living_room
+      - media_player.laurits_sonos
+      - media_player.emmas_vaerelse
+      - media_player.office
+    data: {}
+  - service: switch.turn_off
+    target:
+      entity_id:
+      - switch.office_control_unit
+      - switch.control_unit_1
+      - switch.living_room_control_unit
+      - switch.banquet_hall_control_unit
+    data: {}
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.all_lights
+    data: {}
+  mode: single
+- id: '1666079589004'
+  alias: Turn off charging unit at night
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.hall_charger_end_time
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l1
+    domain: switch
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l2
+    domain: switch
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l3
+    domain: switch
+  mode: single
+- id: '1666079667089'
+  alias: Turn on Workshop Control Unit for 3 hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.control_unit_1
+    to: 'on'
+  condition: []
+  action:
+  - service: timer.start
+    entity_id: timer.workshop_switch
+  mode: single
+- id: '1666079718247'
+  alias: Turn off Workshop Control Unit once Timer runs out
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.workshop_switch
+  - platform: state
+    entity_id: switch.control_unit_1
+    to: 'off'
+  condition: []
+  action:
+  - service: timer.cancel
+    data:
+      entity_id: timer.workshop_switch
+  - service: switch.turn_off
+    entity_id: switch.control_unit_1
+  mode: single
+- id: '1666079763585'
+  alias: Wait for mobile response
+  description: ''
+  trigger:
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: WORK_REMOTELY_YES
+    id: work-remotely-yes
+  - platform: event
+    event_type: mobile_app_notification_action
+    id: work-remotely-no
+    event_data:
+      action: WORK_REMOTELY_NO
+  condition:
+  - condition: state
+    entity_id: input_boolean.vacation
+    state: 'off'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: work-remotely-yes
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.work_from_home_today
+    - conditions:
+      - condition: trigger
+        id: work-remotely-no
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.work_from_home_today
+    default: []
+  mode: single
+- id: '1666079789109'
+  alias: Workshop lightstrip toggle
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.workshop_sensor_occupancy
+    id: turn-on
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.workshop_sensor_occupancy
+    id: turn-off
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: turn-on
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.workshop_strip
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: turn-off
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.workshop_strip
+        data: {}
+    default: []
+  mode: single
+- id: '1666079819744'
+  alias: Zigbee Device Joined Notification
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: zigbee2mqtt/bridge/log
+  condition:
+  - condition: template
+    value_template: '{{trigger.payload_json.type == "pairing" and trigger.payload_json.message
+      == "interview_successful"}}'
+  action:
+  - service: persistent_notification.create
+    data_template:
+      title: Device joined the zigbee2mqtt network
+      message: 'Name: {{trigger.payload_json.meta.friendly_name}}, Vendor: {{trigger.payload_json.meta.vendor}},
+        Description: {{trigger.payload_json.meta.description}}'
+  mode: single
+- id: '1666079831524'
+  alias: Zigbee Join Disabled
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.zigbee_permit_join
+  - platform: state
+    entity_id: switch.zigbee2mqtt_main_join
+    to: 'off'
+  condition: []
+  action:
+  - service: timer.cancel
+    data:
+      entity_id: timer.zigbee_permit_join
+  - service: switch.turn_off
+    entity_id: switch.zigbee2mqtt_main_join
+  mode: single
+- id: '1666079842056'
+  alias: Zigbee Join Enabled
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.zigbee2mqtt_main_join
+    to: 'on'
+  condition: []
+  action:
+  - service: timer.start
+    entity_id: timer.zigbee_permit_join
+  mode: single
+- id: '1666079854150'
+  alias: Zigbee2mqtt Log Level
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_select.zigbee2mqtt_log_level
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      payload_template: '{{ states(''input_select.zigbee2mqtt_log_level'') }}'
+      topic: zigbee2mqtt/bridge/config/log_level
+  mode: single
+  initial_state: 'on'
+- id: '1666079943355'
+  alias: Notify when backup stale
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.backups_stale
+    from: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      title: Backups are stale
+      message: Backups are failing, please fix
   mode: single
