@@ -1,0 +1,29 @@
+---
+name: Kristian's Laptop Internet Usage Time
+unique_id: klgn_internet_usage_time
+state: |
+  {% if this.attributes.active %}
+    {{ (timedelta(seconds=as_timestamp(now()) - states(this.attributes.sensor) | as_timestamp) | string).split(".")[0] }}
+  {% else %}
+    00:00:00
+  {% endif %}
+attributes:
+  current_session_seconds: |
+    {% if this.attributes.active %}
+      {{ as_timestamp(now()) - states(this.attributes.sensor) | as_timestamp | float }}
+    {% else %}
+      {{ 0.0 }}
+    {% endif %}
+  active: |
+    {% if states.device_tracker.klgn_laptop.state == 'home' %}
+      True
+    {% else %}
+      False
+    {% endif %}
+  current_session_started: |
+    {% if this.attributes.active %}
+      {{ as_timestamp(states(this.attributes.sensor)) | timestamp_local | as_timestamp | timestamp_custom("%Y-%m-%d %H:%M:%S") }}
+    {% else %}
+      unavailable
+    {% endif %}
+  sensor: "sensor.klgn_laptop_uptime"
