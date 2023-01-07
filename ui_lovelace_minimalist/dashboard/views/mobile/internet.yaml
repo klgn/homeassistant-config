@@ -1,0 +1,41 @@
+---
+title: Internet
+path: "internet"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: Internet Access
+  - type: grid
+    square: false
+    columns: 2
+    cards: !include_dir_list ../common/kids_internet
+  - type: "custom:button-card"
+    template: card_title
+    name: Internet Stats
+  - type: grid
+    square: false
+    columns: 2
+    cards: !include_dir_list ../common/kids_internet_online
+  - type: "custom:button-card"
+    template: card_title
+    name: Internet Curfew
+  - type: grid
+    square: false
+    columns: 1
+    cards:
+      - type: "custom:button-card"
+        template:
+          - card_input_datetime
+        entity: input_datetime.kids_internet_curfew_start
+        variables:
+          ulm_card_input_datetime_name: Internet time ends at
+      - type: "custom:button-card"
+        template:
+          - card_input_datetime
+        entity: input_datetime.kids_internet_curfew_end
+        variables:
+          ulm_card_input_datetime_name: Internet time starts at

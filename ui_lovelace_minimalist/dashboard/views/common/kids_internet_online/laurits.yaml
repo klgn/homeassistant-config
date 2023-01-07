@@ -1,0 +1,6 @@
+---
+type: "custom:button-card"
+template: card_generic_swap
+entity: sensor.laurits_laptop_internet_usage_time
+variables:
+  ulm_card_generic_swap_name: "Laurits online"
