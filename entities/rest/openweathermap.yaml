@@ -1,0 +1,15 @@
+---
+resource_template: http://api.openweathermap.org/data/2.5/weather
+scan_interval: 01:00 # 1 hour
+params:
+  q: Roskilde,dk
+  units: metric
+  APPID: !secret openweather_api_key
+sensor:
+  - name: weather_raw
+    value_template: "OK"
+    json_attributes:
+      - main
+      - wind
+      - sys
+      - dt
