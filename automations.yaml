@@ -357,6 +357,9 @@
     - condition: state
       entity_id: person.kristian_l_g_nielsen
       state: home
+    - condition: state
+      entity_id: input_boolean.guestmode
+      state: 'off'
   action:
   - choose:
     - conditions:
@@ -440,14 +443,14 @@
     entity_id: sensor.sun_elevation
     below: '1.0'
   condition:
-  - condition: or
+  - condition: and
     conditions:
     - condition: state
-      entity_id: person.kristian_l_g_nielsen
-      state: home
+      entity_id: input_boolean.guestmode
+      state: 'off'
     - condition: state
-      entity_id: person.mai_britt
-      state: home
+      entity_id: alarm_control_panel.verisure_alarm
+      state: disarmed
   action:
   - service: light.turn_on
     data: {}
@@ -472,47 +475,35 @@
         id: morning-curfew
       sequence:
       - service: switch.turn_on
-        target:
-          entity_id:
-          - switch.emmas_laptop
-          - switch.laurits_laptop
-          - switch.astrids_laptop
         data: {}
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 10
-          milliseconds: 0
+        target:
+          entity_id: switch.laurits_laptop
       - service: switch.turn_on
         data: {}
         target:
           entity_id:
-          - switch.emmas_laptop
-          - switch.laurits_laptop
           - switch.astrids_laptop
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.emmas_laptop
     - conditions:
       - condition: trigger
         id: evening-curfew
       sequence:
       - service: switch.turn_off
+        data: {}
         target:
           entity_id:
-          - switch.emmas_laptop
           - switch.laurits_laptop
-          - switch.astrids_laptop
-        data: {}
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 10
-          milliseconds: 0
       - service: switch.turn_off
         data: {}
         target:
-          entity_id:
-          - switch.emmas_laptop
-          - switch.astrids_laptop
-          - switch.laurits_laptop
+          entity_id: switch.astrids_laptop
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.emmas_laptop
     default: []
   mode: single
 - id: '1664649038611'
@@ -776,6 +767,9 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
+    - condition: state
+      entity_id: input_boolean.guestmode
+      state: 'off'
   action:
   - service: alarm_control_panel.alarm_arm_away
     data:
@@ -840,24 +834,9 @@
         data: {}
       - service: media_player.select_source
         data:
-          source: Today's Top Hits
+          source: Bangers - the sequel
         target:
           entity_id: media_player.astrids_sonos
-    - conditions:
-      - condition: trigger
-        id: morning-end
-      - condition: and
-        conditions:
-        - condition: device
-          device_id: 3696ce59f94aeaf88451fe18f7eb3033
-          domain: media_player
-          entity_id: media_player.astrids_sonos
-          type: is_playing
-      sequence:
-      - service: media_player.media_stop
-        target:
-          entity_id: media_player.office
-        data: {}
     default: []
   mode: single
 - id: '1666078503672'
@@ -919,63 +898,6 @@
     target:
       entity_id: switch.living_room_control_unit
     data: {}
-  mode: single
-- id: '1666079096643'
-  alias: Kitchen Strip dimm
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: sensor.kitchen_dimmer_brightness
-  condition:
-  - condition: and
-    conditions:
-    - condition: state
-      state: 'on'
-      entity_id: light.kitchen_strip
-    - condition: numeric_state
-      entity_id: sensor.kitchen_dimmer_brightness
-      above: '0'
-  action:
-  - service: light.turn_on
-    data:
-      brightness: '{{ trigger.to_state.state }}
-
-        '
-    target:
-      entity_id: light.kitchen_strip
-  mode: single
-- id: '1666079140789'
-  alias: Kitchen strip toggle
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: sensor.kitchen_dimmer_action
-    to: 'on'
-    id: dimmer-on
-  - platform: state
-    entity_id: sensor.kitchen_dimmer_action
-    id: dimmer-off
-    to: 'off'
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id: dimmer-on
-      sequence:
-      - service: light.turn_on
-        target:
-          entity_id: light.kitchen_strip
-        data: {}
-    - conditions:
-      - condition: trigger
-        id: dimmer-off
-      sequence:
-      - service: light.turn_off
-        target:
-          entity_id: light.kitchen_strip
-        data: {}
-    default: []
   mode: single
 - id: '1666079166095'
   alias: Light Pantry light
@@ -1072,7 +994,9 @@
       sequence:
       - service: light.turn_on
         target:
-          entity_id: light.office_bulp
+          entity_id:
+          - light.office_bulp
+          - light.office_strip
         data: {}
     - conditions:
       - condition: trigger
@@ -1080,7 +1004,9 @@
       sequence:
       - service: light.turn_off
         target:
-          entity_id: light.office_bulp
+          entity_id:
+          - light.office_bulp
+          - light.office_strip
         data: {}
     - conditions:
       - condition: trigger
@@ -1104,7 +1030,8 @@
       sequence:
       - service: light.turn_on
         target:
-          entity_id: light.office_bulp
+          entity_id:
+          - light.office_bulp
         data:
           hs_color:
           - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -
@@ -1120,7 +1047,8 @@
       sequence:
       - service: light.turn_on
         target:
-          entity_id: light.office_bulp
+          entity_id:
+          - light.office_bulp
         data:
           hs_color:
           - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,
@@ -1171,7 +1099,7 @@
       entity_id: media_player.astrids_sonos
   - service: media_player.select_source
     data:
-      source: Today's Top Hits
+      source: Bangers - the sequel
     target:
       entity_id: media_player.astrids_sonos
   - service: media_player.media_play
@@ -1190,9 +1118,9 @@
   - service: media_player.media_stop
     target:
       entity_id:
-      - media_player.laurits_sonos
       - media_player.astrids_sonos
       - media_player.emmas_vaerelse
+      - media_player.laurits_sonos
     data: {}
   mode: single
 - id: '1666079365648'
@@ -1517,4 +1445,326 @@
     data:
       title: Backups are stale
       message: Backups are failing, please fix
+  mode: single
+- id: '1666348293270'
+  alias: Set Electricity Price
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.electricity_day_tariff_start
+    id: day-start
+  - platform: time
+    at: input_datetime.electricity_night_tariff_start
+    id: night-start
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: day-start
+      sequence:
+      - service: input_number.set_value
+        data:
+          value: '{{ states.input_number.electricity_day_tariff.state | float }}
+
+            '
+        target:
+          entity_id: input_number.electricity_price
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.night_electricity_tariff_on
+    - conditions:
+      - condition: trigger
+        id: night-start
+      sequence:
+      - service: input_number.set_value
+        data:
+          value: '{{ states.input_number.electricity_night_tariff.state | float }}
+
+            '
+        target:
+          entity_id: input_number.electricity_price
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.night_electricity_tariff_on
+  mode: single
+- id: '1666357170120'
+  alias: Office Strip as slave from Office Bulb
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - light.office_bulp
+    attribute: brightness
+    id: brightness
+  - platform: state
+    entity_id:
+    - light.office_bulp
+    attribute: hs_color
+    id: color
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: brightness
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: '{% set color = state_attr(''light.office_bulp'', ''brightness'')
+            | float %}
+
+            {{ color }}
+
+            '
+        target:
+          entity_id: light.office_strip
+    - conditions:
+      - condition: trigger
+        id: color
+      sequence:
+      - service: light.turn_on
+        data:
+          hs_color: '{% set color = state_attr(''light.office_bulp'', ''hs_color'')
+            %}
+
+            {{ color }}
+
+            '
+        target:
+          entity_id: light.office_strip
+  mode: single
+- id: '1666359702996'
+  alias: Hall Dimmer
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.hall_dimmer_brightness
+    id: brightness
+  - platform: state
+    entity_id:
+    - sensor.hall_dimmer_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.hall_dimmer_action
+    id: 'off'
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_lights
+        data:
+          brightness: '{{ states.sensor.hall_dimmer_brightness.state | float }}
+
+            '
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id: light.hall_lights
+    - conditions:
+      - condition: trigger
+        id: brightness
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: '{{ state_attr(''sensor.hall_dimmer_brightness'', ''state'')
+            | float }}
+
+            '
+  mode: single
+- id: '1666360654338'
+  alias: Bedroom dimmer
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.bedroom_dimmer_brightness
+    id: brightness
+  - platform: state
+    entity_id:
+    - sensor.bedroom_dimmer_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.bedroom_dimmer_action
+    id: 'off'
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: '{{ states.sensor.bedroom_dimmer_brightness.state | float }}
+
+            '
+        target:
+          entity_id: light.bedroom_lights
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id: light.bedroom_lights
+    - conditions:
+      - condition: trigger
+        id: brightness
+      - condition: state
+        entity_id: light.bedroom_lights
+        state: 'on'
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: '{{ states.sensor.bedroom_dimmer_brightness.state | float }}
+
+            '
+        target:
+          entity_id: light.bedroom_lights
+  mode: single
+- id: '1666360971602'
+  alias: Rotater
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.rotater_brightness
+    id: brightness
+  - platform: state
+    entity_id:
+    - sensor.rotater_action_2
+    to: toggle
+    id: toggle
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: brightness
+      - condition: state
+        entity_id: light.bedside_bulb
+        state: 'on'
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: '{{ states.sensor.rotater_brightness.state | float }}
+
+            '
+        target:
+          entity_id: light.bedside_bulb
+    - conditions:
+      - condition: trigger
+        id: toggle
+      sequence:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.bedside_bulb
+  mode: single
+- id: '1670168839221'
+  alias: Notify when a device has low battery
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.low_battery_devices
+    above: 0
+    id: 'on'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: notify.mobile_app_klgn_phone
+        data:
+          message: "Low battery detected in these devices:\n  {{ state_attr('sensor.low_battery_devices',
+            'sensors') | join(', ') }}\n"
+          data:
+            persisent: true
+            tag: battery
+            actions:
+            - action: BATTERY_CHANGED
+              title: Changed it
+  mode: single
+- id: '1670179192592'
+  alias: Kitchen button
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.kitchen_button_action
+    to: 'on'
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    target:
+      entity_id: light.kitchen_strip
+  mode: single
+- id: '1673040731243'
+  alias: Set electricity tarfiffs
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.electricity_day_tariff_start
+    id: day-start
+    variables:
+      tariff: day
+  - platform: time
+    at: input_datetime.electricity_night_tariff_start
+    id: night-start
+    variables:
+      tariff: night
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: day-start
+      sequence:
+      - service: select.select_option
+        data:
+          option: day
+        target:
+          entity_id: select.daily_electricity
+      - service: select.select_option
+        data:
+          option: day
+        target:
+          entity_id: select.monthly_electricity
+    - conditions:
+      - condition: trigger
+        id: night-start
+      sequence:
+      - service: select.select_option
+        data:
+          option: night
+        target:
+          entity_id: select.daily_electricity
+      - service: select.select_option
+        data:
+          option: night
+        target:
+          entity_id: select.monthly_electricity
   mode: single
