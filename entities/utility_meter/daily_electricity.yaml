@@ -1,0 +1,7 @@
+---
+source: sensor.power_meter_energy
+name: Daily Electricity Usage
+cycle: daily
+tariffs:
+  - day
+  - night

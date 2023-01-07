@@ -1,0 +1,5 @@
+---
+name: Electricity night tariff interval
+unique_id: electricity_night_tariff_interval
+state: >
+  {{ states.input_datetime.electricity_night_tariff_start.state.split(':')[0]}}-{{states.input_datetime.electricity_day_tariff_start.state.split(':')[0]}}

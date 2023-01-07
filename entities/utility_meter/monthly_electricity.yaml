@@ -1,0 +1,7 @@
+---
+source: sensor.power_meter_energy
+name: Monthly Electricity Usage
+cycle: monthly
+tariffs:
+  - day
+  - night

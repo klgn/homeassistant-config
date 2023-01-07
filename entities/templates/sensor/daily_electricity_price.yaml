@@ -1,0 +1,9 @@
+---
+name: Daily Electricity Price
+unique_id: daily_electricity_price
+device_class: energy
+icon: mdi:lightning-bolt-circle
+state: >
+  {{ states.sensor.daily_electricity_day.state | float * states.input_number.electricity_day_tariff.state | float + states.sensor.daily_electricity_night.state | float * states.input_number.electricity_night_tariff.state | float }}
+attributes:
+  unit_of_measurement: "kr."
