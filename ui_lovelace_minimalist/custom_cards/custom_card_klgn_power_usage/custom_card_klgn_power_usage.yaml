@@ -1,0 +1,38 @@
+---
+### Card Power Usage ###
+card_power_usage:
+  template:
+    - "icon_more_info_new"
+    - "yellow"
+    - "ulm_translation_engine"
+  variables:
+    ulm_card_power_usage_price_sensor:
+    ulm_card_power_friendly_name: "[[[ return entity.attributes.friendly_name ]]]"
+    ulm_card_power_icon: "[[[ return entity.attributes.icon ]]]"
+  triggers_update: "all"
+  custom_fields:
+    item1:
+      card:
+        type: "custom:button-card"
+        template:
+          - "yellow"
+        custom_fields:
+          item1:
+            card:
+              type: "custom:button-card"
+              template:
+                - "yellow"
+              entity: "[[[ return entity.entity_id ]]]"
+              icon: "[[[ return variables.ulm_card_power_icon ]]]"
+          item2:
+            card:
+              type: "custom:button-card"
+              template:
+                - "yellow_no_card"
+              entity: "[[[ return entity.entity_id ]]]"
+              name: "[[[ return variables.ulm_card_power_friendly_name ]]]"
+              label: >
+                [[[
+                  var _price = Math.round(states[variables.ulm_card_power_usage_price_sensor].state * 100)/100;
+                  return variables.ulm_translation_state + "kWh • " + _price + " kr."
+                ]]]
