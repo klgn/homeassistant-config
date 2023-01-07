@@ -11,6 +11,7 @@ homeassistant:
   latitude: !secret hass_latitude
   longitude: !secret hass_longitude
   elevation: !secret hass_elevation
+  country: DK
   unit_system: metric
   temperature_unit: C
   time_zone: Europe/Copenhagen
