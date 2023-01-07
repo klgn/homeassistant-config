@@ -61,12 +61,15 @@ card_esh_welcome:
     grid:
       - grid-template-areas: >
           [[[
-            if(variables.ulm_card_esh_welcome_collapse && states[variables.ulm_card_esh_welcome_collapse].state == 'on'){
-              return "\'item1\' \'item2\' ";
-            } else {
-              return "\'item1\' \'item2\' \'item3\'";
-            }
+            return "\'item1\' \'item2\' \'item3\'";
           ]]]
+      #          [[[
+      #            if(variables.ulm_card_esh_welcome_collapse && states[variables.ulm_card_esh_welcome_collapse].state == 'on'){
+      #              return "\'item1\' \'item2\' ";
+      #            } else {
+      #              return "\'item1\' \'item2\' \'item3\'";
+      #            }
+      #          ]]]
       - grid-template-columns: "1fr"
       - grid-template-rows: "min-content min-content"
       - row-gap: "0px"
@@ -78,21 +81,27 @@ card_esh_welcome:
       item3:
         - display: >
             [[[
-              if(variables.ulm_card_esh_welcome_collapse && states[variables.ulm_card_esh_welcome_collapse].state == 'on'){
-                return "none";
-              } else {
-                return "block";
-              }
+              return "block";
             ]]]
+      #            [[[
+      #              if(variables.ulm_card_esh_welcome_collapse && states[variables.ulm_card_esh_welcome_collapse].state == 'on'){
+      #                return "none";
+      #              } else {
+      #                return "block";
+      #              }
+      #            ]]]
       item4:
         - display: >
             [[[
-              if(variables.ulm_card_esh_welcome_collapse && states[variables.ulm_card_esh_welcome_collapse].state == 'on'){
-                return "none";
-              } else {
-                return "block";
-              }
+              return "block";
             ]]]
+  #            [[[
+  #              if(variables.ulm_card_esh_welcome_collapse && states[variables.ulm_card_esh_welcome_collapse].state == 'on'){
+  #                return "none";
+  #              } else {
+  #                return "block";
+  #              }
+  #            ]]]
   custom_fields:
     item1:
       card:
@@ -114,22 +123,22 @@ card_esh_welcome:
         show_label: false
         show_name: true
         show_entity_picture: false
-        name: |
-          [[[
-            var today = new Date();
-            var time = today.getHours()
-            let welcome = '';
-            if (time >= '18'){
-              welcome = variables.ulm_evening;
-            } else if (time >= '12'){
-              welcome = variables.ulm_afternoon;
-            } else if (time >= '5'){
-              welcome = variables.ulm_morning;
-            } else {
-              welcome = variables.ulm_hello;
-            }
-            return welcome + ', ' + '   <br>' + user.name + '!';
-          ]]]
+        #        name: |
+        #          [[[
+        #            var today = new Date();
+        #            var time = today.getHours()
+        #            let welcome = '';
+        #            if (time >= '18'){
+        #              welcome = variables.ulm_evening;
+        #            } else if (time >= '12'){
+        #              welcome = variables.ulm_afternoon;
+        #            } else if (time >= '5'){
+        #              welcome = variables.ulm_morning;
+        #            } else {
+        #              welcome = variables.ulm_hello;
+        #            }
+        #            return welcome + ', ' + '   <br>' + user.name + '!';
+        #          ]]]
         styles:
           name:
             - align-self: "start"
@@ -441,7 +450,8 @@ card_esh_welcome_topbar:
         type: "custom:button-card"
         template: "chips"
         entity: "[[[ return variables.ulm_card_esh_welcome_collapse ]]]"
-        icon: "mdi:chevron-up"
+        icon: "mdi:ethernet"
+        color: "[[[return `rgba(var(--color-blue), 0.5)`;]]]"
         show_icon: true
         styles:
           grid:
@@ -455,17 +465,9 @@ card_esh_welcome_topbar:
                     return "var(--box-shadow)";
                   }
                 ]]]
-        state:
-          - value: "on"
-            icon: "mdi:chevron-down"
-            styles:
-              icon:
-                - color: "rgb(var(--color-theme))"
         tap_action:
-          action: "call-service"
-          service: "input_boolean.toggle"
-          service_data:
-            entity_id: "[[[ return variables.ulm_card_esh_welcome_collapse ]]]"
+          action: "navigate"
+          navigation_path: "internet"
     item2:
       card:
         type: "custom:button-card"

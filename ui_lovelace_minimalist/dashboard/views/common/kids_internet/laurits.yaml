@@ -1,5 +1,5 @@
 ---
 type: "custom:button-card"
 template: card_power_outlet
-entity: switch.laurits_laptop
+entity: switch.laurits_laptop_rx
 name: Laurits' wifi

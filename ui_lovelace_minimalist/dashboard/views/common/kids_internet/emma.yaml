@@ -1,5 +1,5 @@
 ---
 type: "custom:button-card"
 template: card_power_outlet
-entity: switch.emmas_laptop
+entity: switch.emmas_laptop_rx
 name: Emmas wifi

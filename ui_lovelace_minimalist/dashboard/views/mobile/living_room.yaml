@@ -60,6 +60,17 @@ cards:
         template: card_power_outlet
         entity: switch.smartplug
         name: Living Room TV
+      - type: "custom:button-card"
+        template: card_navigate
+        tap_action:
+          action: call-service
+          service: automation.trigger
+          service_data:
+            entity_id: automation.living_room_p4_kobenhavn
+        variables:
+          ulm_card_navigate_path: ""
+          ulm_card_navigate_title: "Play P4"
+          ulm_card_navigate_icon: "mdi:music"
   - type: "custom:button-card"
     template: card_title
     label: Media Players

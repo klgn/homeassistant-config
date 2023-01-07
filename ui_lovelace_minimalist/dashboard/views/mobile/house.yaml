@@ -44,7 +44,7 @@ cards:
     template: card_title
     label: Misc
   - type: grid
-    columns: 3
+    columns: 2
     square: false
     cards:
       - show_name: true
@@ -98,6 +98,7 @@ cards:
           - "icon_info_bg"
           - "yellow"
         name: Partying
+        entity: input_boolean.party_mode
         show_icon: true
         type: custom:button-card
         state:
@@ -109,4 +110,21 @@ cards:
                 - color: grey
         tap_action:
           action: toggle
-        entity: input_boolean.party_mode
+      - show_name: true
+        show_label: false
+        template:
+          - "icon_info_bg"
+          - "yellow"
+        entity: input_boolean.guestmode
+        name: Guest Mode
+        show_icon: true
+        type: custom:button-card
+        state:
+          - value: "off"
+            styles:
+              state:
+                - color: grey
+              icon:
+                - color: grey
+        tap_action:
+          action: toggle

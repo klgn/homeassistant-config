@@ -41,6 +41,18 @@ cards:
             variables:
               ulm_card_input_datetime_name: Alarm is enabled on workdays at
           - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.electricity_night_tariff_start
+            variables:
+              ulm_card_input_datetime_name: Nighttime Tariff for Electricity starts at
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.electricity_day_tariff_start
+            variables:
+              ulm_card_input_datetime_name: Daytime Tariff for Electricity starts at
+          - type: "custom:button-card"
             template: card_power_outlet
             entity: automation.ask_if_working_remotely
             name: Ask if working remotely enabled?
