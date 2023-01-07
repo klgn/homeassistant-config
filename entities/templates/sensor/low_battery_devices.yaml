@@ -1,0 +1,20 @@
+---
+name: "Low battery devices"
+state: "{{ (this.attributes.sensors | length | default(0)) + (this.attributes.binary_sensors | length | default(0)) }}"
+attributes:
+  sensors: >
+    {% set result = namespace(sensors=[]) %}
+    {% for state in states.sensor | selectattr('attributes.device_class', 'defined') | selectattr('attributes.device_class', '==', 'battery') %}
+      {% if 0 <= state.state | int(-1) <= 15 | int %}
+        {% set result.sensors = result.sensors + [state.entity_id] %}
+      {% endif %}
+    {% endfor %}
+    {{ result.sensors }}
+  sensor_min: "{{ expand(this.attributes.sensors) | map(attribute='state') | map('int') | min | default(0) }}"
+  sensor_max: "{{ expand(this.attributes.sensors) | map(attribute='state') | map('int') | max | default(0) }}"
+  binary_sensors: >
+    {% set result = namespace(sensors=[]) %}
+    {% for state in states.binary_sensor | selectattr('attributes.device_class', 'defined') | selectattr('attributes.device_class', '==', 'battery') | selectattr('state', '==', 'on') %}
+      {% set result.sensors = result.sensors + [state.name] %}
+    {% endfor %}
+    {{ result.sensors }}
