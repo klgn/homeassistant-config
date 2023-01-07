@@ -1,20 +1,21 @@
 ---
-resource_template: https://api.energidataservice.dk/dataset/Elspotprices
-scan_interval: 01:00 # 1 hour
-params:
-  filter: '{"PriceArea":"DK2"}'
-  start: |
-    {% if states("input_boolean.energy_price_include_yesterday") | default(false) | bool(false) %}
-      {{ (now() - timedelta(days = 1)).timestamp() | timestamp_custom('%Y-%m-%d') }}
-    {% else %}
-      {{ now().timestamp() | timestamp_custom('%Y-%m-%d') }}
-    {% endif %}
-  limit: 100
-  offset: 0
-  sort: "HourDK ASC"
-  timezone: dk
-sensor:
-  - name: energy_price_raw
-    value_template: "OK"
-    json_attributes:
-      - records
+#---
+#resource_template: http://api.energidataservice.dk/dataset/Elspotprices
+#scan_interval: 01:00 # 1 hour
+#timeout: 60
+#headers:
+#  User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
+#params:
+#  filter: '{"PriceArea":"DK2"}'
+#  start: |
+#    {{ now().timestamp() | timestamp_custom('%Y-%m-%d') }}
+#  limit: 100
+#  offset: 0
+#  sort: "HourDK ASC"
+#  timezone: dk
+#sensor:
+#  - name: energy_price_raw
+#    value_template: "OK"
+#    json_attributes:
+#      - "records"
+#
