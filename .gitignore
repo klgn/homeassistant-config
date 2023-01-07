@@ -19,7 +19,7 @@ deps
 *.log
 .HA_VERSION
 blueprints/automation/homeassistant
-custom_components/
+custom_components/*
 www/community
 blueprints
 watchman_report.txt
