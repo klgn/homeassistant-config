@@ -1,6 +1,0 @@
----
-name: "Cheapest electricity price hour"
-unique_id: electricity_price_min_hour
-icon: mdi:lightning-bolt
-state: >
-  {{ state_attr('sensor.energy_price', 'today_min')['hour_minute'] }}

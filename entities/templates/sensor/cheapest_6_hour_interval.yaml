@@ -1,8 +1,0 @@
----
-name: Cheapest 6 hours
-unique_id: cheapest_six_hours_energy
-icon: mdi:flash
-state: >
-  {% set first = state_attr('sensor.energy_price', 'cheapest_6_hour_interval')['hours'] | first %}
-  {% set last = state_attr('sensor.energy_price', 'cheapest_6_hour_interval')['hours'] | last %}
-  {{ first['time'] | as_timestamp | timestamp_custom("%-d/%-m", true) + ": " + first['hour_only'] + "-" + last['hour_only'] }}
