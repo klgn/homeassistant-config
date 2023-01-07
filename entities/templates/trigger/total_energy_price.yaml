@@ -1,9 +1,0 @@
----
-trigger:
-  platform: time_pattern
-  seconds: "*"
-sensor:
-  name: Energy Price Total
-  unique_id: energy_price_total
-  state: >
-    {{ states.sensor.energy_price.state | float * states.sensor.hourly_power_usage.state | float }}
