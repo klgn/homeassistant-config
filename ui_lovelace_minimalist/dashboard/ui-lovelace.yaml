@@ -4,15 +4,16 @@ button_card_templates: !include_dir_merge_named "../../custom_components/ui_love
 title: "Minimalist"
 background: "var(--background-image)"
 views:
-  - !include views/mobile/home.yaml
-  - !include views/mobile/living_room.yaml
-  - !include views/mobile/bedroom.yaml
-  - !include views/mobile/office.yaml
-  - !include views/mobile/hall.yaml
-  - !include views/mobile/basement.yaml
-  - !include views/mobile/lights.yaml
-  - !include views/mobile/energy.yaml
-  - !include views/mobile/switches.yaml
   - !include views/mobile/alarm.yaml
+  - !include views/mobile/basement.yaml
+  - !include views/mobile/bedroom.yaml
+  - !include views/mobile/car.yaml
+  - !include views/mobile/energy.yaml
+  - !include views/mobile/hall.yaml
+  - !include views/mobile/home.yaml
   - !include views/mobile/house.yaml
   - !include views/mobile/internet.yaml
+  - !include views/mobile/lights.yaml
+  - !include views/mobile/living_room.yaml
+  - !include views/mobile/office.yaml
+  - !include views/mobile/switches.yaml

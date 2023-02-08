@@ -1,0 +1,24 @@
+title: Car
+path: "car"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: Car
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: chip_icon_double_state
+        variables:
+          ulm_chip_icon_double_state_icon: "🔋"
+          ulm_chip_icon_double_state_entity_1: sensor.ioniq_5_ev_battery_level
+          ulm_chip_icon_double_state_entity_2: sensor.hyundai_ioniq_5_battery_level_kwh
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.hyundai_toniq_5_estimated_charging_time
+        variables:
+          ulm_card_generic_swap_name: Estimated charging time
+          ulm_card_generic_swap_icon: mdi:timer

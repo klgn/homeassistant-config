@@ -1,7 +1,7 @@
 title: Energy
 path: "energy"
 cards:
-  - type: horizontal-stack
+  - type: vertical-stack
     cards:
       - type: "custom:button-card"
         template: chip_back
@@ -35,7 +35,7 @@ cards:
         entity: sensor.yesterday_s_energy_consumption
         variables:
           ulm_card_power_friendly_name: "Yesterday"
-          ulm_card_power_usage_price_sensor: sensor.yesterday_s_electricity_cost_2
+          ulm_card_power_usage_price_sensor: sensor.cost_of_yesterday_s_energy_consumption
 #  - type: custom:button-card
 #    template: custom_card_irmajavi_entities
 #    variables:

@@ -32,6 +32,28 @@ cards:
         variables:
           ulm_card_power_friendly_name: "Yesterday"
           ulm_card_power_usage_price_sensor: sensor.cost_of_yesterday_s_energy_consumption
+  - type: "custom:button-card"
+    template: card_title
+    name: System
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.cpu_temperature
+  - type: "custom:button-card"
+    template: card_title
+    name: Car
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: chip_icon_double_state
+        variables:
+          ulm_chip_icon_double_state_icon: "🔋"
+          ulm_chip_icon_double_state_entity_1: sensor.ioniq_5_ev_battery_level
+          ulm_chip_icon_double_state_entity_2: sensor.hyundai_ioniq_5_battery_level_kwh
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.hyundai_toniq_5_estimated_charging_time
 #  - type: vertical-stack
 #    cards:
 #      - type: custom:button-card
