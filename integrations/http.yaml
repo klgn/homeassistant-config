@@ -3,6 +3,6 @@ http:
   server_port: 8443
   use_x_forwarded_for: true
   trusted_proxies:
-    - 10.10.20.64
+    - 10.10.20.66
   ssl_certificate: /ssl/hass/origin.pem
   ssl_key: /ssl/hass/private.pem
