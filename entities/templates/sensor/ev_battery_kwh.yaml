@@ -1,0 +1,8 @@
+name: Hyundai Ioniq 5 Battery Level (kWh)
+unique_id: ioniq5_battery_kwh
+state: >
+  {% set level = namespace(lvl=None) %}
+  {% set level.lvl = states.sensor.ioniq_5_ev_battery_level.state | float * states.input_number.hyundai_ev_battery_size.state | float / 100 %}
+  {{'%0.2f' | format(level.lvl) }}
+attributes:
+  unit_of_measurement: kWh

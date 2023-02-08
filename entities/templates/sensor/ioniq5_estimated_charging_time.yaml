@@ -1,0 +1,18 @@
+---
+name: Hyundai Ioniq 5 Estimated Charging Time
+unique_id: ioniq_estimated_charging_time
+state: >
+  {{ as_timedelta(this.attributes.total_seconds | string) }}
+attributes:
+  raw: >
+    {{ ((states.input_number.hyundai_ev_battery_size.state | float - states.sensor.hyundai_ioniq_5_battery_level_kwh.state | float) / states.input_number.home_charger_yield.state | float) | string }}
+  hours: >
+    {{ (this.attributes.raw | string).split('.')[0] | int }}
+  mins_raw: |
+    {{ ('0.' + (this.attributes.raw | string).split('.')[1]) | float * 60 }}
+  mins: |
+    {{ (this.attributes.mins_raw | string).split('.')[0] | int }}
+  secs: |
+    {{ (('0.' + (this.attributes.mins_raw | string).split('.')[1]) | float * 60) | round | int }}
+  total_seconds: |
+    {{ this.attributes.secs + this.attributes.mins | int * 60 + this.attributes.hours | int * 3600 }}
