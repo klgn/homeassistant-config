@@ -1,0 +1,7 @@
+---
+name: Hyundai Ioniq5 estimated Charging Cost
+unique_id: ioniq_5_charging_cost
+state: >
+  {{state_attr('sensor.hyundai_ioniq_5_charging', 'estimated_charging_cost')}}
+attributes:
+  unit_of_measurement: kr

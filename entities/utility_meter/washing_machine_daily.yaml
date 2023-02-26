@@ -1,0 +1,4 @@
+---
+source: sensor.shelly_shplg_s_f1487f_total_consumption
+name: Washing Machine Daily Usage
+cycle: daily

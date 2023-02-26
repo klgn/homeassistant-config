@@ -1,0 +1,83 @@
+---
+name: Hyundai Ioniq 5 Charging
+unique_id: ioniq5_charging
+state: OK
+attributes:
+  cheapest_charging_time: >
+    {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
+    {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+      {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+    {% endif %}
+    {% set ns = namespace(result_slice=[],slices=[],result=[],final_result={},remaining_kwh=states.sensor.hyundai_ioniq_5_kwh_until_full.state,total_price=0) %}
+    {% for i in range(now().hour, period | length) %}
+      {% set el = {
+        "index": i,
+        "hours": period[i:i+this.attributes.charging_time_rounded],
+        "sum": period[i:i+this.attributes.charging_time_rounded] | sum(attribute='price') | round(3)
+        }
+      %}
+      {% if el.hours | length == this.attributes.charging_time_rounded %}
+        {% set ns.slices = ns.slices + [el] %}
+      {% endif %}
+    {% endfor %}
+    {%set ns.result_slice = ns.slices | sort(attribute='sum') | first %}
+    {% for h in ns.result_slice['hours'] %}
+      {% set d = h['hour'].strftime("%Y-%m-%d") %}
+      {% set ho = h['hour'].strftime("%H") %}
+      {%if (ns.remaining_kwh | int) >= (states.input_number.home_charger_yield.state | int) %}
+        {% set ns.total_price = ns.total_price + (states.input_number.home_charger_yield.state | int) * h['price'] %}
+        {% set ns.remaining_kwh = (ns.remaining_kwh | float) - (states.input_number.home_charger_yield.state | float) %}
+      {% else %}
+        {% set ns.total_price = ns.total_price + ns.remaining_kwh * h['price'] %}
+        {% set ns.remaining_kwh = (ns.remaining_kwh | float) - (ns.remaining_kwh | float) %}
+      {%endif%}
+      {%set ns.result = ns.result + 
+        [{
+          'date': d,
+          'time': ho,
+          'price': h['price']
+        }]
+      %}
+    {% endfor %}
+    {{ns.result}}
+  charging_time: >
+    {{ states.sensor.hyundai_toniq_5_estimated_charging_time.state }}
+  charging_time_rounded: >
+    {{ (int(state_attr('sensor.hyundai_toniq_5_estimated_charging_time', 'total_seconds')) / 3600) | round(0, 'ceil')}}
+  estimated_charging_cost: >
+    {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
+    {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+      {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+    {% endif %}
+    {% set ns = namespace(result_slice=[],slices=[],result=[],final_result={},remaining_kwh=states.sensor.hyundai_ioniq_5_kwh_until_full.state,total_price=0) %}
+    {% for i in range(now().hour, period | length) %}
+      {% set el = {
+        "index": i,
+        "hours": period[i:i+this.attributes.charging_time_rounded],
+        "sum": period[i:i+this.attributes.charging_time_rounded] | sum(attribute='price') | round(3)
+        }
+      %}
+      {% if el.hours | length == this.attributes.charging_time_rounded %}
+        {% set ns.slices = ns.slices + [el] %}
+      {% endif %}
+    {% endfor %}
+    {%set ns.result_slice = ns.slices | sort(attribute='sum') | first %}
+    {% for h in ns.result_slice['hours'] %}
+      {% set d = h['hour'].strftime("%Y-%m-%d") %}
+      {% set ho = h['hour'].strftime("%H") %}
+      {%if (ns.remaining_kwh | int) >= (states.input_number.home_charger_yield.state | int) %}
+        {% set ns.total_price = ns.total_price + (states.input_number.home_charger_yield.state | int) * h['price'] %}
+        {% set ns.remaining_kwh = (ns.remaining_kwh | float) - (states.input_number.home_charger_yield.state | float) %}
+      {% else %}
+        {% set ns.total_price = ns.total_price + ns.remaining_kwh * h['price'] %}
+        {% set ns.remaining_kwh = (ns.remaining_kwh | float) - (ns.remaining_kwh | float) %}
+      {%endif%}
+      {%set ns.result = ns.result + 
+        [{
+          'date': d,
+          'time': ho,
+          'price': h['price']
+        }]
+      %}
+    {% endfor %}
+    {{ns.total_price | round(2)}}

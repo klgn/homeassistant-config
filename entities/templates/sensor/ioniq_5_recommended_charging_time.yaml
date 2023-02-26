@@ -1,0 +1,13 @@
+---
+name: Hyundai ioniq 5 Charging Start Time
+unique_id: ioniq_5_start_charging_time
+state: >
+  {%set today = as_timestamp(now().replace(hour=0,second=0,minute=0,microsecond=0)) | timestamp_local %}
+  {%set start = as_timestamp((state_attr('sensor.hyundai_ioniq_5_charging', 'cheapest_charging_time') | first)['date']) | timestamp_local %}
+  {%set hour = (state_attr('sensor.hyundai_ioniq_5_charging', 'cheapest_charging_time') | first)['time'] %}
+
+  {%if start == today %}
+    {{"Today at "  + hour }}
+  {%else%}
+    {{"Tomorrow at " + hour }}
+  {%endif%}

@@ -1,0 +1,23 @@
+---
+name: Dishwasher
+unique_id: dishwasher
+state: OK
+attributes:
+  recommended_start_time: >
+    {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
+    {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+      {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+    {% endif %}
+    {% set ns = namespace(result=[], slices=[]) %}
+    {% for i in range(now().hour, period | length) %}
+      {% set el = {
+        "index": i,
+        "hours": period[i:i+(states.input_number.dishwasher_time.state | int)],
+        "sum": period[i:i+(states.input_number.dishwasher_time.state | int)] | sum(attribute='price') | round(3)
+        }
+      %}
+    {% if el.hours | length == (states.input_number.dishwasher_time.state | int) %}
+      {% set ns.slices = ns.slices + [el] %}
+    {% endif %}
+    {% endfor %}
+    {{ ((ns.slices | sort(attribute='sum') | first)['hours'] | first)['hour'] }}

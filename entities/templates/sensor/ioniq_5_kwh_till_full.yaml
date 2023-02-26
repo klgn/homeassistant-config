@@ -1,0 +1,7 @@
+---
+name: Hyundai Ioniq 5 KwH until full
+unique_id: ioniq_5_kwh_until_full
+state: >
+  {{ "%.2f" | format(states.input_number.hyundai_ev_battery_size.state | float - states.sensor.hyundai_ioniq_5_battery_level_kwh.state | float)  }}
+attributes:
+  unit_of_measurement: kWh

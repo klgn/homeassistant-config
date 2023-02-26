@@ -1,0 +1,11 @@
+---
+name: Start washing machine 90 degrees
+unique_id: washing_machine_90_degrees
+state: >
+  {% set today = as_timestamp(now().replace(hour=0,second=0,minute=0,microsecond=0)) | timestamp_custom('%Y-%m-%d') %}
+  {% set start = as_timestamp(state_attr('sensor.washing_machine', 'recommended_start_time_90_degrees')) | timestamp_custom('%Y-%m-%d') %}
+  {%if start == today %}
+    {{"Today at " + as_timestamp(state_attr('sensor.washing_machine', 'recommended_start_time_90_degrees')) | timestamp_custom('%H') }}
+  {% else %}
+    {{"Tomorrow at " + as_timestamp(state_attr('sensor.washing_machine', 'recommended_start_time_90_degrees')) | timestamp_custom('%H') }}
+  {% endif %}

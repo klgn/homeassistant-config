@@ -1,0 +1,64 @@
+---
+name: Washing Machine
+unique_id: washing_machine
+state: OK
+attributes:
+  recommended_start_time_30_degrees: >
+    {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
+    {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+      {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+    {% endif %}
+    {% set ns = namespace(result=[], slices=[]) %}
+    {% for i in range(now().hour, period | length) %}
+      {% set el = {
+        "index": i,
+        "hours": period[i:i+(states.input_number.washing_machine_30_degrees.state | int)],
+        "sum": period[i:i+(states.input_number.washing_machine_30_degrees.state | int)] | sum(attribute='price') | round(3)
+        }
+      %}
+      {% if el.hours | length == (states.input_number.washing_machine_30_degrees.state | int) %}
+        {% set ns.slices = ns.slices + [el] %}
+      {% endif %}
+    {% endfor %}
+    {{ ((ns.slices | sort(attribute='sum') | first)['hours'] | first)['hour'] }}
+  recommended_start_time_60_degrees: >
+    {% set hourly_usage = [1.3, 0.15, 0.11, 0.02] %}
+    {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
+    {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+      {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+    {% endif %}
+    {% set ns = namespace(result=[], slices=[], total=0.0) %}
+    {% for i in range(now().hour, period | length) %}
+      {% set ns.total = 0.0 %}
+      {%for r in period[i:i+(states.input_number.washing_machine_60_degrees.state | int)] %}
+        {% set ns.total = ns.total + (r['price'] | float) * hourly_usage[(loop.index-1)] %}
+      {%endfor%}
+      {% set el = {
+        "index": i,
+        "hours": period[i:i+(states.input_number.washing_machine_60_degrees.state | int)],
+        "sum": ns.total | round(3)
+        }
+      %}
+      {% if el.hours | length == (states.input_number.washing_machine_60_degrees.state | int) %}
+        {% set ns.slices = ns.slices + [el] %}
+      {% endif %}
+    {% endfor %}
+    {{ ((ns.slices | sort(attribute='sum') | first)['hours'] | first)['hour'] }}
+  recommended_start_time_90_degrees: >
+    {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
+    {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+      {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+    {% endif %}
+    {% set ns = namespace(result=[], slices=[]) %}
+    {% for i in range(now().hour, period | length) %}
+      {% set el = {
+        "index": i,
+        "hours": period[i:i+(states.input_number.washing_machine_90_degrees.state | int)],
+        "sum": period[i:i+(states.input_number.washing_machine_90_degrees.state | int)] | sum(attribute='price') | round(3)
+        }
+      %}
+      {% if el.hours | length == (states.input_number.washing_machine_90_degrees.state | int) %}
+        {% set ns.slices = ns.slices + [el] %}
+      {% endif %}
+    {% endfor %}
+    {{ ((ns.slices | sort(attribute='sum') | first)['hours'] | first)['hour'] }}

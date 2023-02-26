@@ -1,0 +1,33 @@
+---
+name: Daily Electricity Price Hourly Tariffs
+unique_id: daily_electricity_price_hourly_tariffs
+device_class: energy
+icon: mdi:lightning-bolt-circle
+state: >
+  {{ states.sensor.daily_electricity_hourly_tariffs_hour00.state | float * state_attr('sensor.energi_data_service', 'today')[0] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour01.state | float * state_attr('sensor.energi_data_service', 'today')[1] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour02.state | float * state_attr('sensor.energi_data_service', 'today')[2] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour03.state | float * state_attr('sensor.energi_data_service', 'today')[3] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour04.state | float * state_attr('sensor.energi_data_service', 'today')[4] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour05.state | float * state_attr('sensor.energi_data_service', 'today')[5] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour06.state | float * state_attr('sensor.energi_data_service', 'today')[6] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour07.state | float * state_attr('sensor.energi_data_service', 'today')[7] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour08.state | float * state_attr('sensor.energi_data_service', 'today')[8] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour09.state | float * state_attr('sensor.energi_data_service', 'today')[9] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour10.state | float * state_attr('sensor.energi_data_service', 'today')[10] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour11.state | float * state_attr('sensor.energi_data_service', 'today')[11] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour12.state | float * state_attr('sensor.energi_data_service', 'today')[12] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour13.state | float * state_attr('sensor.energi_data_service', 'today')[13] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour14.state | float * state_attr('sensor.energi_data_service', 'today')[14] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour15.state | float * state_attr('sensor.energi_data_service', 'today')[15] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour16.state | float * state_attr('sensor.energi_data_service', 'today')[16] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour17.state | float * state_attr('sensor.energi_data_service', 'today')[17] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour18.state | float * state_attr('sensor.energi_data_service', 'today')[18] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour19.state | float * state_attr('sensor.energi_data_service', 'today')[19] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour20.state | float * state_attr('sensor.energi_data_service', 'today')[20] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour21.state | float * state_attr('sensor.energi_data_service', 'today')[21] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour22.state | float * state_attr('sensor.energi_data_service', 'today')[22] | float 
+  +  states.sensor.daily_electricity_hourly_tariffs_hour23.state | float * state_attr('sensor.energi_data_service', 'today')[12] | float 
+  }}
+attributes:
+  unit_of_measurement: "kr."
