@@ -1,0 +1,38 @@
+title: Appliances
+path: "appliances"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: Appliances
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.start_dishwasher_2
+        variables:
+          ulm_card_generic_swap_name: Start Dishwasher
+          ulm_card_generic_swap_icon: mdi:dishwasher
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.start_washing_machine_30_degree
+        variables:
+          ulm_card_generic_swap_name: Start 30 degree wash
+          ulm_card_generic_swap_icon: mdi:washing-machine
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.start_washing_machine_60_degrees
+        variables:
+          ulm_card_generic_swap_name: Start 60 degree wash
+          ulm_card_generic_swap_icon: mdi:washing-machine
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.start_washing_machine_90_degrees
+        variables:
+          ulm_card_generic_swap_name: Start 90 degree wash
+          ulm_card_generic_swap_icon: mdi:washing-machine
