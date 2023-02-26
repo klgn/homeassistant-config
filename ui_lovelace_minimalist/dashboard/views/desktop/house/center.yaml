@@ -36,7 +36,7 @@ cards:
               ulm_card_input_datetime_name: Sonos in Living Room turns off at
           - type: "custom:button-card"
             template: card_power_outlet
-            entity: automation.living_room_morning_scheduledsad
+            entity: automation.living_room_morning_schedule
             name: Living Room morning lights schedule enabled
             variables:
               ulm_card_power_outlet_name: Is Living Room morning lights schedule enabled?
@@ -59,7 +59,7 @@ cards:
                   ulm_card_input_datetime_name: Kitchen Timer Turns off at
               - type: "custom:button-card"
                 template: card_power_outlet
-                entity: automation.turn_off_charging_unit_at_23_30_2
+                entity: automation.turn_off_charging_unit_at_night
                 name: Turn off charging unit at night
                 variables:
                   ulm_card_power_outlet_name: Turn off charging unit at night

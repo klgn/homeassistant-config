@@ -216,24 +216,6 @@
     input:
       waste: sensor.renoweb_240_l_rest_mad_14_dag
       mobile_app_device: 49007877174341f3f8961213599c583f
-- id: '1659546576401'
-  alias: Update previous hour price
-  description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: '59'
-  condition: []
-  action:
-  - service: input_number.set_value
-    data:
-      value: '{% set _price_obj = state_attr(''sensor.energy_price'', ''today'') |
-        selectattr(''hour_only'', ''=='', now().timestamp() | timestamp_custom("%H"))
-        | list %} {{ _price_obj[0][''price''] }}
-
-        '
-    target:
-      entity_id: input_number.previous_hour_price
-  mode: single
 - id: '1659547210990'
   alias: Update Hourly Electricity price
   description: ''
@@ -477,16 +459,16 @@
       - service: switch.turn_on
         data: {}
         target:
-          entity_id: switch.laurits_laptop
-      - service: switch.turn_on
-        data: {}
-        target:
           entity_id:
-          - switch.astrids_laptop
+          - switch.laurits_laptop_rx
       - service: switch.turn_on
         data: {}
         target:
-          entity_id: switch.emmas_laptop
+          entity_id: switch.astrids_laptop_rx
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.emmas_laptop_rx
     - conditions:
       - condition: trigger
         id: evening-curfew
@@ -494,16 +476,15 @@
       - service: switch.turn_off
         data: {}
         target:
-          entity_id:
-          - switch.laurits_laptop
+          entity_id: switch.laurits_laptop_rx
       - service: switch.turn_off
         data: {}
         target:
-          entity_id: switch.astrids_laptop
+          entity_id: switch.astrids_laptop_rx
       - service: switch.turn_off
         data: {}
         target:
-          entity_id: switch.emmas_laptop
+          entity_id: switch.emmas_laptop_rx
     default: []
   mode: single
 - id: '1664649038611'
@@ -829,14 +810,10 @@
         id: morning-start
       sequence:
       - service: automation.trigger
-        target:
-          entity_id: automation.sonos_start_astrid_alarm
-        data: {}
-      - service: media_player.select_source
         data:
-          source: Bangers - the sequel
+          skip_condition: true
         target:
-          entity_id: media_player.astrids_sonos
+          entity_id: automation.sonos_start_astrid_alarm_2
     default: []
   mode: single
 - id: '1666078503672'
@@ -1135,7 +1112,7 @@
   action:
   - service: automation.trigger
     target:
-      entity_id: automation.sonos_start_astrid_alarm
+      entity_id: automation.sonos_start_astrid_alarm_2
     data: {}
   mode: single
 - id: '1666079376655'
@@ -1239,7 +1216,6 @@
       - switch.office_control_unit
       - switch.control_unit_1
       - switch.living_room_control_unit
-      - switch.banquet_hall_control_unit
     data: {}
   - service: light.turn_off
     target:
@@ -1767,4 +1743,135 @@
           option: night
         target:
           entity_id: select.monthly_electricity
+  mode: single
+- id: '1677350763501'
+  alias: Update hourly tariffs
+  description: Sets the tariff to the currently hourly tariff
+  trigger:
+  - platform: time
+    at: 00:00:00
+    id: hour00
+    variables:
+      tariff: hour00
+  - platform: time
+    at: 01:00:00
+    id: hour01
+    variables:
+      tariff: hour01
+  - platform: time
+    at: 02:00:00
+    id: hour02
+    variables:
+      tariff: hour02
+  - platform: time
+    at: 03:00:00
+    id: hour03
+    variables:
+      tariff: hour03
+  - platform: time
+    at: 04:00:00
+    id: hour04
+    variables:
+      tariff: hour04
+  - platform: time
+    at: 05:00:00
+    id: hour05
+    variables:
+      tariff: hour05
+  - platform: time
+    at: 06:00:00
+    id: hour06
+    variables:
+      tariff: hour06
+  - platform: time
+    at: 07:00:00
+    id: hour07
+    variables:
+      tariff: hour07
+  - platform: time
+    at: 08:00:00
+    id: hour08
+    variables:
+      tariff: hour08
+  - platform: time
+    at: 09:00:00
+    id: hour09
+    variables:
+      tariff: hour09
+  - platform: time
+    at: '10:00:00'
+    id: hour10
+    variables:
+      tariff: hour10
+  - platform: time
+    at: '11:00:00'
+    id: hour11
+    variables:
+      tariff: hour11
+  - platform: time
+    at: '12:00:00'
+    id: hour12
+    variables:
+      tariff: hour12
+  - platform: time
+    at: '13:00:00'
+    id: hour13
+    variables:
+      tariff: hour13
+  - platform: time
+    at: '14:00:00'
+    id: hour14
+    variables:
+      tariff: hour14
+  - platform: time
+    at: '15:00:00'
+    id: hour15
+    variables:
+      tariff: hour15
+  - platform: time
+    at: '16:00:00'
+    id: hour16
+    variables:
+      tariff: hour16
+  - platform: time
+    at: '17:00:00'
+    id: hour17
+    variables:
+      tariff: hour17
+  - platform: time
+    at: '18:00:00'
+    id: hour18
+    variables:
+      tariff: hour18
+  - platform: time
+    at: '19:00:00'
+    id: hour19
+    variables:
+      tariff: hour19
+  - platform: time
+    at: '20:00:00'
+    id: hour20
+    variables:
+      tariff: hour20
+  - platform: time
+    at: '21:00:00'
+    id: hour21
+    variables:
+      tariff: hour21
+  - platform: time
+    at: '22:00:00'
+    id: hour22
+    variables:
+      tariff: hour22
+  - platform: time
+    at: '23:00:00'
+    id: hour23
+    variables:
+      tariff: hour23
+  action:
+  - service: select.select_option
+    target:
+      entity_id: select.daily_electricity_hourly_tariffs
+    data:
+      option: '{{ trigger.id }}'
   mode: single

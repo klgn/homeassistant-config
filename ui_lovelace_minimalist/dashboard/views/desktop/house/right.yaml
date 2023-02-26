@@ -36,7 +36,7 @@ cards:
               ulm_card_power_outlet_name: Kids Internet Schedule is enabled?
           - type: "custom:button-card"
             template: card_power_outlet
-            entity: automation.sonos_stop_kids_players_at_22_30
+            entity: automation.sonos_stop_kids_players_at_night
             name: Kids Sonos Players Schedule Enabled?
             variables:
               ulm_card_power_outlet_name: Kids Sonos Players Schedule Enabled?
@@ -59,7 +59,7 @@ cards:
               ulm_card_input_datetime_name: Astrid Alarm End
           - type: "custom:button-card"
             template: card_power_outlet
-            entity: automation.astrid_morning_alarm_2
+            entity: automation.astrid_morning_alarm
             name: Astrid Morning Alarm
             variables:
               ulm_card_power_outlet_name: Astrid Morning Alarm

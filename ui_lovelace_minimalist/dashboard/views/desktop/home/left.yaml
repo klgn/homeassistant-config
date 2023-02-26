@@ -12,7 +12,7 @@ cards:
         template: "card_homeassistant_updates"
         variables:
           ulm_card_homeassistant_core: "sensor.core_updates"
-          ulm_card_homeassistant_entity: "binary_sensor.updater"
+          ulm_card_homeassistant_entity: "sensor.current_version"
           ulm_card_homeassistant_supervisor: "sensor.supervisor_updates"
           ulm_card_homeassistant_os: "sensor.os_updates"
           ulm_card_homeassistant_addons: "sensor.addons_updates"

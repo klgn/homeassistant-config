@@ -16,9 +16,9 @@ cards:
   - type: "custom:button-card"
     template: card_title
     name: Kids' internet
-#  - type: grid
-#    columns: 2
-#    square: false
-#    view_layout:
-#      grid-area: kids-internet
-#    cards: !include_dir_list ../../common/kids_internet
+  - type: grid
+    columns: 2
+    square: false
+    view_layout:
+      grid-area: kids-internet
+    cards: !include_dir_list ../../common/kids_internet

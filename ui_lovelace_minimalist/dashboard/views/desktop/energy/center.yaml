@@ -5,19 +5,14 @@ view_layout:
 cards:
   - type: vertical-stack
     cards:
-      - type: "custom:apexcharts-card"
-        header:
-          show: true
-          title: Monthly Energy Usage
-        span:
-          start: day
-          offset: -12m
-        graph_span: 12m
-        series:
-          - entity: sensor.monthly_power_usage
-            type: column
-            group_by:
-              func: max
-              duration: 1m
-        all_series_config:
-          unit: kWh
+      - type: "custom:mini-graph-card"
+        hours_to_show: 24
+        entities:
+          - entity: sensor.washing_machine_hourly_usage
+        group_by: hour
+        aggregate_func: max
+        unit: kwh
+        decimals: 2
+        show:
+          graph: bar
+          icon: false

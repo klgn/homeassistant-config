@@ -8,7 +8,7 @@ cards:
   - type: "custom:button-card"
     template: card_title
     name: Car
-  - type: vertical-stack
+  - type: horizontal-stack
     cards:
       - type: "custom:button-card"
         template: chip_icon_double_state
@@ -17,8 +17,35 @@ cards:
           ulm_chip_icon_double_state_entity_1: sensor.ioniq_5_ev_battery_level
           ulm_chip_icon_double_state_entity_2: sensor.hyundai_ioniq_5_battery_level_kwh
       - type: "custom:button-card"
+        template: chip_mdi_icon_state
+        variables:
+          ulm_chip_mdi_icon_state_entity: device_tracker.ioniq_5_location
+          ulm_chip_mdi_icon_state_icon: mdi:map-marker
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
         template: card_generic_swap
         entity: sensor.hyundai_toniq_5_estimated_charging_time
         variables:
-          ulm_card_generic_swap_name: Estimated charging time
+          ulm_card_generic_swap_name: Charging time
           ulm_card_generic_swap_icon: mdi:timer
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.hyundai_ioniq_5_kwh_until_full
+        variables:
+          ulm_card_generic_swap_name: kWh until full
+          ulm_card_generic_swap_icon: mdi:transmission-tower-import
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.hyundai_ionoq_5_charging_start_time
+        variables:
+          ulm_card_generic_swap_name: Start charging at
+          ulm_card_generic_swap_icon: mdi:clock
+      - type: "custom:button-card"
+        template: card_generic_swap
+        entity: sensor.hyundai_ioniq5_estimated_charging_cost
+        variables:
+          ulm_card_generic_swap_name: Cost
+          ulm_card_generic_swap_icon: mdi:cash

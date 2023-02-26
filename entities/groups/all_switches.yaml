@@ -4,7 +4,6 @@ entities:
   - switch.smartplug
   - switch.living_room_control_unit
   - switch.office_control_unit
-  - switch.banquet_hall_control_unit
   - switch.control_unit_1
   - switch.charge_unit_l1
   - switch.charge_unit_l2

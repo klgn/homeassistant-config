@@ -4,6 +4,6 @@ unique_id: energy_consumption_yesterday_cont
 device_class: energy
 icon: mdi:lightning-bolt-circle
 state: >
-  {{ state_attr('sensor.daily_electricity_price', 'last_period') }}
+  {{ state_attr('sensor.daily_electricity_day', 'last_period') | float * states.input_number.electricity_day_tariff.state | float + state_attr('sensor.daily_electricity_night', 'last_period') | float * states.input_number.electricity_night_tariff.state | float }}
 attributes:
   unit_of_measurement: "kr"

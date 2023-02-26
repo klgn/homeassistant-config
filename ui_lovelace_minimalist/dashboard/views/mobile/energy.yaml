@@ -7,6 +7,18 @@ cards:
         template: chip_back
         variables:
           ulm_chip_back_path: home
+  - type: "custom:button-card"
+    template: card_title
+    name: Energy
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: chip_icon_state
+        variables:
+          ulm_chip_icon_state_icon: "⚡"
+          ulm_chip_icon_state_entity: sensor.energi_data_service
+  - type: vertical-stack
+    cards:
       - type: "custom:button-card"
         template: chip_icon_double_state
         variables:
@@ -19,9 +31,6 @@ cards:
           ulm_chip_icon_double_state_icon: "🌙"
           ulm_chip_icon_double_state_entity_1: sensor.electricity_night_tariff_interval
           ulm_chip_icon_double_state_entity_2: input_number.electricity_night_tariff
-  - type: "custom:button-card"
-    template: card_title
-    name: Energy
   - type: vertical-stack
     cards:
       - type: "custom:button-card"
@@ -36,93 +45,50 @@ cards:
         variables:
           ulm_card_power_friendly_name: "Yesterday"
           ulm_card_power_usage_price_sensor: sensor.cost_of_yesterday_s_energy_consumption
-#  - type: custom:button-card
-#    template: custom_card_irmajavi_entities
-#    variables:
-#      ulm_custom_card_irmajavi_entities_entity_1: sensor.today_s_cheapest_3_hour_energy
-#      ulm_custom_card_irmajavi_entities_entity_2: sensor.tomorrow_s_cheapest_3_hour_energy
-#      ulm_custom_card_irmajavi_entities_entity_3: sensor.tomorrow_s_cheapest_3_hour_energy
-#      ulm_custom_card_irmajavi_entities_entity_4: sensor.cheapest_6_hours
-#      ulm_custom_card_irmajavi_entities_name_1: Today
-#      ulm_custom_card_irmajavi_entities_name_2: Tomorrow
-#      ulm_custom_card_irmajavi_entities_name_3: Rolling
-#      ulm_custom_card_irmajavi_entities_name_4: 6 hours
-#      ulm_custom_card_irmajavi_entities_name: Cheapest hour intervals
-#      ulm_custom_card_irmajavi_entities: sensor.energy_price
-#  - type: "custom:mini-graph-card"
-#    hours_to_show: 24
-#    entities:
-#      - entity: sensor.hourly_power_usage
-#    group_by: hour
-#    aggregate_func: max
-#    unit: kWh
-#    decimals: 2
-#    show:
-#      graph: bar
-#      icon: false
-#    color_thresholds:
-#      - value: 0
-#        color: "#43A047"
-#      - value: 2500
-#        color: "#FFA600"
-#      - value: 3000
-#        color: "#DB4437"
-#  - type: custom:apexcharts-card
-#    experimental:
-#      color_threshold: true
-#    graph_span: 48h
-#    header:
-#      title: Electricity prices (kr/kWh)
-#      show: true
-#      show_states: true
-#    span:
-#      start: day
-#    now:
-#      show: true
-#      label: Now
-#    yaxis:
-#      - min: 0
-#        apex_config:
-#          tickAmount: 5
-#        max: 12
-#    series:
-#      - name: hax
-#        entity: sensor.energy_price
-#        color: rgb(33, 150, 243)
-#        data_generator: |
-#          return [[new Date(), entity.state]]
-#        show:
-#          in_chart: false
-#      - name: Current
-#        entity: sensor.energy_price
-#        stroke_width: 2
-#        float_precision: 2
-#        type: line
-#        color: rgb(33, 150, 243)
-#        extend_to: false
-#        show:
-#          in_header: false
-#        data_generator: |
-#          var now = new Date()
-#          now.setHours(now.getHours() - 1);
-#          var data = entity.attributes.today
-#            .map((start, index) => {
-#              return [new Date(start["time"]).getTime(), start["price"]];
-#            });
-#          if (entity.attributes.tomorrow.length > 0) {
-#            var tomorrow = entity.attributes.tomorrow.map((start, index) => {
-#              return [new Date(start["time"]).getTime(), start["price"]];
-#            });
-#            var data = data.concat(tomorrow);
-#          }
-#          return data;
-#        color_threshold:
-#          - value: 0
-#            color: green
-#          - value: 2
-#            color: orange
-#          - value: 3.5
-#            color: red
-#          - value: 5
-#            color: darkred
-#
+  - type: custom:apexcharts-card
+    apex_config:
+      chart:
+        height: 200px
+    experimental:
+      color_threshold: true
+    graph_span: 24h
+    header:
+      title: Electricity prices per hour (kr/kWh)
+      show: true
+    span:
+      start: hour
+      offset: "-2h"
+    now:
+      show: true
+      label: Now
+    yaxis:
+      - min: 0
+        apex_config:
+          tickAmount: 5
+    series:
+      - entity: sensor.energi_data_service
+        type: line
+        data_generator: |
+          var today = entity.attributes.raw_today.map((start, index) => {
+            return [new Date(start["hour"]).getTime(), entity.attributes.raw_today[index]["price"]];
+          });
+          if (entity.attributes.tomorrow_valid) {
+            var tomorrow = entity.attributes.raw_tomorrow.map((start, index) => {
+              return [new Date(start["hour"]).getTime(), entity.attributes.raw_tomorrow[index]["price"]];
+            });
+
+            var data = today.concat(tomorrow);
+          } else {
+            var data = today
+          }
+          return data;
+        float_precision: 2
+        color_threshold:
+          - value: 0
+            color: green
+          - value: 2
+            color: orange
+          - value: 3.5
+            color: red
+          - value: 5
+            color: darkred

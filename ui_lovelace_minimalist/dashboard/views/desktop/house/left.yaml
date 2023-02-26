@@ -60,7 +60,7 @@ cards:
               ulm_card_power_outlet_name: Ask if working remotely enabled?
           - type: "custom:button-card"
             template: card_power_outlet
-            entity: automation.everyday_alarm
+            entity: automation.everyday_alarm_2
             name: Everyday Alarm enabled
             variables:
               ulm_card_power_outlet_name: Everyday Alarm enabled

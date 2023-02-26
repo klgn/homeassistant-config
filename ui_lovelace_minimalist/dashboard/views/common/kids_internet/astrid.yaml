@@ -1,5 +1,5 @@
 ---
 type: "custom:button-card"
 template: card_power_outlet
-entity: switch.astrids_laptop
+entity: switch.astrids_laptop_rx
 name: Astrids wifi

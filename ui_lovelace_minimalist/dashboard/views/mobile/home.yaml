@@ -58,6 +58,12 @@ cards:
           ulm_card_navigate_path: car
           ulm_card_navigate_title: Ioniq 5
           ulm_card_navigate_icon: mdi:car-electric
+      - type: custom:button-card
+        template: card_navigate
+        variables:
+          ulm_card_navigate_path: appliances
+          ulm_card_navigate_title: Appliances
+          ulm_card_navigate_icon: mdi:washing-machine
   - type: grid
     columns: 2
     square: false
