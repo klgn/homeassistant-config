@@ -84,7 +84,7 @@ cards:
           - card_esh_room
           - yellow_on
         name: Bedroom
-        entity: light.bedroom_lights
+        entity: light.all_bedroom_lights
         icon: mdi:bed-double-outline
         tap_action:
           action: navigate
@@ -95,7 +95,7 @@ cards:
           - card_esh_room
           - yellow_on
         name: Office
-        entity: light.office_bulp
+        entity: light.office_lights
         icon: mdi:desk
         tap_action:
           action: navigate
@@ -106,7 +106,7 @@ cards:
           - card_esh_room
           - yellow_on
         name: Basement
-        entity: light.utility_room_light
+        entity: light.basement_lights
         icon: mdi:bed-double-outline
         tap_action:
           action: navigate

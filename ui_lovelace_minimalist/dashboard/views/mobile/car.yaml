@@ -8,6 +8,11 @@ cards:
   - type: "custom:button-card"
     template: card_title
     name: Car
+  - type: "custom:button-card"
+    template: card_input_number
+    entity: input_number.ioniq5_manual_battery_level
+    variables:
+      ulm_card_input_number_name: "Ioniq 5 Battery level"
   - type: horizontal-stack
     cards:
       - type: "custom:button-card"
@@ -49,3 +54,37 @@ cards:
         variables:
           ulm_card_generic_swap_name: Cost
           ulm_card_generic_swap_icon: mdi:cash
+  - type: custom:apexcharts-card
+    apex_config:
+      chart:
+        height: 200px
+    experimental:
+      color_threshold: true
+    graph_span: 12h
+    header:
+      title: Car Charging Costs
+      show: true
+    span:
+      start: hour
+      offset: +1h
+    now:
+      show: true
+      label: Now
+    yaxis:
+      - min: 0
+        apex_config:
+          tickAmount: 5
+    series:
+      - entity: sensor.hyundai_ioniq_5_charging
+        name: Prices
+        type: column
+        unit: kr
+        stroke_width: 2
+        show:
+          legend_value: false
+        data_generator: |
+          return entity.attributes.charging_costs.map((start, index) => {
+            return [new Date(start["start"]).getTime(), start["price"]];
+          });
+        float_precision: 2
+        color: blue

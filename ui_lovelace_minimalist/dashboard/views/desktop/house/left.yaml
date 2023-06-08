@@ -53,6 +53,18 @@ cards:
             variables:
               ulm_card_input_datetime_name: Daytime Tariff for Electricity starts at
           - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.phone_charge_start
+            variables:
+              ulm_card_input_datetime_name: Start Charging Phones at
+          - type: "custom:button-card"
+            template:
+              - card_input_datetime
+            entity: input_datetime.phone_charge_end
+            variables:
+              ulm_card_input_datetime_name: End Charging Phones at
+          - type: "custom:button-card"
             template: card_power_outlet
             entity: automation.ask_if_working_remotely
             name: Ask if working remotely enabled?

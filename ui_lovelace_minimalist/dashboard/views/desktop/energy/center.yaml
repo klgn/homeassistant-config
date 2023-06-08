@@ -16,3 +16,66 @@ cards:
         show:
           graph: bar
           icon: false
+  - type: vertical-stack
+    cards:
+      - type: "custom:mini-graph-card"
+        hours_to_show: 24
+        entities:
+          - entity: sensor.office_laptop_hourly_usage
+        group_by: hour
+        aggregate_func: max
+        unit: kwh
+        decimals: 2
+        show:
+          graph: bar
+          icon: false
+  - type: custom:apexcharts-card
+    apex_config:
+      chart:
+        height: 200px
+    experimental:
+      color_threshold: true
+    graph_span: 12h
+    header:
+      title: Washing machine prices
+      show: true
+    span:
+      start: hour
+      offset: +1h
+    now:
+      show: true
+      label: Now
+    yaxis:
+      - min: 0
+        show: true
+        id: first
+        apex_config:
+          tickAmount: 5
+    all_series_config:
+      type: column
+      float_precision: 2
+      show:
+        legend_value: false
+      unit: kr
+    series:
+      - entity: sensor.washing_machine
+        name: 30 degrees
+        data_generator: |
+          return entity.attributes.prices_30_degrees.map((start, index) => {
+            return [new Date(start["start"]).getTime(), start["price"]];
+          });
+        color: green
+      - entity: sensor.washing_machine
+        name: 60 degrees
+        data_generator: |
+          return entity.attributes.prices_60_degrees.map((start, index) => {
+            return [new Date(start["start"]).getTime(), start["price"]];
+          });
+        color: red
+      - entity: sensor.washing_machine
+        name: 90 degrees
+        data_generator: |
+          return entity.attributes.prices_90_degrees.map((start, index) => {
+            return [new Date(start["start"]).getTime(), start["price"]];
+          });
+        color: darkred

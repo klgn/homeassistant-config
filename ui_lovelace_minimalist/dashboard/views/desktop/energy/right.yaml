@@ -7,4 +7,88 @@ cards:
     cards:
       - type: "custom:button-card"
         template: card_title
-        name: Kids
+        name: Prices
+  - type: custom:apexcharts-card
+    apex_config:
+      chart:
+        height: 200px
+    experimental:
+      color_threshold: true
+    graph_span: 24h
+    header:
+      title: Electricity prices per hour (kr/kWh)
+      show: true
+    span:
+      start: hour
+      offset: "-2h"
+    now:
+      show: true
+      label: Now
+    yaxis:
+      - min: 0
+        apex_config:
+          tickAmount: 5
+    series:
+      - entity: sensor.energi_data_service
+        type: line
+        data_generator: |
+          var today = entity.attributes.raw_today.map((start, index) => {
+            return [new Date(start["hour"]).getTime(), entity.attributes.raw_today[index]["price"]];
+          });
+          if (entity.attributes.tomorrow_valid) {
+            var tomorrow = entity.attributes.raw_tomorrow.map((start, index) => {
+              return [new Date(start["hour"]).getTime(), entity.attributes.raw_tomorrow[index]["price"]];
+            });
+
+            var data = today.concat(tomorrow);
+          } else {
+            var data = today
+          }
+          return data;
+        float_precision: 2
+        color_threshold:
+          - value: 0
+            color: green
+          - value: 2
+            color: orange
+          - value: 3.5
+            color: red
+          - value: 5
+            color: darkred
+  - type: custom:apexcharts-card
+    apex_config:
+      chart:
+        height: 200px
+    experimental:
+      color_threshold: true
+    graph_span: 120h
+    header:
+      title: Electricity Forecast prices per hour (kr/kWh)
+      show: true
+    span:
+      start: day
+      offset: +2day
+    now:
+      show: true
+      label: Now
+    yaxis:
+      - min: 0
+        apex_config:
+          tickAmount: 5
+    series:
+      - entity: sensor.energi_data_service
+        type: line
+        data_generator: |
+          return entity.attributes.forecast.map((start, index) => {
+            return [new Date(start["hour"]).getTime(), entity.attributes.forecast[index]["price"]];
+          });
+        float_precision: 2
+        color_threshold:
+          - value: 0
+            color: green
+          - value: 2
+            color: orange
+          - value: 3.5
+            color: red
+          - value: 5
+            color: darkred

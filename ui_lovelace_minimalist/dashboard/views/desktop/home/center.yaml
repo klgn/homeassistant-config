@@ -7,17 +7,10 @@ cards:
   - type: horizontal-stack
     cards:
       - type: "custom:button-card"
-        template: chip_icon_double_state
+        template: chip_icon_state
         variables:
-          ulm_chip_icon_double_state_icon: "☀️"
-          ulm_chip_icon_double_state_entity_1: sensor.electricity_day_tariff_interval
-          ulm_chip_icon_double_state_entity_2: input_number.electricity_day_tariff
-      - type: "custom:button-card"
-        template: chip_icon_double_state
-        variables:
-          ulm_chip_icon_double_state_icon: "🌙"
-          ulm_chip_icon_double_state_entity_1: sensor.electricity_night_tariff_interval
-          ulm_chip_icon_double_state_entity_2: input_number.electricity_night_tariff
+          ulm_chip_icon_state_icon: "⚡"
+          ulm_chip_icon_state_entity: sensor.energi_data_service
   - type: horizontal-stack
     cards:
       - type: "custom:button-card"
@@ -25,7 +18,7 @@ cards:
         entity: sensor.today_s_energy_consumption
         variables:
           ulm_card_power_friendly_name: "Today"
-          ulm_card_power_usage_price_sensor: sensor.daily_electricity_price
+          ulm_card_power_usage_price_sensor: sensor.daily_electricity_price_hourly_tariffs
       - type: "custom:button-card"
         template: card_power_usage
         entity: sensor.yesterday_s_energy_consumption
@@ -56,6 +49,11 @@ cards:
         variables:
           ulm_chip_mdi_icon_state_entity: device_tracker.ioniq_5_location
           ulm_chip_mdi_icon_state_icon: mdi:map-marker
+  - type: "custom:button-card"
+    template: card_input_number
+    entity: input_number.ioniq5_manual_battery_level
+    variables:
+      ulm_card_input_number_name: "Ioniq 5 Battery level"
   - type: grid
     columns: 2
     square: false

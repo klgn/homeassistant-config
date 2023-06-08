@@ -14,7 +14,7 @@ cards:
           offset: -10d
         graph_span: 10d
         series:
-          - entity: sensor.daily_power_usage
+          - entity: sensor.daily_electricity_price_hourly_tariffs
             type: column
             group_by:
               func: max
