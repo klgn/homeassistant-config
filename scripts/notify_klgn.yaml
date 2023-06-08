@@ -1,0 +1,7 @@
+---
+alias: Notify Kristian
+sequence:
+  service: notify.mobile_app_klgn_phone
+  data:
+    title: "{{ title }}"
+    message: "{{ message }}"

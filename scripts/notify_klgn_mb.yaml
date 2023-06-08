@@ -1,0 +1,11 @@
+---
+alias: Notify Kristian Plus Mai-Britt
+sequence:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      title: "{{ title }}"
+      message: "{{ message }}"
+  - service: notify.mobile_app_sm_a405fn
+    data:
+      title: "{{ title }}"
+      message: "{{ message }}"
