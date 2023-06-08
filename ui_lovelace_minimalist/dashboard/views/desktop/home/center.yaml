@@ -49,11 +49,6 @@ cards:
         variables:
           ulm_chip_mdi_icon_state_entity: device_tracker.ioniq_5_location
           ulm_chip_mdi_icon_state_icon: mdi:map-marker
-  - type: "custom:button-card"
-    template: card_input_number
-    entity: input_number.ioniq5_manual_battery_level
-    variables:
-      ulm_card_input_number_name: "Ioniq 5 Battery level"
   - type: grid
     columns: 2
     square: false
