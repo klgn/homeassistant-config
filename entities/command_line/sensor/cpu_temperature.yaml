@@ -1,8 +1,8 @@
 ---
-name: CPU Temperature
-unique_id: cpu_temperature
-command: "cat /sys/class/thermal/thermal_zone0/temp" # RPi
-#    command: "cat /sys/class/thermal/thermal_zone2/temp" # NUC
-# If errors occur, remove degree symbol below
-unit_of_measurement: "°C"
-value_template: "{{ '%.1f' | format(value | multiply(0.001)) }}" # RPi & NUC
+sensor:
+  name: CPU Temperature
+  command: "cat /sys/class/thermal/thermal_zone0/temp" # RPi
+  #    command: "cat /sys/class/thermal/thermal_zone2/temp" # NUC
+  # If errors occur, remove degree symbol below
+  unit_of_measurement: "°C"
+  value_template: "{{ '%.1f' | format(value | multiply(0.001)) }}" # RPi & NUC

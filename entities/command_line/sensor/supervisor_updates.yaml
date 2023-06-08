@@ -1,9 +1,10 @@
 ---
-name: supervisor_updates
-command: 'curl http://supervisor/supervisor/info -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" | jq ''{"latest_version":.data.version_latest,"installed_version":.data.version,"update_available":.data.update_available}'''
-value_template: "{{ value_json.update_available }}"
-scan_interval: 600
-json_attributes:
-  - update_available
-  - latest_version
-  - installed_version
+sensor:
+  name: supervisor_updates
+  command: 'curl http://supervisor/supervisor/info -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" | jq ''{"latest_version":.data.version_latest,"installed_version":.data.version,"update_available":.data.update_available}'''
+  value_template: "{{ value_json.update_available }}"
+  scan_interval: 600
+  json_attributes:
+    - update_available
+    - latest_version
+    - installed_version
