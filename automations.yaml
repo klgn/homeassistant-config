@@ -327,6 +327,10 @@
     entity_id: sensor.sun_elevation
     id: sun-up
     above: '1'
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    id: sun-not-up
+    below: 1
   condition:
   - condition: and
     conditions:
@@ -337,16 +341,20 @@
       entity_id: binary_sensor.workday_sensor
       state: 'on'
     - condition: state
-      entity_id: person.kristian_l_g_nielsen
-      state: home
-    - condition: state
       entity_id: input_boolean.guestmode
       state: 'off'
+    - condition: state
+      entity_id: alarm_control_panel.verisure_alarm
+      state: disarmed
   action:
   - choose:
     - conditions:
-      - condition: trigger
-        id: morning-start
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: morning-start
+        - condition: time
+          before: input_datetime.next_sun_rise
       sequence:
       - service: switch.turn_on
         target:
@@ -640,7 +648,7 @@
         data:
           title: Waste collection tomorrow
           message: Paper waste is collected tomorrow
-      - service: notify.mobile_app_sm_a405fn
+      - service: script.notify_klgn_mb
         data:
           message: Paper waste is collected tomorrow
           title: Waste collection tomorrow
@@ -652,7 +660,7 @@
         data:
           title: Waste is collected tomorrow
           message: Glass and metal waste is collected tomorrow
-      - service: notify.mobile_app_sm_a405fn
+      - service: script.notify_klgn_mb
         data:
           title: Waste is collected tomorrow
           message: Glass and metal waste is collected tomorrow
@@ -664,7 +672,7 @@
         data:
           title: Waste is collected tomorrow
           message: General waste is collected tomorrow
-      - service: notify.mobile_app_sm_a405fn
+      - service: script.notify_klgn_mb
         data:
           message: General waste is collected tomorrow
           title: Waste is collected tomorrow
@@ -676,7 +684,7 @@
         data:
           message: Chemical waste is collected tomorrow
           title: Waste is collected tomorrow
-      - service: notify.mobile_app_sm_a405fn
+      - service: script.notify_klgn_mb
         data:
           title: Waste is collected tomorrow
           message: Chemical waste is collected tomorrow
@@ -688,7 +696,7 @@
         data:
           title: Waste is collected tomorrow
           message: Textile waste is collected tomorrow
-      - service: notify.mobile_app_sm_a405fn
+      - service: script.notify_klgn_mb
         data:
           message: Textile waste is collected tomorrow
           title: Waste is collected tomorrow
@@ -1563,61 +1571,6 @@
 
             '
   mode: single
-- id: '1666360654338'
-  alias: Bedroom dimmer
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - sensor.bedroom_dimmer_brightness
-    id: brightness
-  - platform: state
-    entity_id:
-    - sensor.bedroom_dimmer_action
-    to: 'on'
-    id: 'on'
-  - platform: state
-    entity_id:
-    - sensor.bedroom_dimmer_action
-    id: 'off'
-    to: 'off'
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id: 'on'
-      sequence:
-      - service: light.turn_on
-        data:
-          brightness: '{{ states.sensor.bedroom_dimmer_brightness.state | float }}
-
-            '
-        target:
-          entity_id: light.bedroom_lights
-    - conditions:
-      - condition: trigger
-        id: 'off'
-      sequence:
-      - service: light.turn_off
-        data: {}
-        target:
-          entity_id: light.bedroom_lights
-    - conditions:
-      - condition: trigger
-        id: brightness
-      - condition: state
-        entity_id: light.bedroom_lights
-        state: 'on'
-      sequence:
-      - service: light.turn_on
-        data:
-          brightness: '{{ states.sensor.bedroom_dimmer_brightness.state | float }}
-
-            '
-        target:
-          entity_id: light.bedroom_lights
-  mode: single
 - id: '1666360971602'
   alias: Rotater
   description: ''
@@ -1874,4 +1827,145 @@
       entity_id: select.daily_electricity_hourly_tariffs
     data:
       option: '{{ trigger.id }}'
+  mode: single
+- id: '1679759653400'
+  alias: Toggle Bedroom Lights
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.bedroom_button_action
+    to: 'on'
+  condition: []
+  action:
+  - service: light.toggle
+    data: {}
+    target:
+      entity_id: light.bedroom_lights
+  mode: single
+- id: '1679760064468'
+  alias: Toggle Phone Charging Automation
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.phone_charge_trigger_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.phone_charge_trigger_action
+    id: 'off'
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.charge_phones
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_phone_charge_start''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.phone_charge_start
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{as_timestamp(state_attr(''sensor.energy_prices'',''recommended_phone_charge_end''))|
+            timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.phone_charge_end
+      - service: script.notify_klgn
+        data:
+          title: Charging Turned On
+          message: Phone charging will start at {{ as_timestamp(state_attr('sensor.energy_prices',
+            'recommended_phone_charge_start')) | timestamp_custom('%H:%M') }}
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_phones
+      - service: script.notify_klgn
+        data:
+          title: Charging Turned Off
+          message: Phone charging has been disabled
+  mode: single
+- id: '1679763740841'
+  alias: Phone Charging
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.phone_charge_start
+    id: start
+  - platform: time
+    at: input_datetime.phone_charge_end
+    id: end
+  condition:
+  - condition: state
+    entity_id: input_boolean.charge_phones
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: start
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.charge_unit_l1
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.charge_unit_l2
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.charge_unit_l3
+    - conditions:
+      - condition: trigger
+        id: end
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.charge_unit_l1
+          - switch.charge_unit_l2
+          - switch.charge_unit_l3
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_phones
+  mode: single
+- id: '1679934803929'
+  alias: Set next Sun Rise
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 0
+    id: sun-set
+    enabled: true
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: sun-set
+      sequence:
+      - service: input_datetime.set_datetime
+        data:
+          datetime: '{{as_timestamp(state_attr(''sun.sun'', ''next_rising'')) | timestamp_custom(''%Y-%m-%d
+            %H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.next_sun_rise
   mode: single
