@@ -1,0 +1,6 @@
+---
+platform: group
+name: Office Lights
+entities:
+  - light.office_bulp
+  - light.office_strip

@@ -1,0 +1,4 @@
+---
+source: sensor.shelly_shplg_s_f14C3f_total_consumption
+name: Office Laptop Hourly Usage
+cycle: hourly

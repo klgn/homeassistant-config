@@ -1,0 +1,8 @@
+---
+platform: group
+name: All Bedroom Lights
+entities:
+  - light.bedroom_bulp_1
+  - light.bedroom_bulp_2
+  - light.bedroom_bulp_3
+  - light.bedside_bulb

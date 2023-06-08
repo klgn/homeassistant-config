@@ -1,0 +1,9 @@
+---
+platform: group
+name: Basement Lights
+entities:
+  - light.astrid_s_lights
+  - light.emmas_strip
+  - light.pantry_light
+  - light.utility_room_light
+  - light.toilet_bulbs
