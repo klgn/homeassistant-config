@@ -1,0 +1,2 @@
+command_line:
+  - sensor: !include_dir_merge_named ../entities/command_line/sensor
