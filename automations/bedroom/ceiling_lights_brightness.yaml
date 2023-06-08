@@ -1,9 +1,0 @@
----
-id: bedroom_ceiling_lights_brightness
-alias: Light bedroom dim
-description: ''
-use_blueprint:
-  path: klgn/ikea_dimmer_brightness.yaml
-  input:
-    button: sensor.bedroom_dimmer_brightness
-    target_light: light.bedroom_bulp_1
