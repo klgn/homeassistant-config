@@ -1,5 +1,4 @@
 ---
-platform: command_line
 name: CPU Temperature
 unique_id: cpu_temperature
 command: "cat /sys/class/thermal/thermal_zone0/temp" # RPi

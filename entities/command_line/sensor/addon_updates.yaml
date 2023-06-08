@@ -1,5 +1,4 @@
 ---
-platform: command_line
 name: addons_updates
 command: 'curl http://supervisor/addons -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" | jq ''{"addons":[.data.addons[] | select(.update_available)]}'''
 value_template: "{{ value_json.addons | length }}"
