@@ -4,20 +4,54 @@ unique_id: dishwasher
 state: OK
 attributes:
   recommended_start_time: >
+    {% set hourly_usage = [0.76, 0.74, 0.02] %}
     {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
     {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
       {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
     {% endif %}
-    {% set ns = namespace(result=[], slices=[]) %}
+    {% set ns = namespace(result=[], slices=[], total=0.0) %}
     {% for i in range(now().hour, period | length) %}
+      {% set ns.total = 0.0 %}
+      {%for r in period[i:i+(states.input_number.dishwasher_time.state | int)] %}
+        {% set ns.total = ns.total + (r['price'] | float) * hourly_usage[(loop.index-1)] %}
+      {%endfor%}
       {% set el = {
         "index": i,
         "hours": period[i:i+(states.input_number.dishwasher_time.state | int)],
-        "sum": period[i:i+(states.input_number.dishwasher_time.state | int)] | sum(attribute='price') | round(3)
+        "sum": ns.total | round(3)
         }
       %}
+      {% if el.hours | length == (states.input_number.dishwasher_time.state | int) %}
+        {% set ns.slices = ns.slices + [el] %}
+      {% endif %}
+    {% endfor %}
+    {{ ((ns.slices | sort(attribute='sum') | first)['hours'] | first)['hour'] }}
+  prices: >
+    {% set hourly_usage = [0.76, 0.74, 0.02] %}
+    {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
+    {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+      {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+    {% endif %}
+    {% set ns = namespace(result=[], slices=[],total=0.0) %}
+    {% for i in range(now().hour, period | length) %}
+      {% set ns.total = 0.0 %}
+      {%for r in period[i:i+(states.input_number.dishwasher_time.state | int)] %}
+        {% set ns.total = ns.total + (r['price'] | float) * hourly_usage[(loop.index-1)] %}
+      {%endfor%}
+      {% set total1 = period[i:i+(states.input_number.dishwasher_time.state | int)] | sum(attribute='price') | round(3) %}
+      
+      {% set el = {
+        "index": i,
+        "hours": period[i:i+(states.input_number.dishwasher_time.state | int)],
+        "sum": ns.total
+        }
+      %}
+      
     {% if el.hours | length == (states.input_number.dishwasher_time.state | int) %}
       {% set ns.slices = ns.slices + [el] %}
     {% endif %}
     {% endfor %}
-    {{ ((ns.slices | sort(attribute='sum') | first)['hours'] | first)['hour'] }}
+    {% for el in ns.slices %}
+      {% set ns.result = ns.result + [{'start': as_timestamp(el['hours'][0]['hour']) | timestamp_local, 'price': el['sum'] | round(2)}] %}
+    {% endfor %}
+    {{ns.result}}
