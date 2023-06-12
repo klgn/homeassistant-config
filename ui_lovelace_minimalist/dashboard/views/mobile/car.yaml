@@ -8,11 +8,11 @@ cards:
   - type: "custom:button-card"
     template: card_title
     name: Car
-  - type: "custom:button-card"
-    template: card_input_number
-    entity: input_number.ioniq5_manual_battery_level
-    variables:
-      ulm_card_input_number_name: "Ioniq 5 Battery level"
+  #  - type: "custom:button-card"
+  #  template: card_input_number
+  #    entity: input_number.ioniq5_manual_battery_level
+  #    variables:
+  #      ulm_card_input_number_name: "Ioniq 5 Battery level"
   - type: horizontal-stack
     cards:
       - type: "custom:button-card"
