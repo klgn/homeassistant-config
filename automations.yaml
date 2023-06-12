@@ -1969,3 +1969,36 @@
         target:
           entity_id: input_datetime.next_sun_rise
   mode: single
+- id: '1686590810156'
+  alias: Notify Heat Pump Reminder
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.heat_pump_alert_time
+    id: trigger
+  condition:
+  - condition: time
+    weekday:
+    - mon
+  action:
+  - service: script.notify_klgn
+    data:
+      message: Remember to turn on Heat Pump for a short while
+      title: Turn On Heat Pump
+  mode: single
+- id: '1686591059364'
+  alias: Notify when lawn mower battery is done charging
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - timer.workshop_switch
+    to: '0'
+    id: trigger
+  condition: []
+  action:
+  - service: script.notify_klgn
+    data:
+      title: Charging ended
+      message: Charger for lawn mower batteries was switched off
+  mode: single
