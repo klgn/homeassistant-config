@@ -1,2 +1,2 @@
 ---
-command_line: !include_dir_list ../entities/command_line/sensor
+command_line:  ../entities/command_line/sensor
