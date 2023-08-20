@@ -1,0 +1,4 @@
+---
+source: sensor.washing_machine_total_consumption
+name: Washing Machine (new) Hourly Usage
+cycle: daily

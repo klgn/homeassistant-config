@@ -1,0 +1,4 @@
+---
+source: sensor.dishwasher_total_consumption
+name: Dishwasher Hourly Usage
+cycle: daily
