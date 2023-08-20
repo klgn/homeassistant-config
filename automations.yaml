@@ -119,7 +119,7 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.shelly_shplg_s_f1487f_current_consumption
+    entity_id: sensor.washing_machine_current_consumption
     id: 'off'
     for:
       hours: 0
@@ -127,7 +127,7 @@
       seconds: 0
     below: '1'
   - platform: numeric_state
-    entity_id: sensor.shelly_shplg_s_f1487f_current_consumption
+    entity_id: sensor.washing_machine_current_consumption
     id: running
     above: '1'
   condition: []
@@ -266,6 +266,7 @@
           entity_id:
           - switch.office_sonos_switch
           - switch.shelly_shplg_s_f1a39a
+          - switch.shelly_shplg_s_f1487f
     - conditions:
       - condition: trigger
         id: home
@@ -276,6 +277,7 @@
           entity_id:
           - switch.office_sonos_switch
           - switch.shelly_shplg_s_f1a39a
+          - switch.shelly_shplg_s_f1487f
     - conditions:
       - condition: trigger
         id: arm-home
@@ -286,6 +288,7 @@
           entity_id:
           - switch.office_sonos_switch
           - switch.shelly_shplg_s_f1a39a
+          - switch.shelly_shplg_s_f1487f
   mode: single
 - id: '1663351083369'
   alias: Turn off Living Sonos Bulp when switch is turned on
@@ -716,6 +719,14 @@
   - condition: state
     entity_id: input_boolean.house_mode_away
     state: 'off'
+    enabled: false
+  - condition: not
+    conditions:
+    - condition: device
+      device_id: 64fb315d63a19409f86ab6f0d6d4cf72
+      domain: alarm_control_panel
+      entity_id: f353994aa290aa922c90c5f7285975e3
+      type: is_armed_away
   action:
   - choose:
     - conditions:
@@ -2001,4 +2012,229 @@
     data:
       title: Charging ended
       message: Charger for lawn mower batteries was switched off
+  mode: single
+- id: '1690393373804'
+  alias: Mower Battery Charge Ended
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.control_unit_1
+    to: 'off'
+    from: 'on'
+  condition: []
+  action:
+  - service: script.notify_klgn
+    data:
+      title: Charging stopped
+      message: Mower battery charge has ended
+  mode: single
+- id: '1690714897214'
+  alias: Workshop button
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.workshop_dimmer_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.workshop_dimmer_action
+    to: 'off'
+    id: 'off'
+  - platform: state
+    entity_id:
+    - sensor.workshop_dimmer_action
+    to: brightness_move_up
+    id: hold_up
+  - platform: state
+    entity_id:
+    - sensor.workshop_dimmer_action
+    to: brightness_move_down
+    id: hold_down
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.control_unit_1
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.control_unit_1
+    - conditions:
+      - condition: trigger
+        id:
+        - hold_up
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.charge_mower
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_mower_charge_start''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.mower_charge_start
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_mower_charge_end''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.mower_charge_end
+      - service: script.notify_klgn
+        data:
+          title: Charging Turned On
+          message: Mower charging will start at {{ as_timestamp(state_attr('sensor.energy_prices',
+            'recommended_mower_charge_start')) | timestamp_custom('%H:%M') }}
+    - conditions:
+      - condition: trigger
+        id:
+        - hold_down
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_mower
+      - service: script.notify_klgn
+        data:
+          title: Charging Turned Off
+          message: Mower charging has been disabled
+  mode: single
+- id: '1690796014218'
+  alias: Mower Charging
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.mower_charge_start
+    id: start
+  - platform: time
+    at: input_datetime.mower_charge_end
+    id: end
+  condition:
+  - condition: state
+    entity_id: input_boolean.charge_mower
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: start
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.control_unit_1
+    - conditions:
+      - condition: trigger
+        id: end
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.control_unit_1
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_mower
+  mode: single
+- id: '1691155582820'
+  alias: Astrids Strip Button
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.astrids_strip_button_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.astrids_strip_button_action
+    id: 'off'
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.astrids_strip
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.astrids_strip
+  mode: single
+- id: '1691599751865'
+  alias: New Washing Machine Switch Monitor
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.washing_machine
+    to: 'off'
+    id: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Switch turned off
+          message: The New Washing machine switch turned off. Was automatically turned
+            on again
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.washing_machine
+  mode: single
+- id: '1692520858625'
+  alias: Dishwasher Switch Monitor
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.dishwasher
+    to: 'off'
+    id: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Switch turned off
+          message: Dishwasher switch turned off. Was automatically turned on again
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.dishwasher
   mode: single
