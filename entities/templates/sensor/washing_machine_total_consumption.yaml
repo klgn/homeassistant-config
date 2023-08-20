@@ -1,0 +1,7 @@
+---
+name: Washing Machine Total Consumption
+unique_id: washing_machine_total_consumption
+icon: mdi:meter-electric
+unit_of_measurement: kWh
+state: >
+  {{state_attr('switch.washing_machine', 'energy') }}

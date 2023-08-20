@@ -1,0 +1,7 @@
+---
+name: Dishwasher Current Consumption
+unique_id: dishwasher_current_consumption
+icon: mdi:meter-electric
+unit_of_measurement: W
+state: >
+  {{state_attr('switch.dishwasher', 'power') }}

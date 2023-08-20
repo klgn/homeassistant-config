@@ -1,0 +1,8 @@
+---
+name: Dishwasher Total Consumption
+unique_id: dishwasher_total_consumption
+icon: mdi:meter-electric
+unit_of_measurement: kWh
+state: >
+  {{state_attr('switch.dishwasher', 'energy') }}
+  

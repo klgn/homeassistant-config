@@ -1,0 +1,7 @@
+---
+name: Washing Machine Current Consumption
+unique_id: washing_machine_current_consumption
+icon: mdi:meter-electric
+unit_of_measurement: W
+state: >
+  {{state_attr('switch.washing_machine', 'power') }}
