@@ -12,6 +12,7 @@ state: >
       states.light.hall_light_living_room,
       states.light.astrid_ceiling_1,
       states.light.astrid_ceiling_2,
+      states.light.astrids_strip,
       states.light.bedside_bulb,
       states.light.office_bulp,
       states.light.living_room_sonos_bulp,
