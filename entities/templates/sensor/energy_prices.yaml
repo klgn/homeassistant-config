@@ -34,3 +34,31 @@ attributes:
   recommended_phone_charge_end: >
     {% set el = this.attributes.phone_charge_prices | sort (attribute='price') | first %}
     {{ as_timestamp(el['end']) | timestamp_local('%H:%M')}}
+  mower_charge_prices: >
+    {% set hours_to_run = 3 %}
+    {% set period = state_attr('sensor.energi_data_service', 'raw_today') %}
+    {% if state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+      {% set period = period + state_attr('sensor.energi_data_service', 'raw_tomorrow') %}
+    {% endif %}
+    {% set length = period | length %}
+    {% set ns = namespace(slices=[], result=[]) %}
+    {% for i in range(now().hour, length) %}
+      {%
+      set ns.slices = ns.slices + [{
+        "index": i,
+        "hours": period[i:i + hours_to_run],
+        "sum": period[i:i + hours_to_run] | sum(attribute='price') | round(3),
+        "_size": period[i:i + hours_to_run] | length,
+      }]
+      %}
+    {% endfor %}
+    {% for el in ns.slices | rejectattr('_size', '<', hours_to_run) %}
+      {% set ns.result = ns.result + [{'start': as_timestamp(el['hours'][0]['hour']) | timestamp_local, 'end': as_timestamp((el['hours'][0]['hour']) + timedelta(hours=hours_to_run)) | timestamp_local, 'price': el['sum'] | round(2)}] %}
+    {% endfor %}
+    {{ns.result}}
+  recommended_mower_charge_start: >
+    {% set el = this.attributes.mower_charge_prices | sort (attribute='price') | first %}
+    {{ as_timestamp(el['start']) | timestamp_local('%H:%M')}}
+  recommended_mower_charge_end: >
+    {% set el = this.attributes.mower_charge_prices | sort (attribute='price') | first %}
+    {{ as_timestamp(el['end']) | timestamp_local('%H:%M')}}
