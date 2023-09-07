@@ -123,7 +123,7 @@
     id: 'off'
     for:
       hours: 0
-      minutes: 1
+      minutes: 5
       seconds: 0
     below: '1'
   - platform: numeric_state
@@ -174,7 +174,10 @@
     - input_select.washing_machine_status
     to: 'Off'
     from: Running
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_notify_washing_machine_finished_automation
+    state: 'on'
   action:
   - service: notify.mobile_app_klgn_phone
     data:
@@ -189,24 +192,6 @@
     data: {}
     target:
       entity_id: input_boolean.washing_machine_emptied
-  mode: single
-- id: '1656424680283'
-  alias: Notify - Washing machine emptied action
-  description: ''
-  trigger:
-  - platform: event
-    event_type: mobile_app_notification
-    event_data:
-      action: MACHINE_EMPTIED
-  condition: []
-  action:
-  - service: notify.mobile_app_klgn_phone
-    data:
-      message: clear_notification
-      data:
-        tag: washing
-  - service: input_boolean.turn_off
-    data: {}
   mode: single
 - id: '1657113186860'
   alias: Notify When general waste is collected
@@ -349,6 +334,9 @@
     - condition: state
       entity_id: alarm_control_panel.verisure_alarm
       state: disarmed
+    - condition: state
+      entity_id: input_boolean.enable_living_room_morning_schedule_automation
+      state: 'on'
   action:
   - choose:
     - conditions:
@@ -403,6 +391,9 @@
     - condition: state
       entity_id: person.kristian_l_g_nielsen
       state: home
+    - condition: state
+      entity_id: input_boolean.enable_sonos_living_room_morning_schedule
+      state: 'on'
   action:
   - choose:
     - conditions:
@@ -444,6 +435,9 @@
     - condition: state
       entity_id: alarm_control_panel.verisure_alarm
       state: disarmed
+  - condition: state
+    entity_id: input_boolean.enable_turn_on_lights_in_living_room_when_dark_outside_automation
+    state: 'on'
   action:
   - service: light.turn_on
     data: {}
@@ -460,7 +454,10 @@
   - platform: time
     at: input_datetime.kids_internet_curfew_start
     id: evening-curfew
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_kids_internet_schedule_automation
+    state: 'on'
   action:
   - choose:
     - conditions:
@@ -504,6 +501,10 @@
   trigger:
   - platform: state
     entity_id: alarm_control_panel.verisure_alarm
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_alarm_status_changed_automation
+    state: 'on'
   action:
   - service: notify.mobile_app_klgn_phone
     data:
@@ -515,7 +516,10 @@
   alias: 'Sonos: Living Room Play P4 København'
   description: ''
   trigger: []
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_sonos_play_p4_kobenhavn_automation
+    state: 'on'
   action:
   - service: media_player.volume_set
     data:
@@ -530,6 +534,7 @@
   - service: media_player.media_play
     target:
       entity_id: media_player.living_room
+    data: {}
   mode: single
 - id: '1665207930179'
   alias: Pantry Room Notification
@@ -540,7 +545,10 @@
     - binary_sensor.pantry_room_sensor_occupancy
     to: 'on'
     id: detected
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_pantry_room_notification
+    state: 'on'
   action:
   - service: notify.mobile_app_klgn_phone
     data:
@@ -640,7 +648,10 @@
     from: '2'
     to: '1'
     id: textile
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_notify_trash_being_collected_automation
+    state: 'on'
   action:
   - choose:
     - conditions:
@@ -716,10 +727,6 @@
     at: input_datetime.home_alarm_off_in_the_morning
     id: alarm-end
   condition:
-  - condition: state
-    entity_id: input_boolean.house_mode_away
-    state: 'off'
-    enabled: false
   - condition: not
     conditions:
     - condition: device
@@ -727,6 +734,9 @@
       domain: alarm_control_panel
       entity_id: f353994aa290aa922c90c5f7285975e3
       type: is_armed_away
+  - condition: state
+    entity_id: input_boolean.enable_everyday_alarm_automation
+    state: 'on'
   action:
   - choose:
     - conditions:
@@ -770,6 +780,9 @@
     - condition: state
       entity_id: input_boolean.guestmode
       state: 'off'
+    - condition: state
+      entity_id: input_boolean.enable_arm_alarm_in_the_morning_automation
+      state: 'on'
   action:
   - service: alarm_control_panel.alarm_arm_away
     data:
@@ -792,6 +805,9 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
+    - condition: state
+      entity_id: input_boolean.enable_ask_if_working_remotely_automation
+      state: 'on'
   action:
   - service: notify.mobile_app_klgn_phone
     data:
@@ -822,6 +838,9 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
+    - condition: state
+      entity_id: input_boolean.enable_astrid_morning_alarm_automation
+      state: 'on'
   action:
   - choose:
     - conditions:
@@ -1081,7 +1100,10 @@
   alias: 'Sonos: Start Astrid Alarm'
   description: ''
   trigger: []
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_astrid_morning_alarm_automation
+    state: 'on'
   action:
   - service: media_player.volume_set
     data:
@@ -1248,7 +1270,10 @@
   trigger:
   - platform: time
     at: input_datetime.hall_charger_end_time
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_turn_off_charging_unit_at_night
+    state: 'on'
   action:
   - type: turn_off
     device_id: 9ba1e1178dd56b582d4de26be35124f3
@@ -1434,7 +1459,10 @@
   - platform: state
     entity_id: binary_sensor.backups_stale
     from: 'on'
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_notify_when_backup_is_stale_automation
+    state: 'on'
   action:
   - service: notify.mobile_app_klgn_phone
     data:
@@ -1629,7 +1657,10 @@
     entity_id: sensor.low_battery_devices
     above: 0
     id: 'on'
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_notify_when_a_device_has_low_battery_automation
+    state: 'on'
   action:
   - choose:
     - conditions:
@@ -1991,6 +2022,9 @@
   - condition: time
     weekday:
     - mon
+  - condition: state
+    entity_id: input_boolean.enable_notify_heat_pump_reminder_automation
+    state: 'on'
   action:
   - service: script.notify_klgn
     data:
@@ -2022,7 +2056,10 @@
     - switch.control_unit_1
     to: 'off'
     from: 'on'
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_mower_battery_charge_ended_automation
+    state: 'on'
   action:
   - service: script.notify_klgn
     data:
@@ -2237,4 +2274,83 @@
         data: {}
         target:
           entity_id: switch.dishwasher
+  mode: single
+- id: '1692532084892'
+  alias: Set Dishwasher states
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.dishwasher_current_consumption
+    id: 'off'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    below: '1'
+  - platform: numeric_state
+    entity_id: sensor.dishwasher_current_consumption
+    id: running
+    above: '1'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: 'Off'
+        target:
+          entity_id: input_select.dishwasher_states
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      - condition: state
+        state: Running
+        entity_id: input_select.dishwasher_states
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Finished
+        target:
+          entity_id: input_select.dishwasher_states
+    - conditions:
+      - condition: trigger
+        id: running
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Running
+        target:
+          entity_id: input_select.dishwasher_states
+    default: []
+  mode: single
+- id: '1692966744028'
+  alias: Notify Dishwasher is done
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.dishwasher_states
+    to: 'Off'
+    from: Running
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_notify_dishwasher_is_done_automation
+    state: 'on'
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Dishwasher is done
+      data:
+        persisent: true
+        tag: dishwasher
+        actions:
+        - action: MACHINE_EMPTIED
+          title: It's done
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.dishwasher_emptied
   mode: single
