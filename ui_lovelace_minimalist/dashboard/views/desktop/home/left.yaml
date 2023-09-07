@@ -33,3 +33,12 @@ cards:
         view_layout:
           grid-area: plugs
         cards: !include_dir_list ../../common/switches
+      - type: "custom:button-card"
+        template: card_title
+        name: Automations
+      - type: grid
+        columns: 2
+        square: false
+        view_layout:
+          grid-area: plugs
+        cards: !include_dir_list ../../common/automation_toggles
