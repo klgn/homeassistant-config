@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_input_boolean
+entity: input_boolean.enable_turn_on_lights_in_living_room_when_dark_outside_automation
+variables:
+  ulm_card_input_boolean_name: Turn On Lights In Living Room When Dark Outside
+  ulm_card_input_boolean_color: green

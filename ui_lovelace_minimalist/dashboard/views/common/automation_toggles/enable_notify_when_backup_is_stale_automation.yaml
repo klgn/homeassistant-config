@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_input_boolean
+entity: input_boolean.enable_notify_when_backup_is_stale_automation
+variables:
+  ulm_card_input_boolean_name: Notify When Backup Is Stale
+  ulm_card_input_boolean_color: green

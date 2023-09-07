@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_input_boolean
+entity: input_boolean.enable_toggle_sonos_from_alarm_state_automation
+variables:
+  ulm_card_input_boolean_name: Toggle Sonos From Alarm State
+  ulm_card_input_boolean_color: green
