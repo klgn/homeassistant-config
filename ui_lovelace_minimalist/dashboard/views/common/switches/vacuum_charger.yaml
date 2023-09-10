@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_power_outlet
+entity: switch.vacuum_charger
+variables:
+  ulm_card_power_outlet_name: Vacuum Charger
+  ulm_card_power_outlet_consumption_sensor: sensor.vacuum_charger_current_consumption
