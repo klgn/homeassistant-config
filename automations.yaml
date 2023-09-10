@@ -2354,3 +2354,187 @@
     target:
       entity_id: input_boolean.dishwasher_emptied
   mode: single
+- id: '1694352160039'
+  alias: Vacuum Charger Start Timer
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    id: 'on'
+    to: 'on'
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'off'
+    id: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - service: timer.start
+        data: {}
+        target:
+          entity_id: timer.vacuum_charger_time_remaining
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: timer.cancel
+        data: {}
+  mode: single
+- id: '1694352356652'
+  alias: Stop Vacuum Charger
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.vacuum_charger_time_remaining
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'off'
+  condition: []
+  action:
+  - service: timer.cancel
+    data: {}
+    target:
+      entity_id: timer.vacuum_charger_time_remaining
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.vacuum_charger
+  mode: single
+- id: '1694352427718'
+  alias: Toggle Vacuum Charging
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.vacuum_button_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.vacuum_button_action
+    to: brightness_move_up
+    id: hold
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - service: switch.toggle
+        data: {}
+        target:
+          entity_id: switch.vacuum_charger
+      - service: script.notify_klgn_mb
+        data:
+          title: Vacuum Charging Turned On
+          message: Vacuum Charger just started
+    - conditions:
+      - condition: trigger
+        id:
+        - hold
+      sequence:
+      - service: input_boolean.toggle
+        data: {}
+        target:
+          entity_id: input_boolean.charge_vacuum
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_vacuum_charge_start''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.vacuum_charging_start
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_vacuum_charge_end''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.vacuum_charging_end
+  mode: single
+- id: '1694353641135'
+  alias: Charge Vacuum
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.vacuum_charging_start
+    id: start
+  - platform: time
+    at: input_datetime.vacuum_charging_end
+    id: end
+  condition:
+  - condition: state
+    entity_id: input_boolean.charge_vacuum
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: start
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.vacuum_charger
+    - conditions:
+      - condition: trigger
+        id: end
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.vacuum_charger
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_vacuum
+  mode: single
+- id: '1694360120636'
+  alias: Notify Scheduled Vacuum Cleaner Charging
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.charge_mower
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.charge_mower
+    to: 'off'
+    id: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          title: Vacuum Charging Scheduled
+          message: Vacuum will start charging at {{ as_timestamp(state_attr('sensor.energy_prices',
+            'recommended_vacuum_charge_start')) | timestamp_custom('%d/%m %H:%M')
+            }}
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          title: Vacuum Cleaner Scheduled Charging Turned off
+          message: The scheduled charging of the vacuum cleaner was turned off
+  mode: single
