@@ -325,12 +325,14 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
+      enabled: false
     - condition: state
       entity_id: binary_sensor.workday_sensor
       state: 'on'
     - condition: state
       entity_id: input_boolean.guestmode
       state: 'off'
+      enabled: false
     - condition: state
       entity_id: alarm_control_panel.verisure_alarm
       state: disarmed
@@ -388,9 +390,7 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
-    - condition: state
-      entity_id: person.kristian_l_g_nielsen
-      state: home
+      enabled: false
     - condition: state
       entity_id: input_boolean.enable_sonos_living_room_morning_schedule
       state: 'on'
@@ -777,9 +777,11 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
+      enabled: false
     - condition: state
       entity_id: input_boolean.guestmode
       state: 'off'
+      enabled: false
     - condition: state
       entity_id: input_boolean.enable_arm_alarm_in_the_morning_automation
       state: 'on'
@@ -805,6 +807,7 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
+      enabled: false
     - condition: state
       entity_id: input_boolean.enable_ask_if_working_remotely_automation
       state: 'on'
@@ -838,6 +841,7 @@
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
+      enabled: false
     - condition: state
       entity_id: input_boolean.enable_astrid_morning_alarm_automation
       state: 'on'
@@ -1335,8 +1339,8 @@
       action: WORK_REMOTELY_NO
   condition:
   - condition: state
-    entity_id: input_boolean.vacation
-    state: 'off'
+    entity_id: input_boolean.enable_ask_if_working_remotely_automation
+    state: 'on'
   action:
   - choose:
     - conditions:
@@ -2537,4 +2541,118 @@
         data:
           title: Vacuum Cleaner Scheduled Charging Turned off
           message: The scheduled charging of the vacuum cleaner was turned off
+  mode: single
+- id: '1694622838535'
+  alias: Toggle automations when activation vacation mode
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.vacation
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.vacation
+    id: 'off'
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.guestmode
+          state: 'off'
+        then:
+        - service: input_boolean.turn_off
+          data: {}
+          target:
+            entity_id:
+            - input_boolean.enable_living_room_morning_schedule_automation
+            - input_boolean.enable_arm_alarm_in_the_morning_automation
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id:
+          - input_boolean.enable_sonos_living_room_morning_schedule
+          - input_boolean.enable_ask_if_working_remotely_automation
+          - input_boolean.enable_astrid_morning_alarm_automation
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.guestmode
+          state: 'off'
+        then:
+        - service: input_boolean.turn_on
+          data: {}
+          target:
+            entity_id:
+            - input_boolean.enable_living_room_morning_schedule_automation
+            - input_boolean.enable_arm_alarm_in_the_morning_automation
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id:
+          - input_boolean.enable_sonos_living_room_morning_schedule
+          - input_boolean.enable_ask_if_working_remotely_automation
+          - input_boolean.enable_astrid_morning_alarm_automation
+  mode: single
+- id: '1694623101121'
+  alias: Toggle automations when using guestmode shortcut
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.guestmode
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.guestmode
+    id: 'off'
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.vacation
+          state: 'off'
+        then:
+        - service: input_boolean.turn_off
+          data: {}
+          target:
+            entity_id:
+            - input_boolean.enable_living_room_morning_schedule_automation
+            - input_boolean.enable_arm_alarm_in_the_morning_automation
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.vacation
+          state: 'off'
+        then:
+        - service: input_boolean.turn_on
+          data: {}
+          target:
+            entity_id:
+            - input_boolean.enable_living_room_morning_schedule_automation
+            - input_boolean.enable_arm_alarm_in_the_morning_automation
   mode: single
