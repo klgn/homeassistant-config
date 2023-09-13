@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.ask_working_remote_time
+variables:
+  ulm_card_input_datetime_name: Asked about Working remotely at

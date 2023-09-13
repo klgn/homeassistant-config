@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.home_alarm_on_at_night
+variables:
+  ulm_card_input_datetime_name: Home Alarm is turned on at

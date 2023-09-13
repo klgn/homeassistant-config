@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.arm_alarm_workday_time
+variables:
+  ulm_card_input_datetime_name: Alarm is enabled on workdays at

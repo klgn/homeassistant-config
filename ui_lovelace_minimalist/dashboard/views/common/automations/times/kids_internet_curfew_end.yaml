@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.kids_internet_curfew_end
+variables:
+  ulm_card_input_datetime_name: Kids' Internet curfew ends at

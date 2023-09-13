@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.reset_work_remotely_time
+variables:
+  ulm_card_input_datetime_name: Working remotely is reset at

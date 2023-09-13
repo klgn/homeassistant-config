@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.living_room_light_morning_schedule_start
+variables:
+  ulm_card_input_datetime_name: Light in Living Room turns on at

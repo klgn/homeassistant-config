@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.kids_sonos_players_stop
+variables:
+  ulm_card_input_datetime_name: Kids' Sonos players stop at

@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.hall_charger_end_time
+variables:
+  ulm_card_input_datetime_name: Kitchen Timer Turns off at

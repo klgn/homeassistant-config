@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_input_boolean
+entity: input_boolean.guestmode
+variables:
+  ulm_card_input_boolean_name: Guest Mode
+  ulm_card_input_boolean_color: green

@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.astrid_alarm_end
+variables:
+  ulm_card_input_datetime_name: Astrid Alarm End

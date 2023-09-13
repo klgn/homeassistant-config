@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_input_boolean
+entity: input_boolean.enable_turn_off_charging_unit_at_night
+variables:
+  ulm_card_input_boolean_name: Turn Off Charging Unit At Night
+  ulm_card_input_boolean_color: green
