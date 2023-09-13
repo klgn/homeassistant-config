@@ -18,3 +18,4 @@ views:
   - !include views/mobile/living_room.yaml
   - !include views/mobile/office.yaml
   - !include views/mobile/switches.yaml
+  - !include views/mobile/automations.yaml
