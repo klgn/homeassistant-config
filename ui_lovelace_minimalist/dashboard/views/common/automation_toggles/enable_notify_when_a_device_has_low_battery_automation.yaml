@@ -1,7 +1,0 @@
----
-type: "custom:button-card"
-template: card_input_boolean
-entity: input_boolean.enable_notify_when_a_device_has_low_battery_automation
-variables:
-  ulm_card_input_boolean_name: Notify When A Device Has Low Battery
-  ulm_card_input_boolean_color: green

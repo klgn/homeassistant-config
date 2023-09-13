@@ -1,7 +1,0 @@
----
-type: "custom:button-card"
-template: card_input_boolean
-entity: input_boolean.enable_kids_internet_schedule_automation
-variables:
-  ulm_card_input_boolean_name: Kids Internet Schedule
-  ulm_card_input_boolean_color: green

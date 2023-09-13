@@ -1,7 +1,0 @@
----
-type: "custom:button-card"
-template: card_input_boolean
-entity: input_boolean.enable_ask_if_working_remotely_automation
-variables:
-  ulm_card_input_boolean_name: Ask if Working Remotely
-  ulm_card_input_boolean_color: green

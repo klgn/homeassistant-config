@@ -41,4 +41,4 @@ cards:
         square: false
         view_layout:
           grid-area: plugs
-        cards: !include_dir_list ../../common/automation_toggles
+        cards: !include_dir_list ../../common/automations/toggles

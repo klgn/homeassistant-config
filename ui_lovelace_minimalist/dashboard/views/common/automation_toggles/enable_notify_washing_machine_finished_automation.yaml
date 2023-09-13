@@ -1,7 +1,0 @@
----
-type: "custom:button-card"
-template: card_input_boolean
-entity: input_boolean.enable_notify_washing_machine_finished_automation
-variables:
-  ulm_card_input_boolean_name: Notify Washing Machine Finished
-  ulm_card_input_boolean_color: green
