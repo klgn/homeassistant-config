@@ -1,0 +1,7 @@
+---
+name: Vacuum Charger Current Consumption
+unique_id: vacuum_charger_current_consumption
+icon: mdi:meter-electric
+unit_of_measurement: W
+state: >
+  {{state_attr('switch.vacuum_charger', 'power') }}
