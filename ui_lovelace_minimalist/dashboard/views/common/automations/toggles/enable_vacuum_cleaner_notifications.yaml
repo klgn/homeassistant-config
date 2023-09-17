@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_input_boolean
+entity: input_boolean.enable_vacuum_cleaner_notifications
+variables:
+  ulm_card_input_boolean_name: Vacuum Cleaner Notifications
+  ulm_card_input_boolean_color: green

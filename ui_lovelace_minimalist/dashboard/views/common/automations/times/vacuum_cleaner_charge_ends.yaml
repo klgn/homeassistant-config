@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.vacuum_charging_end
+variables:
+  ulm_card_input_datetime_name: Vacuum Cleaner Charge Ends At

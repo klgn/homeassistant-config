@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template:
+  - card_input_datetime
+entity: input_datetime.mower_charge_end
+variables:
+  ulm_card_input_datetime_name: Mower Charge Ends At

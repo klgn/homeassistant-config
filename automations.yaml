@@ -166,7 +166,7 @@
     default: []
   mode: single
 - id: '1656424427614'
-  alias: Notify - Washing machine finished
+  alias: Notify Washing machine finished
   description: ''
   trigger:
   - platform: state
@@ -193,14 +193,6 @@
     target:
       entity_id: input_boolean.washing_machine_emptied
   mode: single
-- id: '1657113186860'
-  alias: Notify When general waste is collected
-  description: ''
-  use_blueprint:
-    path: klgn/renoweb_waste_blueprint.yaml
-    input:
-      waste: sensor.renoweb_240_l_rest_mad_14_dag
-      mobile_app_device: 49007877174341f3f8961213599c583f
 - id: '1659547210990'
   alias: Update Hourly Electricity price
   description: ''
@@ -615,7 +607,7 @@
     default: []
   mode: single
 - id: waste_collection
-  alias: Notification Trash being collected
+  alias: Notify Trash Being Collected
   description: Sends a notification to Kristian on the day that waste is being collected
   trigger:
   - platform: state
@@ -658,10 +650,6 @@
       - condition: trigger
         id: paper-collected
       sequence:
-      - service: notify.mobile_app_klgn_phone
-        data:
-          title: Waste collection tomorrow
-          message: Paper waste is collected tomorrow
       - service: script.notify_klgn_mb
         data:
           message: Paper waste is collected tomorrow
@@ -670,10 +658,6 @@
       - condition: trigger
         id: glass-collected
       sequence:
-      - service: notify.mobile_app_klgn_phone
-        data:
-          title: Waste is collected tomorrow
-          message: Glass and metal waste is collected tomorrow
       - service: script.notify_klgn_mb
         data:
           title: Waste is collected tomorrow
@@ -682,10 +666,6 @@
       - condition: trigger
         id: general-collected
       sequence:
-      - service: notify.mobile_app_klgn_phone
-        data:
-          title: Waste is collected tomorrow
-          message: General waste is collected tomorrow
       - service: script.notify_klgn_mb
         data:
           message: General waste is collected tomorrow
@@ -694,10 +674,6 @@
       - condition: trigger
         id: red-box
       sequence:
-      - service: notify.mobile_app_klgn_phone
-        data:
-          message: Chemical waste is collected tomorrow
-          title: Waste is collected tomorrow
       - service: script.notify_klgn_mb
         data:
           title: Waste is collected tomorrow
@@ -706,10 +682,6 @@
       - condition: trigger
         id: textile
       sequence:
-      - service: notify.mobile_app_klgn_phone
-        data:
-          title: Waste is collected tomorrow
-          message: Textile waste is collected tomorrow
       - service: script.notify_klgn_mb
         data:
           message: Textile waste is collected tomorrow
@@ -1456,23 +1428,6 @@
       topic: zigbee2mqtt/bridge/config/log_level
   mode: single
   initial_state: 'on'
-- id: '1666079943355'
-  alias: Notify when backup stale
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.backups_stale
-    from: 'on'
-  condition:
-  - condition: state
-    entity_id: input_boolean.enable_notify_when_backup_is_stale_automation
-    state: 'on'
-  action:
-  - service: notify.mobile_app_klgn_phone
-    data:
-      title: Backups are stale
-      message: Backups are failing, please fix
-  mode: single
 - id: '1666348293270'
   alias: Set Electricity Price
   description: ''
@@ -1654,7 +1609,7 @@
           entity_id: light.bedside_bulb
   mode: single
 - id: '1670168839221'
-  alias: Notify when a device has low battery
+  alias: Notify When A Device Has Low Battery
   description: ''
   trigger:
   - platform: numeric_state
@@ -2035,41 +1990,6 @@
       message: Remember to turn on Heat Pump for a short while
       title: Turn On Heat Pump
   mode: single
-- id: '1686591059364'
-  alias: Notify when lawn mower battery is done charging
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - timer.workshop_switch
-    to: '0'
-    id: trigger
-  condition: []
-  action:
-  - service: script.notify_klgn
-    data:
-      title: Charging ended
-      message: Charger for lawn mower batteries was switched off
-  mode: single
-- id: '1690393373804'
-  alias: Mower Battery Charge Ended
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - switch.control_unit_1
-    to: 'off'
-    from: 'on'
-  condition:
-  - condition: state
-    entity_id: input_boolean.enable_mower_battery_charge_ended_automation
-    state: 'on'
-  action:
-  - service: script.notify_klgn
-    data:
-      title: Charging stopped
-      message: Mower battery charge has ended
-  mode: single
 - id: '1690714897214'
   alias: Workshop button
   description: ''
@@ -2331,7 +2251,7 @@
     default: []
   mode: single
 - id: '1692966744028'
-  alias: Notify Dishwasher is done
+  alias: Notify Dishwasher Is Done
   description: ''
   trigger:
   - platform: state
@@ -2391,6 +2311,14 @@
       sequence:
       - service: timer.cancel
         data: {}
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_vacuum
+      - service: script.notify_klgn_mb
+        data:
+          message: Vaccum Charge Ended
+          title: Vacuum Charge Ended
   mode: single
 - id: '1694352356652'
   alias: Stop Vacuum Charger
@@ -2441,10 +2369,6 @@
         data: {}
         target:
           entity_id: switch.vacuum_charger
-      - service: script.notify_klgn_mb
-        data:
-          title: Vacuum Charging Turned On
-          message: Vacuum Charger just started
     - conditions:
       - condition: trigger
         id:
@@ -2505,26 +2429,39 @@
           entity_id: input_boolean.charge_vacuum
   mode: single
 - id: '1694360120636'
-  alias: Notify Scheduled Vacuum Cleaner Charging
+  alias: Notify Vacuum Cleaner Charging
   description: ''
   trigger:
   - platform: state
     entity_id:
-    - input_boolean.charge_mower
+    - input_boolean.charge_vacuum
     to: 'on'
-    id: 'on'
+    id: scheduled-on
   - platform: state
     entity_id:
-    - input_boolean.charge_mower
+    - input_boolean.charge_vacuum
     to: 'off'
-    id: 'off'
-  condition: []
+    id: scheduled-off
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'off'
+    id: end
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'on'
+    id: start
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_vacuum_cleaner_notifications
+    state: 'on'
   action:
   - choose:
     - conditions:
       - condition: trigger
         id:
-        - 'on'
+        - scheduled-on
       sequence:
       - service: script.notify_klgn_mb
         data:
@@ -2535,12 +2472,30 @@
     - conditions:
       - condition: trigger
         id:
-        - 'off'
+        - scheduled-off
       sequence:
       - service: script.notify_klgn_mb
         data:
           title: Vacuum Cleaner Scheduled Charging Turned off
           message: The scheduled charging of the vacuum cleaner was turned off
+    - conditions:
+      - condition: trigger
+        id:
+        - start
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          message: The battery of the Vacuum cleaner started charging
+          title: Vacuum charge started
+    - conditions:
+      - condition: trigger
+        id:
+        - end
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          title: Vacuum charge ended
+          message: Vacuum charger stopped charging
   mode: single
 - id: '1694622838535'
   alias: Toggle automations when activation vacation mode
@@ -2655,4 +2610,73 @@
             entity_id:
             - input_boolean.enable_living_room_morning_schedule_automation
             - input_boolean.enable_arm_alarm_in_the_morning_automation
+  mode: single
+- id: '1694958243458'
+  alias: Notify Mower Charging
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.charge_mower
+    to: 'on'
+    id: scheduled-on
+  - platform: state
+    entity_id:
+    - input_boolean.charge_mower
+    to: 'off'
+    id: scheduled-off
+  - platform: state
+    entity_id:
+    - switch.control_unit_1
+    to: 'off'
+    id: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_mower_charger_notifications
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - scheduled-on
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Mower Charging Scheduled
+          message: Mower will start charging at {{ as_timestamp(state_attr('sensor.energy_prices',
+            'recommended_mower_charge_start')) | timestamp_custom('%d/%m %H:%M') }}
+    - conditions:
+      - condition: trigger
+        id:
+        - scheduled-off
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Scheduled Mower Charging Cancelled
+          message: Scheduled Mower Charge was cancelled
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Charging stopped
+          message: Mower battery charge has ended
+  mode: single
+- id: '1694960152775'
+  alias: Turn On Vacuum charger for 4 hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'on'
+  condition: []
+  action:
+  - service: timer.start
+    data: {}
+    target:
+      entity_id: timer.vacuum_charger_time_remaining
   mode: single
