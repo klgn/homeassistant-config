@@ -1265,7 +1265,7 @@
     domain: switch
   mode: single
 - id: '1666079667089'
-  alias: Turn on Workshop Control Unit for 3 hours
+  alias: Start Mower Charging for 3 hours
   description: ''
   trigger:
   - platform: state
@@ -1277,7 +1277,7 @@
     entity_id: timer.workshop_switch
   mode: single
 - id: '1666079718247'
-  alias: Turn off Workshop Control Unit once Timer runs out
+  alias: Stop Mower Charger Once Timer Runs Out
   description: ''
   trigger:
   - platform: event
