@@ -4,4 +4,4 @@ template:
   - card_input_datetime
 entity: input_datetime.mower_charge_start
 variables:
-  ulm_card_input_datetime_name: Mower Charge Starts At
+  ulm_card_input_datetime_name: Mower Charge Begins At
