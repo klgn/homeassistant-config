@@ -4,4 +4,4 @@ template:
   - card_input_datetime
 entity: input_datetime.vacuum_charging_start
 variables:
-  ulm_card_input_datetime_name: Vacuum Cleaner Charge Starts At
+  ulm_card_input_datetime_name: Vacuum Cleaner Charge Begins At
