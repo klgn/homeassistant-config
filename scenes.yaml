@@ -1,0 +1,164 @@
+- id: '1695806213623'
+  name: Toilet Light Night
+  entities:
+    light.toilet_bulbs:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - channel_change
+      - finish_effect
+      - okay
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      entity_id:
+      - light.toilet_bulb1
+      - light.toilet_bulb2
+      icon: mdi:lightbulb-group
+      friendly_name: Toilet bulbs
+      supported_features: 44
+      color_mode: color_temp
+      brightness: 3
+      color_temp_kelvin: 6535
+      color_temp: 153
+      hs_color:
+      - 54.768
+      - 1.6
+      rgb_color:
+      - 255
+      - 254
+      - 250
+      xy_color:
+      - 0.326
+      - 0.333
+      state: 'on'
+  icon: mdi:lightbulb-group
+  metadata:
+    light.toilet_bulbs:
+      entity_only: true
+- id: '1695806793648'
+  name: Toilet Light Day
+  entities:
+    light.toilet_bulbs:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - channel_change
+      - finish_effect
+      - okay
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      entity_id:
+      - light.toilet_bulb1
+      - light.toilet_bulb2
+      icon: mdi:lightbulb-group
+      friendly_name: Toilet bulbs
+      supported_features: 44
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 6535
+      color_temp: 153
+      hs_color:
+      - 54.768
+      - 1.6
+      rgb_color:
+      - 255
+      - 254
+      - 250
+      xy_color:
+      - 0.326
+      - 0.333
+      state: 'on'
+  icon: mdi:lightbulb-group
+  metadata:
+    light.toilet_bulbs:
+      entity_only: true
+- id: '1696012010422'
+  name: Utility Room Day
+  entities:
+    light.utility_room_light:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      do_not_disturb:
+      linkquality: 126
+      friendly_name: utility_room_light
+      supported_features: 44
+      color_mode: color_temp
+      brightness: 256
+      color_temp_kelvin: 3424
+      color_temp: 292
+      hs_color:
+      - 27.252
+      - 46.451
+      rgb_color:
+      - 255
+      - 190
+      - 136
+      xy_color:
+      - 0.46
+      - 0.376
+      state: 'on'
+  icon: mdi:washing-machine
+  metadata:
+    light.utility_room_light:
+      entity_only: true
+- id: '1696012042348'
+  name: Utility Room Night
+  entities:
+    light.utility_room_light:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      do_not_disturb:
+      linkquality: 123
+      friendly_name: utility_room_light
+      supported_features: 44
+      color_mode: color_temp
+      brightness: 3
+      color_temp_kelvin: 3424
+      color_temp: 292
+      hs_color:
+      - 27.252
+      - 46.451
+      rgb_color:
+      - 255
+      - 190
+      - 136
+      xy_color:
+      - 0.46
+      - 0.376
+      state: 'on'
+  icon: mdi:washing-machine
+  metadata:
+    light.utility_room_light:
+      entity_only: true
