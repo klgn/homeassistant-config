@@ -1,2704 +1,2708 @@
-- id: "1643822863833"
+- id: '1643822863833'
   alias: Emmas remote
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: sensor.emma_remote_brightness
-      id: brightness
-    - platform: state
-      entity_id: sensor.emma_remote_action
-      id: "on"
-      to: "on"
-    - platform: state
-      entity_id: sensor.emma_remote_action
-      id: "off"
-      to: "off"
-    - platform: state
-      entity_id: sensor.emma_remote_action
-      id: left-click
-      to: arrow_left_click
-    - platform: state
-      entity_id: sensor.emma_remote_action
-      id: right-click
-      to: arrow_right_click
+  - platform: state
+    entity_id: sensor.emma_remote_brightness
+    id: brightness
+  - platform: state
+    entity_id: sensor.emma_remote_action
+    id: 'on'
+    to: 'on'
+  - platform: state
+    entity_id: sensor.emma_remote_action
+    id: 'off'
+    to: 'off'
+  - platform: state
+    entity_id: sensor.emma_remote_action
+    id: left-click
+    to: arrow_left_click
+  - platform: state
+    entity_id: sensor.emma_remote_action
+    id: right-click
+    to: arrow_right_click
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: "on"
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.emmas_strip
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: "off"
-          sequence:
-            - service: light.turn_off
-              target:
-                entity_id: light.emmas_strip
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: left-click
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.emmas_strip
-              data:
-                hs_color:
-                  - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -
-                    state_attr(var_light, \"hs_color\")[0] - 18 }}\n{% else %}\n  {{ state_attr(var_light,
-                    \"hs_color\")[0] - 18 }}\n{% endif %}"
-                  - '{{ state_attr(var_light, "hs_color")[1] }}'
-                transition: 0.5
-            - delay:
-                milliseconds: 500
-        - conditions:
-            - condition: trigger
-              id: right-click
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.emmas_strip
-              data:
-                hs_color:
-                  - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,
-                    \"hs_color\")[0] + 18 - 360 }}\n{% else %}\n  {{ state_attr(var_light,
-                    \"hs_color\")[0] + 18 }}\n{% endif %}"
-                  - '{{ state_attr(var_light, "hs_color")[1] }}'
-                transition: 0.5
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.emmas_strip
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.emmas_strip
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: left-click
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.emmas_strip
+        data:
+          hs_color:
+          - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -
+            state_attr(var_light, \"hs_color\")[0] - 18 }}\n{% else %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] - 18 }}\n{% endif %}"
+          - '{{ state_attr(var_light, "hs_color")[1] }}'
+          transition: 0.5
+      - delay:
+          milliseconds: 500
+    - conditions:
+      - condition: trigger
+        id: right-click
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.emmas_strip
+        data:
+          hs_color:
+          - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] + 18 - 360 }}\n{% else %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] + 18 }}\n{% endif %}"
+          - '{{ state_attr(var_light, "hs_color")[1] }}'
+          transition: 0.5
+    default: []
   mode: single
   variables:
     var_light: light.emmas_strip
-- id: "1653921061156"
+- id: '1653921061156'
   alias: Update notifications
   description: My Description
   use_blueprint:
     path: mdegat01/update_notifications.yaml
     input:
-      reminder_hours: "3"
+      reminder_hours: '3'
       update_entities:
-        - update.home_assistant_core_update
-        - update.home_assistant_operating_system_update
-        - update.home_assistant_supervisor_update
-        - update.studio_code_server_update
-        - update.mosquitto_broker_update
-        - update.zigbee2mqtt_update
-        - update.terminal_ssh_update
-        - update.samba_share_update
-        - update.home_assistant_google_drive_backup_update
-        - update.influxdb_update
-        - update.samba_share_update
+      - update.home_assistant_core_update
+      - update.home_assistant_operating_system_update
+      - update.home_assistant_supervisor_update
+      - update.studio_code_server_update
+      - update.mosquitto_broker_update
+      - update.zigbee2mqtt_update
+      - update.terminal_ssh_update
+      - update.samba_share_update
+      - update.home_assistant_google_drive_backup_update
+      - update.influxdb_update
+      - update.samba_share_update
       mobile_app_device: 49007877174341f3f8961213599c583f
-- id: "1655043793601"
+- id: '1655043793601'
   alias: Astrids lights
-  description: ""
+  description: ''
   trigger:
-    - platform: device
-      domain: mqtt
-      device_id: 957414c082d6a974ad5157d047420dfb
-      type: action
-      subtype: toggle
-      discovery_id: 0xbc33acfffe83dc24 action_toggle
-      id: toggle
+  - platform: device
+    domain: mqtt
+    device_id: 957414c082d6a974ad5157d047420dfb
+    type: action
+    subtype: toggle
+    discovery_id: 0xbc33acfffe83dc24 action_toggle
+    id: toggle
   condition: []
   action:
-    - service: light.toggle
-      data: {}
-      target:
-        entity_id: light.astrid_s_lights
+  - service: light.toggle
+    data: {}
+    target:
+      entity_id: light.astrid_s_lights
   mode: single
-- id: "1656424147667"
+- id: '1656424147667'
   alias: Set Washing Machine States
-  description: ""
+  description: ''
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.washing_machine_current_consumption
-      id: "off"
-      for:
-        hours: 0
-        minutes: 5
-        seconds: 0
-      below: "1"
-    - platform: numeric_state
-      entity_id: sensor.washing_machine_current_consumption
-      id: running
-      above: "1"
+  - platform: numeric_state
+    entity_id: sensor.washing_machine_current_consumption
+    id: 'off'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    below: '1'
+  - platform: numeric_state
+    entity_id: sensor.washing_machine_current_consumption
+    id: running
+    above: '1'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: "off"
-          sequence:
-            - service: input_select.select_option
-              data:
-                option: "Off"
-              target:
-                entity_id: input_select.washing_machine_status
-        - conditions:
-            - condition: trigger
-              id: "off"
-            - condition: state
-              entity_id: input_select.washing_machine_status
-              state: Running
-          sequence:
-            - service: input_select.select_option
-              data:
-                option: Finished
-              target:
-                entity_id: input_select.washing_machine_status
-        - conditions:
-            - condition: trigger
-              id: running
-          sequence:
-            - service: input_select.select_option
-              data:
-                option: Running
-              target:
-                entity_id: input_select.washing_machine_status
-      default: []
-  mode: single
-- id: "1656424427614"
-  alias: Notify Washing machine finished
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - input_select.washing_machine_status
-      to: "Off"
-      from: Running
-  condition:
-    - condition: state
-      entity_id: input_boolean.enable_notify_washing_machine_finished_automation
-      state: "on"
-  action:
-    - service: notify.mobile_app_klgn_phone
-      data:
-        message: Washing machine is done
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: input_select.select_option
         data:
-          persisent: true
-          tag: washing
-          actions:
-            - action: MACHINE_EMPTIED
-              title: It's done
-    - service: input_boolean.turn_on
-      data: {}
-      target:
-        entity_id: input_boolean.washing_machine_emptied
+          option: 'Off'
+        target:
+          entity_id: input_select.washing_machine_status
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      - condition: state
+        entity_id: input_select.washing_machine_status
+        state: Running
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Finished
+        target:
+          entity_id: input_select.washing_machine_status
+    - conditions:
+      - condition: trigger
+        id: running
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Running
+        target:
+          entity_id: input_select.washing_machine_status
+    default: []
   mode: single
-- id: "1659547210990"
-  alias: Update Hourly Electricity price
-  description: ""
+- id: '1656424427614'
+  alias: Notify Washing machine finished
+  description: ''
   trigger:
-    - platform: time_pattern
-      minutes: "0"
-      seconds: "30"
-  condition: []
-  action:
-    - service: input_number.set_value
-      data:
-        value:
-          "{{ state_attr('sensor.hourly_power_usage', 'last_period') | float
-          * states.input_number.previous_hour_price.state | float }}
-
-          "
-      target:
-        entity_id: input_number.hourly_energy_price
-  mode: single
-- id: "1663350945169"
-  alias: Toggle Sonos from Alarm State
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - alarm_control_panel.verisure_alarm
-      id: away
-      to: armed_away
-    - platform: state
-      entity_id:
-        - alarm_control_panel.verisure_alarm
-      id: home
-      to: disarmed
-    - platform: state
-      entity_id:
-        - alarm_control_panel.verisure_alarm
-      id: arm-home
-      to: armed_home
-  condition: []
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: away
-          sequence:
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id:
-                  - switch.office_sonos_switch
-                  - switch.shelly_shplg_s_f1a39a
-                  - switch.shelly_shplg_s_f1487f
-        - conditions:
-            - condition: trigger
-              id: home
-          sequence:
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id:
-                  - switch.office_sonos_switch
-                  - switch.shelly_shplg_s_f1a39a
-                  - switch.shelly_shplg_s_f1487f
-        - conditions:
-            - condition: trigger
-              id: arm-home
-          sequence:
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id:
-                  - switch.office_sonos_switch
-                  - switch.shelly_shplg_s_f1a39a
-                  - switch.shelly_shplg_s_f1487f
-  mode: single
-- id: "1663351083369"
-  alias: Turn off Living Sonos Bulp when switch is turned on
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - switch.shelly_shplg_s_f1a39a
-      to: "on"
-      id: turn-on
-  condition: []
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: turn-on
-          sequence:
-            - delay:
-                hours: 0
-                minutes: 0
-                seconds: 1
-                milliseconds: 0
-            - service: light.turn_off
-              data: {}
-              target:
-                entity_id: light.living_room_sonos_bulp
-  mode: single
-- id: "1664647979067"
-  alias: Living Room morning schedule
-  description: ""
-  trigger:
-    - platform: time
-      at: input_datetime.living_room_light_morning_schedule_start
-      id: morning-start
-    - platform: time
-      at: input_datetime.living_room_light_morning_schedule_end
-      id: morning-end
-    - platform: numeric_state
-      entity_id: sensor.sun_elevation
-      id: sun-up
-      above: "1"
-    - platform: numeric_state
-      entity_id: sensor.sun_elevation
-      id: sun-not-up
-      below: 1
+  - platform: state
+    entity_id:
+    - input_select.washing_machine_status
+    to: 'Off'
+    from: Running
   condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.vacation
-          state: "off"
-          enabled: false
-        - condition: state
-          entity_id: binary_sensor.workday_sensor
-          state: "on"
-        - condition: state
-          entity_id: input_boolean.guestmode
-          state: "off"
-          enabled: false
-        - condition: state
-          entity_id: alarm_control_panel.verisure_alarm
-          state: disarmed
-        - condition: state
-          entity_id: input_boolean.enable_living_room_morning_schedule_automation
-          state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_notify_washing_machine_finished_automation
+    state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: and
-              conditions:
-                - condition: trigger
-                  id: morning-start
-                - condition: time
-                  before: input_datetime.next_sun_rise
-          sequence:
-            - service: switch.turn_on
-              target:
-                entity_id: switch.living_room_control_unit
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: morning-end
-          sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.living_room_control_unit
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: sun-up
-          sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.living_room_control_unit
-              data: {}
-      default: []
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Washing machine is done
+      data:
+        persisent: true
+        tag: washing
+        actions:
+        - action: MACHINE_EMPTIED
+          title: It's done
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.washing_machine_emptied
+  mode: single
+- id: '1659547210990'
+  alias: Update Hourly Electricity price
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '0'
+    seconds: '30'
+  condition: []
+  action:
+  - service: input_number.set_value
+    data:
+      value: '{{ state_attr(''sensor.hourly_power_usage'', ''last_period'') | float
+        * states.input_number.previous_hour_price.state | float }}
+
+        '
+    target:
+      entity_id: input_number.hourly_energy_price
+  mode: single
+- id: '1663350945169'
+  alias: Toggle Sonos from Alarm State
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - alarm_control_panel.verisure_alarm
+    id: away
+    to: armed_away
+  - platform: state
+    entity_id:
+    - alarm_control_panel.verisure_alarm
+    id: home
+    to: disarmed
+  - platform: state
+    entity_id:
+    - alarm_control_panel.verisure_alarm
+    id: arm-home
+    to: armed_home
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: away
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.office_sonos_switch
+          - switch.shelly_shplg_s_f1a39a
+          - switch.shelly_shplg_s_f1487f
+    - conditions:
+      - condition: trigger
+        id: home
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id:
+          - switch.office_sonos_switch
+          - switch.shelly_shplg_s_f1a39a
+          - switch.shelly_shplg_s_f1487f
+    - conditions:
+      - condition: trigger
+        id: arm-home
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.office_sonos_switch
+          - switch.shelly_shplg_s_f1a39a
+          - switch.shelly_shplg_s_f1487f
+  mode: single
+- id: '1663351083369'
+  alias: Turn off Living Sonos Bulp when switch is turned on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.shelly_shplg_s_f1a39a
+    to: 'on'
+    id: turn-on
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: turn-on
+      sequence:
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id: light.living_room_sonos_bulp
+  mode: single
+- id: '1664647979067'
+  alias: Living Room morning schedule
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.living_room_light_morning_schedule_start
+    id: morning-start
+  - platform: time
+    at: input_datetime.living_room_light_morning_schedule_end
+    id: morning-end
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    id: sun-up
+    above: '1'
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    id: sun-not-up
+    below: 1
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+      enabled: false
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.guestmode
+      state: 'off'
+      enabled: false
+    - condition: state
+      entity_id: alarm_control_panel.verisure_alarm
+      state: disarmed
+    - condition: state
+      entity_id: input_boolean.enable_living_room_morning_schedule_automation
+      state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: morning-start
+        - condition: time
+          before: input_datetime.next_sun_rise
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.living_room_control_unit
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: morning-end
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.living_room_control_unit
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: sun-up
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.living_room_control_unit
+        data: {}
+    default: []
   mode: single
 - id: sonos_living_room_morning_schedule
-  alias: "Sonos: Living Room morning schedule "
-  description: ""
+  alias: 'Sonos: Living Room morning schedule '
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.living_room_sonos_morning_start
-      id: morning-start
-    - platform: time
-      at: input_datetime.living_room_sonos_morning_end
-      id: morning-end
+  - platform: time
+    at: input_datetime.living_room_sonos_morning_start
+    id: morning-start
+  - platform: time
+    at: input_datetime.living_room_sonos_morning_end
+    id: morning-end
   condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday_sensor
-          state: "on"
-        - condition: state
-          entity_id: input_boolean.enable_sonos_living_room_morning_schedule
-          state: "on"
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.enable_sonos_living_room_morning_schedule
+      state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - morning-start
-          sequence:
-            - service: automation.trigger
-              target:
-                entity_id: automation.living_room_p4_kobenhavn
-              data: {}
-              enabled: true
-        - conditions:
-            - condition: trigger
-              id: morning-end
-          sequence:
-            - service: media_player.media_stop
-              target:
-                entity_id: media_player.living_room
-              data: {}
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - morning-start
+      sequence:
+      - service: automation.trigger
+        target:
+          entity_id: automation.living_room_p4_kobenhavn
+        data: {}
+        enabled: true
+    - conditions:
+      - condition: trigger
+        id: morning-end
+      sequence:
+      - service: media_player.media_stop
+        target:
+          entity_id: media_player.living_room
+        data: {}
+    default: []
   mode: single
 - id: living_room_lights_when_dark
   alias: Turn on lights in living room when dark outside
-  description: ""
+  description: ''
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.sun_elevation
-      below: "1.0"
+  - platform: numeric_state
+    entity_id: sensor.sun_elevation
+    below: '1.0'
   condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.guestmode
-          state: "off"
-        - condition: state
-          entity_id: alarm_control_panel.verisure_alarm
-          state: disarmed
+  - condition: and
+    conditions:
     - condition: state
-      entity_id: input_boolean.enable_turn_on_lights_in_living_room_when_dark_outside_automation
-      state: "on"
+      entity_id: input_boolean.guestmode
+      state: 'off'
+    - condition: state
+      entity_id: alarm_control_panel.verisure_alarm
+      state: disarmed
+  - condition: state
+    entity_id: input_boolean.enable_turn_on_lights_in_living_room_when_dark_outside_automation
+    state: 'on'
   action:
-    - service: light.turn_on
-      data: {}
-      target:
-        entity_id: light.living_room_control_unit
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.living_room_control_unit
   mode: single
 - id: kids_internet_schedule
   alias: Kids' Internet Schedule
-  description: ""
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.kids_internet_curfew_end
-      id: morning-curfew
-    - platform: time
-      at: input_datetime.kids_internet_curfew_start
-      id: evening-curfew
+  - platform: time
+    at: input_datetime.kids_internet_curfew_end
+    id: morning-curfew
+  - platform: time
+    at: input_datetime.kids_internet_curfew_start
+    id: evening-curfew
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_kids_internet_schedule_automation
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_kids_internet_schedule_automation
+    state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: morning-curfew
-          sequence:
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id:
-                  - switch.laurits_laptop_rx
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.astrids_laptop_rx
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.emmas_laptop_rx
-        - conditions:
-            - condition: trigger
-              id: evening-curfew
-          sequence:
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id: switch.laurits_laptop_rx
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id: switch.astrids_laptop_rx
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id: switch.emmas_laptop_rx
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: morning-curfew
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id:
+          - switch.laurits_laptop_rx
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.astrids_laptop_rx
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.emmas_laptop_rx
+    - conditions:
+      - condition: trigger
+        id: evening-curfew
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.laurits_laptop_rx
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.astrids_laptop_rx
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.emmas_laptop_rx
+    default: []
   mode: single
-- id: "1664649038611"
+- id: '1664649038611'
   alias: Alarm status changed
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: alarm_control_panel.verisure_alarm
+  - platform: state
+    entity_id: alarm_control_panel.verisure_alarm
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_alarm_status_changed_automation
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_alarm_status_changed_automation
+    state: 'on'
   action:
-    - service: notify.mobile_app_klgn_phone
-      data:
-        message:
-          "Alarm changed from {{ trigger.from_state.state }} to {{ trigger.to_state.state
-          }} by {{ trigger.to_state.attributes.changed_by }}
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: 'Alarm changed from {{ trigger.from_state.state }} to {{ trigger.to_state.state
+        }} by {{ trigger.to_state.attributes.changed_by }}
 
-          "
+        '
 - id: living_room_p4_kobenhavn
-  alias: "Sonos: Living Room Play P4 København"
-  description: ""
+  alias: 'Sonos: Living Room Play P4 København'
+  description: ''
   trigger: []
   condition: []
   action:
-    - service: media_player.volume_set
-      data:
-        volume_level: 0.1
-      target:
-        entity_id: media_player.living_room
-    - service: media_player.select_source
-      data:
-        source: DR P4 København
-      target:
-        entity_id: media_player.living_room
-    - service: media_player.media_play
-      target:
-        entity_id: media_player.living_room
-      data: {}
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.1
+    target:
+      entity_id: media_player.living_room
+  - service: media_player.select_source
+    data:
+      source: DR P4 København
+    target:
+      entity_id: media_player.living_room
+  - service: media_player.media_play
+    target:
+      entity_id: media_player.living_room
+    data: {}
   mode: single
-- id: "1665207930179"
+- id: '1665207930179'
   alias: Pantry Room Notification
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.pantry_room_sensor_occupancy
-      to: "on"
-      id: detected
+  - platform: state
+    entity_id:
+    - binary_sensor.pantry_room_sensor_occupancy
+    to: 'on'
+    id: detected
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_pantry_room_notification
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_pantry_room_notification
+    state: 'on'
   action:
-    - service: notify.mobile_app_klgn_phone
-      data:
-        message: Someone's in the Pantry Room!!!
-        title: Pantry Room activity
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Someone's in the Pantry Room!!!
+      title: Pantry Room activity
   mode: single
-- id: "1665208238398"
+- id: '1665208238398'
   alias: Toggle toilet lights
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.toilet_sensor_occupancy
-      id: turn-on
-      to: "on"
-    - platform: state
-      entity_id:
-        - binary_sensor.toilet_sensor_occupancy
-      id: turn-off
-      to: "off"
+  - platform: state
+    entity_id:
+    - binary_sensor.toilet_sensor_occupancy
+    id: turn-on
+    to: 'on'
+  - platform: state
+    entity_id:
+    - binary_sensor.toilet_sensor_occupancy
+    id: turn-off
+    to: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: turn-off
-          sequence:
-            - service: light.turn_off
-              target:
-                entity_id: light.toilet_bulbs
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: turn-on
-          sequence:
-            - if:
-                - condition: time
-                  after: input_datetime.toilet_nighttime_start
-                  before: input_datetime.toilet_night_time_end
-              then:
-                - service: scene.turn_on
-                  data: {}
-                  target:
-                    entity_id: scene.toilet_light_night
-              else:
-                - service: scene.turn_on
-                  data: {}
-                  target:
-                    entity_id: scene.toilet_light_day
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: turn-off
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.toilet_bulbs
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: turn-on
+      sequence:
+      - if:
+        - condition: time
+          after: input_datetime.toilet_nighttime_start
+          before: input_datetime.toilet_night_time_end
+        then:
+        - service: scene.turn_on
+          data: {}
+          target:
+            entity_id: scene.toilet_light_night
+        else:
+        - service: scene.turn_on
+          data: {}
+          target:
+            entity_id: scene.toilet_light_day
+    default: []
   mode: single
 - id: waste_collection
   alias: Notify Trash Being Collected
   description: Sends a notification to Kristian on the day that waste is being collected
   trigger:
-    - platform: state
-      entity_id:
-        - sensor.renoweb_370_l_to_delt_pappi
-      id: paper-collected
-      from: "2"
-      to: "1"
-    - platform: state
-      entity_id:
-        - sensor.renoweb_240_l_glas_metal
-      id: glass-collected
-      from: "2"
-      to: "1"
-    - platform: state
-      entity_id:
-        - sensor.renoweb_240_l_rest_mad_14_dag
-      id: general-collected
-      from: "2"
-      to: "1"
-    - platform: state
-      entity_id:
-        - sensor.renoweb_rod_boks
-      from: "2"
-      to: "1"
-      id: red-box
-    - platform: state
-      entity_id:
-        - sensor.renoweb_tekstilposer
-      from: "2"
-      to: "1"
-      id: textile
+  - platform: state
+    entity_id:
+    - sensor.renoweb_370_l_to_delt_pappi
+    id: paper-collected
+    from: '2'
+    to: '1'
+  - platform: state
+    entity_id:
+    - sensor.renoweb_240_l_glas_metal
+    id: glass-collected
+    from: '2'
+    to: '1'
+  - platform: state
+    entity_id:
+    - sensor.renoweb_240_l_rest_mad_14_dag
+    id: general-collected
+    from: '2'
+    to: '1'
+  - platform: state
+    entity_id:
+    - sensor.renoweb_rod_boks
+    from: '2'
+    to: '1'
+    id: red-box
+  - platform: state
+    entity_id:
+    - sensor.renoweb_tekstilposer
+    from: '2'
+    to: '1'
+    id: textile
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_notify_trash_being_collected_automation
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_notify_trash_being_collected_automation
+    state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: paper-collected
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                message: Paper waste is collected tomorrow
-                title: Waste collection tomorrow
-        - conditions:
-            - condition: trigger
-              id: glass-collected
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                title: Waste is collected tomorrow
-                message: Glass and metal waste is collected tomorrow
-        - conditions:
-            - condition: trigger
-              id: general-collected
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                message: General waste is collected tomorrow
-                title: Waste is collected tomorrow
-        - conditions:
-            - condition: trigger
-              id: red-box
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                title: Waste is collected tomorrow
-                message: Chemical waste is collected tomorrow
-        - conditions:
-            - condition: trigger
-              id: textile
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                message: Textile waste is collected tomorrow
-                title: Waste is collected tomorrow
-      default: []
-  mode: single
-- id: "1666078197344"
-  alias: Everyday alarm
-  description: ""
-  trigger:
-    - platform: time
-      at: input_datetime.home_alarm_on_at_night
-      id: alarm-start
-    - platform: time
-      at: input_datetime.home_alarm_off_in_the_morning
-      id: alarm-end
-  condition:
-    - condition: not
-      conditions:
-        - condition: device
-          device_id: 64fb315d63a19409f86ab6f0d6d4cf72
-          domain: alarm_control_panel
-          entity_id: f353994aa290aa922c90c5f7285975e3
-          type: is_armed_away
-    - condition: state
-      entity_id: input_boolean.enable_everyday_alarm_automation
-      state: "on"
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: alarm-start
-          sequence:
-            - service: alarm_control_panel.alarm_arm_home
-              data:
-                code: 8532
-              target:
-                entity_id: alarm_control_panel.verisure_alarm
-        - conditions:
-            - condition: trigger
-              id: alarm-end
-          sequence:
-            - service: alarm_control_panel.alarm_disarm
-              data:
-                code: 8532
-              target:
-                entity_id: alarm_control_panel.verisure_alarm
-      default: []
-  mode: single
-- id: "1666078306630"
-  alias: Arm Alarm in the morning
-  description: ""
-  trigger:
-    - platform: time
-      at: input_datetime.arm_alarm_workday_time
-  condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday_sensor
-          state: "on"
-        - condition: state
-          entity_id: input_boolean.work_from_home_today
-          state: "off"
-        - condition: state
-          entity_id: input_boolean.vacation
-          state: "off"
-          enabled: false
-        - condition: state
-          entity_id: input_boolean.guestmode
-          state: "off"
-          enabled: false
-        - condition: state
-          entity_id: input_boolean.enable_arm_alarm_in_the_morning_automation
-          state: "on"
-  action:
-    - service: alarm_control_panel.alarm_arm_away
-      data:
-        code: 8532
-      target:
-        entity_id: alarm_control_panel.verisure_alarm
-  mode: single
-- id: "1666078370422"
-  alias: Ask if working remotely
-  description: ""
-  trigger:
-    - platform: time
-      at: input_datetime.ask_working_remote_time
-  condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday_sensor
-          state: "on"
-        - condition: state
-          entity_id: input_boolean.vacation
-          state: "off"
-          enabled: false
-        - condition: state
-          entity_id: input_boolean.enable_ask_if_working_remotely_automation
-          state: "on"
-  action:
-    - service: notify.mobile_app_klgn_phone
-      data:
-        message: Are you working remotely today?
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: paper-collected
+      sequence:
+      - service: script.notify_klgn_mb
         data:
-          actions:
-            - action: WORK_REMOTELY_YES
-              title: "YES"
-            - action: WORK_REMOTELY_NO
-              title: "NO"
+          message: Paper waste is collected tomorrow
+          title: Waste collection tomorrow
+    - conditions:
+      - condition: trigger
+        id: glass-collected
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          title: Waste is collected tomorrow
+          message: Glass and metal waste is collected tomorrow
+    - conditions:
+      - condition: trigger
+        id: general-collected
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          message: General waste is collected tomorrow
+          title: Waste is collected tomorrow
+    - conditions:
+      - condition: trigger
+        id: red-box
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          title: Waste is collected tomorrow
+          message: Chemical waste is collected tomorrow
+    - conditions:
+      - condition: trigger
+        id: textile
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          message: Textile waste is collected tomorrow
+          title: Waste is collected tomorrow
+    default: []
   mode: single
-- id: "1666078413588"
-  alias: Astrid Morning Alarm
-  description: ""
+- id: '1666078197344'
+  alias: Everyday alarm
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.astrid_alarm_start
-      id: morning-start
-    - platform: time
-      at: input_datetime.astrid_alarm_end
-      id: morning-end
+  - platform: time
+    at: input_datetime.home_alarm_on_at_night
+    id: alarm-start
+  - platform: time
+    at: input_datetime.home_alarm_off_in_the_morning
+    id: alarm-end
   condition:
-    - condition: and
+  - condition: not
+    conditions:
+    - condition: device
+      device_id: 64fb315d63a19409f86ab6f0d6d4cf72
+      domain: alarm_control_panel
+      entity_id: f353994aa290aa922c90c5f7285975e3
+      type: is_armed_away
+  - condition: state
+    entity_id: input_boolean.enable_everyday_alarm_automation
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: alarm-start
+      sequence:
+      - service: alarm_control_panel.alarm_arm_home
+        data:
+          code: 8532
+        target:
+          entity_id: alarm_control_panel.verisure_alarm
+    - conditions:
+      - condition: trigger
+        id: alarm-end
+      sequence:
+      - service: alarm_control_panel.alarm_disarm
+        data:
+          code: 8532
+        target:
+          entity_id: alarm_control_panel.verisure_alarm
+    default: []
+  mode: single
+- id: '1666078306630'
+  alias: Arm Alarm in the morning
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.arm_alarm_workday_time
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.work_from_home_today
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+      enabled: false
+    - condition: state
+      entity_id: input_boolean.guestmode
+      state: 'off'
+      enabled: false
+    - condition: state
+      entity_id: input_boolean.enable_arm_alarm_in_the_morning_automation
+      state: 'on'
+  action:
+  - service: alarm_control_panel.alarm_arm_away
+    data:
+      code: 8532
+    target:
+      entity_id: alarm_control_panel.verisure_alarm
+  mode: single
+- id: '1666078370422'
+  alias: Ask if working remotely
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.ask_working_remote_time
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+      enabled: false
+    - condition: state
+      entity_id: input_boolean.enable_ask_if_working_remotely_automation
+      state: 'on'
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Are you working remotely today?
+      data:
+        actions:
+        - action: WORK_REMOTELY_YES
+          title: 'YES'
+        - action: WORK_REMOTELY_NO
+          title: 'NO'
+  mode: single
+- id: '1666078413588'
+  alias: Astrid Morning Alarm
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.astrid_alarm_start
+    id: morning-start
+  - platform: time
+    at: input_datetime.astrid_alarm_end
+    id: morning-end
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.enable_astrid_morning_alarm_automation
+      state: 'on'
+    - condition: or
       conditions:
-        - condition: state
-          entity_id: binary_sensor.workday_sensor
-          state: "on"
-        - condition: state
-          entity_id: input_boolean.vacation
-          state: "off"
-          enabled: false
-        - condition: state
-          entity_id: input_boolean.enable_astrid_morning_alarm_automation
-          state: "on"
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.astrid_up_for_work
+        state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: morning-start
-          sequence:
-            - service: automation.trigger
-              data:
-                skip_condition: true
-              target:
-                entity_id: automation.sonos_start_astrid_alarm_2
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: morning-start
+      sequence:
+      - service: automation.trigger
+        data:
+          skip_condition: true
+        target:
+          entity_id: automation.sonos_start_astrid_alarm_2
+      - service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.astrid_up_for_work
+        data: {}
+    default: []
   mode: single
-- id: "1666078503672"
+- id: '1666078503672'
   alias: Control alarm with home/away button
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - input_boolean.house_mode_away
-      id: away
-      to: "on"
-    - platform: state
-      entity_id:
-        - input_boolean.house_mode_away
-      id: home
-      to: "off"
+  - platform: state
+    entity_id:
+    - input_boolean.house_mode_away
+    id: away
+    to: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.house_mode_away
+    id: home
+    to: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: and
-              conditions:
-                - condition: trigger
-                  id: away
-                - condition: not
-                  conditions:
-                    - condition: state
-                      entity_id: alarm_control_panel.verisure_alarm
-                      state: armed_away
-          sequence:
-            - service: alarm_control_panel.alarm_arm_away
-              data:
-                code: 8532
-              target:
-                entity_id: alarm_control_panel.verisure_alarm
-        - conditions:
-            - condition: and
-              conditions:
-                - condition: trigger
-                  id: home
-            - condition: state
-              entity_id: alarm_control_panel.verisure_alarm
-              state: armed_away
-          sequence:
-            - service: alarm_control_panel.alarm_disarm
-              data: {}
-      default: []
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: away
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: alarm_control_panel.verisure_alarm
+            state: armed_away
+      sequence:
+      - service: alarm_control_panel.alarm_arm_away
+        data:
+          code: 8532
+        target:
+          entity_id: alarm_control_panel.verisure_alarm
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: home
+      - condition: state
+        entity_id: alarm_control_panel.verisure_alarm
+        state: armed_away
+      sequence:
+      - service: alarm_control_panel.alarm_disarm
+        data: {}
+    default: []
   mode: single
-- id: "1666078902479"
+- id: '1666078902479'
   alias: Control Unit living room toggle
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: sensor.living_room_button_action
-      to: "on"
+  - platform: state
+    entity_id: sensor.living_room_button_action
+    to: 'on'
   condition: []
   action:
-    - service: switch.toggle
-      target:
-        entity_id: switch.living_room_control_unit
-      data: {}
+  - service: switch.toggle
+    target:
+      entity_id: switch.living_room_control_unit
+    data: {}
   mode: single
-- id: "1666079166095"
+- id: '1666079166095'
   alias: Light Pantry light
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: binary_sensor.pantry_room_sensor_occupancy
-      id: turn-on
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.pantry_room_sensor_occupancy
-      id: turn-off
-      to: "off"
+  - platform: state
+    entity_id: binary_sensor.pantry_room_sensor_occupancy
+    id: turn-on
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.pantry_room_sensor_occupancy
+    id: turn-off
+    to: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: turn-on
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.pantry_light
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: turn-off
-          sequence:
-            - service: light.turn_off
-              target:
-                entity_id: light.pantry_light
-              data: {}
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: turn-on
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.pantry_light
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: turn-off
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.pantry_light
+        data: {}
+    default: []
   mode: single
-- id: "1666079193992"
+- id: '1666079193992'
   alias: Light utility room toggle
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: sensor.utility_room_button_action
-      to: "on"
+  - platform: state
+    entity_id: sensor.utility_room_button_action
+    to: 'on'
   condition: []
   action:
-    - service: light.toggle
+  - service: light.toggle
+    target:
+      entity_id: light.utility_room_light
+    data: {}
+  - if:
+    - condition: state
+      entity_id: light.utility_room_light
+      state: 'on'
+    then:
+    - service: light.turn_off
+      data: {}
       target:
         entity_id: light.utility_room_light
-      data: {}
+    else:
     - if:
-        - condition: state
-          entity_id: light.utility_room_light
-          state: "on"
+      - condition: time
+        after: input_datetime.toilet_nighttime_start
+        before: input_datetime.toilet_night_time_end
       then:
-        - service: light.turn_off
-          data: {}
-          target:
-            entity_id: light.utility_room_light
+      - service: scene.turn_on
+        data: {}
+        target:
+          entity_id: scene.utility_room_night
       else:
-        - if:
-            - condition: time
-              after: input_datetime.toilet_nighttime_start
-              before: input_datetime.toilet_night_time_end
-          then:
-            - service: scene.turn_on
-              data: {}
-              target:
-                entity_id: scene.utility_room_night
-          else:
-            - service: scene.turn_on
-              data: {}
-              target:
-                entity_id: scene.utility_room_day
+      - service: scene.turn_on
+        data: {}
+        target:
+          entity_id: scene.utility_room_day
   mode: single
-- id: "1666079237576"
+- id: '1666079237576'
   alias: Office Styrbar
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: sensor.office_styrbar_brightness
-      id: brightness
-    - platform: state
-      entity_id: sensor.office_styrbar_action
-      id: "on"
-      to: "on"
-    - platform: state
-      entity_id: sensor.office_styrbar_action
-      id: "off"
-      to: "off"
-    - platform: state
-      entity_id: sensor.office_styrbar_action
-      id: up-hold
-      to: brightness_move_up
-    - platform: state
-      entity_id: sensor.office_styrbar_action
-      id: down-hold
-      to: brightness_move_down
-    - platform: state
-      entity_id: sensor.office_styrbar_action
-      id: left-hold
-      to: arrow_left_hold
-    - platform: state
-      entity_id: sensor.office_styrbar_action
-      id: right-hold
-      to: arrow_right_hold
-    - platform: state
-      entity_id: sensor.office_styrbar_action
-      id: left-click
-      to: arrow_left_click
-    - platform: state
-      entity_id: sensor.office_styrbar_action
-      id: right-click
-      to: arrow_right_click
+  - platform: state
+    entity_id: sensor.office_styrbar_brightness
+    id: brightness
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'on'
+    to: 'on'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: 'off'
+    to: 'off'
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: up-hold
+    to: brightness_move_up
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: down-hold
+    to: brightness_move_down
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: left-hold
+    to: arrow_left_hold
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: right-hold
+    to: arrow_right_hold
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: left-click
+    to: arrow_left_click
+  - platform: state
+    entity_id: sensor.office_styrbar_action
+    id: right-click
+    to: arrow_right_click
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: "on"
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id:
-                  - light.office_bulp
-                  - light.office_strip
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: "off"
-          sequence:
-            - service: light.turn_off
-              target:
-                entity_id:
-                  - light.office_bulp
-                  - light.office_strip
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: right-hold
-          sequence:
-            - service: switch.turn_on
-              target:
-                entity_id: switch.office_control_unit
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: left-hold
-          sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.office_control_unit
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: left-click
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id:
-                  - light.office_bulp
-              data:
-                hs_color:
-                  - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -
-                    state_attr(var_light, \"hs_color\")[0] - 18 }}\n{% else %}\n  {{ state_attr(var_light,
-                    \"hs_color\")[0] - 18 }}\n{% endif %}"
-                  - '{{ state_attr(var_light, "hs_color")[1] }}'
-                transition: 0.5
-            - delay:
-                milliseconds: 500
-        - conditions:
-            - condition: trigger
-              id: right-click
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id:
-                  - light.office_bulp
-              data:
-                hs_color:
-                  - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,
-                    \"hs_color\")[0] + 18 - 360 }}\n{% else %}\n  {{ state_attr(var_light,
-                    \"hs_color\")[0] + 18 }}\n{% endif %}"
-                  - '{{ state_attr(var_light, "hs_color")[1] }}'
-                transition: 0.5
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id:
+          - light.office_bulp
+          - light.office_strip
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id:
+          - light.office_bulp
+          - light.office_strip
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: right-hold
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.office_control_unit
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: left-hold
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.office_control_unit
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: left-click
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id:
+          - light.office_bulp
+        data:
+          hs_color:
+          - "{% if state_attr(var_light, \"hs_color\")[0] - 18 < 0 %}\n  {{ 360 -
+            state_attr(var_light, \"hs_color\")[0] - 18 }}\n{% else %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] - 18 }}\n{% endif %}"
+          - '{{ state_attr(var_light, "hs_color")[1] }}'
+          transition: 0.5
+      - delay:
+          milliseconds: 500
+    - conditions:
+      - condition: trigger
+        id: right-click
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id:
+          - light.office_bulp
+        data:
+          hs_color:
+          - "{% if state_attr(var_light, \"hs_color\")[0] + 18 > 360 %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] + 18 - 360 }}\n{% else %}\n  {{ state_attr(var_light,
+            \"hs_color\")[0] + 18 }}\n{% endif %}"
+          - '{{ state_attr(var_light, "hs_color")[1] }}'
+          transition: 0.5
+    default: []
   mode: single
   variables:
     var_light: light.office_strip
-- id: "1666079269919"
+- id: '1666079269919'
   alias: Reset work remotely
-  description: ""
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.reset_work_remotely_time
+  - platform: time
+    at: input_datetime.reset_work_remotely_time
   condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday_sensor
-          state: "on"
-        - condition: state
-          entity_id: input_boolean.vacation
-          state: "off"
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
   action:
-    - service: input_boolean.turn_off
-      data: {}
-      target:
-        entity_id: input_boolean.work_from_home_today
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.work_from_home_today
   mode: single
-- id: "1666079312415"
-  alias: "Sonos: Start Astrid Alarm"
-  description: ""
+- id: '1666079312415'
+  alias: 'Sonos: Start Astrid Alarm'
+  description: ''
   trigger: []
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_astrid_morning_alarm_automation
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_astrid_morning_alarm_automation
+    state: 'on'
   action:
-    - service: media_player.volume_set
-      data:
-        volume_level: 0.2
-      target:
-        entity_id: media_player.astrids_sonos
-    - service: media_player.shuffle_set
-      data:
-        shuffle: true
-      target:
-        entity_id: media_player.astrids_sonos
-    - service: media_player.select_source
-      data:
-        source: Bangers - the sequel
-      target:
-        entity_id: media_player.astrids_sonos
-    - service: media_player.media_play
-      target:
-        entity_id: media_player.astrids_sonos
-      data: {}
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.2
+    target:
+      entity_id: media_player.astrids_sonos
+  - service: media_player.shuffle_set
+    data:
+      shuffle: true
+    target:
+      entity_id: media_player.astrids_sonos
+  - service: media_player.play_media
+    data:
+      media_content_type: playlist
+      media_content_id: https://open.spotify.com/playlist/0BhAaH6Qk4oK70Yvx22QBh
+    target:
+      entity_id: media_player.astrids_sonos
   mode: single
-- id: "1666079336846"
-  alias: "Sonos: Stop Kids' players at night"
-  description: ""
+- id: '1666079336846'
+  alias: 'Sonos: Stop Kids'' players at night'
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.kids_sonos_players_stop
+  - platform: time
+    at: input_datetime.kids_sonos_players_stop
   condition: []
   action:
-    - service: media_player.media_stop
-      target:
-        entity_id:
-          - media_player.astrids_sonos
-          - media_player.emmas_vaerelse
-          - media_player.laurits_sonos
-      data: {}
+  - service: media_player.media_stop
+    target:
+      entity_id:
+      - media_player.astrids_sonos
+      - media_player.emmas_vaerelse
+      - media_player.laurits_sonos
+    data: {}
   mode: single
-- id: "1666079365648"
-  alias: "Telegram: Start Astrid Alarm"
-  description: ""
+- id: '1666079365648'
+  alias: 'Telegram: Start Astrid Alarm'
+  description: ''
   trigger:
-    - platform: event
-      event_type: telegram_command
-      event_data:
-        command: /upAstrid
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /upAstrid
   condition: []
   action:
-    - service: automation.trigger
-      target:
-        entity_id: automation.sonos_start_astrid_alarm_2
-      data: {}
+  - service: automation.trigger
+    target:
+      entity_id: automation.sonos_start_astrid_alarm_2
+    data: {}
   mode: single
-- id: "1666079376655"
-  alias: "Telegram: Start Charging Mower"
-  description: ""
+- id: '1666079376655'
+  alias: 'Telegram: Start Charging Mower'
+  description: ''
   trigger:
-    - platform: event
-      event_type: telegram_command
-      event_data:
-        command: /chargeMower
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /chargeMower
   condition: []
   action:
-    - service: switch.turn_on
-      target:
-        entity_id: switch.control_unit_1
-      data: {}
-    - service: telegram_bot.send_message
-      data:
-        message: Started charging the mower
+  - service: switch.turn_on
+    target:
+      entity_id: switch.control_unit_1
+    data: {}
+  - service: telegram_bot.send_message
+    data:
+      message: Started charging the mower
   mode: single
-- id: "1666079388258"
-  alias: "Telegram: Start Living Room Sonos"
-  description: ""
+- id: '1666079388258'
+  alias: 'Telegram: Start Living Room Sonos'
+  description: ''
   trigger:
-    - platform: event
-      event_type: telegram_command
-      event_data:
-        command: /goodmorning
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /goodmorning
   condition: []
   action:
-    - service: automation.trigger
-      target:
-        entity_id: automation.living_room_p4_kobenhavn
-      data: {}
+  - service: automation.trigger
+    target:
+      entity_id: automation.living_room_p4_kobenhavn
+    data: {}
   mode: single
-- id: "1666079439792"
+- id: '1666079439792'
   alias: Toggle Home/Away Using Alarm
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: alarm_control_panel.verisure_alarm
-      id: home
-      to: disarmed
-    - platform: state
-      entity_id: alarm_control_panel.verisure_alarm
-      id: away
-      to: armed_away
+  - platform: state
+    entity_id: alarm_control_panel.verisure_alarm
+    id: home
+    to: disarmed
+  - platform: state
+    entity_id: alarm_control_panel.verisure_alarm
+    id: away
+    to: armed_away
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: and
-              conditions:
-                - condition: trigger
-                  id: home
-                - condition: not
-                  conditions:
-                    - condition: state
-                      entity_id: input_boolean.house_mode_away
-                      state: "off"
-          sequence:
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.house_mode_away
-        - conditions:
-            - condition: and
-              conditions:
-                - condition: trigger
-                  id: away
-                - condition: not
-                  conditions:
-                    - condition: state
-                      entity_id: alarm_control_panel.verisure_alarm
-                      state: armed_away
-          sequence:
-            - service: input_boolean.turn_on
-              data: {}
-              target:
-                entity_id: input_boolean.house_mode_away
-      default: []
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: home
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: input_boolean.house_mode_away
+            state: 'off'
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.house_mode_away
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id: away
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: alarm_control_panel.verisure_alarm
+            state: armed_away
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.house_mode_away
+    default: []
   mode: single
-- id: "1666079560474"
+- id: '1666079560474'
   alias: Turn everything off
-  description: ""
+  description: ''
   trigger: []
   condition: []
   action:
-    - service: media_player.media_stop
-      target:
-        entity_id:
-          - media_player.astrids_sonos
-          - media_player.living_room
-          - media_player.laurits_sonos
-          - media_player.emmas_vaerelse
-          - media_player.office
-      data: {}
-    - service: switch.turn_off
-      target:
-        entity_id:
-          - switch.office_control_unit
-          - switch.control_unit_1
-          - switch.living_room_control_unit
-      data: {}
-    - service: light.turn_off
-      target:
-        entity_id:
-          - light.all_lights
-      data: {}
+  - service: media_player.media_stop
+    target:
+      entity_id:
+      - media_player.astrids_sonos
+      - media_player.living_room
+      - media_player.laurits_sonos
+      - media_player.emmas_vaerelse
+      - media_player.office
+    data: {}
+  - service: switch.turn_off
+    target:
+      entity_id:
+      - switch.office_control_unit
+      - switch.control_unit_1
+      - switch.living_room_control_unit
+    data: {}
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.all_lights
+    data: {}
   mode: single
-- id: "1666079589004"
+- id: '1666079589004'
   alias: Turn off charging unit at night
-  description: ""
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.hall_charger_end_time
+  - platform: time
+    at: input_datetime.hall_charger_end_time
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_turn_off_charging_unit_at_night
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_turn_off_charging_unit_at_night
+    state: 'on'
   action:
-    - type: turn_off
-      device_id: 9ba1e1178dd56b582d4de26be35124f3
-      entity_id: switch.charge_unit_l1
-      domain: switch
-    - type: turn_off
-      device_id: 9ba1e1178dd56b582d4de26be35124f3
-      entity_id: switch.charge_unit_l2
-      domain: switch
-    - type: turn_off
-      device_id: 9ba1e1178dd56b582d4de26be35124f3
-      entity_id: switch.charge_unit_l3
-      domain: switch
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l1
+    domain: switch
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l2
+    domain: switch
+  - type: turn_off
+    device_id: 9ba1e1178dd56b582d4de26be35124f3
+    entity_id: switch.charge_unit_l3
+    domain: switch
   mode: single
-- id: "1666079667089"
+- id: '1666079667089'
   alias: Start Mower Charging for 3 hours
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: switch.control_unit_1
-      to: "on"
+  - platform: state
+    entity_id: switch.control_unit_1
+    to: 'on'
   condition: []
   action:
-    - service: timer.start
-      entity_id: timer.workshop_switch
+  - service: timer.start
+    entity_id: timer.workshop_switch
   mode: single
-- id: "1666079718247"
+- id: '1666079718247'
   alias: Stop Mower Charger Once Timer Runs Out
-  description: ""
+  description: ''
   trigger:
-    - platform: event
-      event_type: timer.finished
-      event_data:
-        entity_id: timer.workshop_switch
-    - platform: state
-      entity_id: switch.control_unit_1
-      to: "off"
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.workshop_switch
+  - platform: state
+    entity_id: switch.control_unit_1
+    to: 'off'
   condition: []
   action:
-    - service: timer.cancel
-      data:
-        entity_id: timer.workshop_switch
-    - service: switch.turn_off
-      entity_id: switch.control_unit_1
+  - service: timer.cancel
+    data:
+      entity_id: timer.workshop_switch
+  - service: switch.turn_off
+    entity_id: switch.control_unit_1
   mode: single
-- id: "1666079763585"
+- id: '1666079763585'
   alias: Wait for mobile response
-  description: ""
+  description: ''
   trigger:
-    - platform: event
-      event_type: mobile_app_notification_action
-      event_data:
-        action: WORK_REMOTELY_YES
-      id: work-remotely-yes
-    - platform: event
-      event_type: mobile_app_notification_action
-      id: work-remotely-no
-      event_data:
-        action: WORK_REMOTELY_NO
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: WORK_REMOTELY_YES
+    id: work-remotely-yes
+  - platform: event
+    event_type: mobile_app_notification_action
+    id: work-remotely-no
+    event_data:
+      action: WORK_REMOTELY_NO
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_ask_if_working_remotely_automation
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_ask_if_working_remotely_automation
+    state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: work-remotely-yes
-          sequence:
-            - service: input_boolean.turn_on
-              data: {}
-              target:
-                entity_id: input_boolean.work_from_home_today
-        - conditions:
-            - condition: trigger
-              id: work-remotely-no
-          sequence:
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.work_from_home_today
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: work-remotely-yes
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.work_from_home_today
+    - conditions:
+      - condition: trigger
+        id: work-remotely-no
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.work_from_home_today
+    default: []
   mode: single
-- id: "1666079789109"
+- id: '1666079789109'
   alias: Workshop lightstrip toggle
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: binary_sensor.workshop_sensor_occupancy
-      id: turn-on
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.workshop_sensor_occupancy
-      id: turn-off
-      to: "off"
+  - platform: state
+    entity_id: binary_sensor.workshop_sensor_occupancy
+    id: turn-on
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.workshop_sensor_occupancy
+    id: turn-off
+    to: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: turn-on
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.workshop_strip
-              data: {}
-        - conditions:
-            - condition: trigger
-              id: turn-off
-          sequence:
-            - service: light.turn_off
-              target:
-                entity_id: light.workshop_strip
-              data: {}
-      default: []
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: turn-on
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.workshop_strip
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: turn-off
+      sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.workshop_strip
+        data: {}
+    default: []
   mode: single
-- id: "1666079819744"
+- id: '1666079819744'
   alias: Zigbee Device Joined Notification
-  description: ""
+  description: ''
   trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/bridge/log
+  - platform: mqtt
+    topic: zigbee2mqtt/bridge/log
   condition:
-    - condition: template
-      value_template:
-        '{{trigger.payload_json.type == "pairing" and trigger.payload_json.message
-        == "interview_successful"}}'
+  - condition: template
+    value_template: '{{trigger.payload_json.type == "pairing" and trigger.payload_json.message
+      == "interview_successful"}}'
   action:
-    - service: persistent_notification.create
-      data_template:
-        title: Device joined the zigbee2mqtt network
-        message:
-          "Name: {{trigger.payload_json.meta.friendly_name}}, Vendor: {{trigger.payload_json.meta.vendor}},
-          Description: {{trigger.payload_json.meta.description}}"
+  - service: persistent_notification.create
+    data_template:
+      title: Device joined the zigbee2mqtt network
+      message: 'Name: {{trigger.payload_json.meta.friendly_name}}, Vendor: {{trigger.payload_json.meta.vendor}},
+        Description: {{trigger.payload_json.meta.description}}'
   mode: single
-- id: "1666079831524"
+- id: '1666079831524'
   alias: Zigbee Join Disabled
-  description: ""
+  description: ''
   trigger:
-    - platform: event
-      event_type: timer.finished
-      event_data:
-        entity_id: timer.zigbee_permit_join
-    - platform: state
-      entity_id: switch.zigbee2mqtt_main_join
-      to: "off"
-  condition: []
-  action:
-    - service: timer.cancel
-      data:
-        entity_id: timer.zigbee_permit_join
-    - service: switch.turn_off
-      entity_id: switch.zigbee2mqtt_main_join
-  mode: single
-- id: "1666079842056"
-  alias: Zigbee Join Enabled
-  description: ""
-  trigger:
-    - platform: state
-      entity_id: switch.zigbee2mqtt_main_join
-      to: "on"
-  condition: []
-  action:
-    - service: timer.start
+  - platform: event
+    event_type: timer.finished
+    event_data:
       entity_id: timer.zigbee_permit_join
+  - platform: state
+    entity_id: switch.zigbee2mqtt_main_join
+    to: 'off'
+  condition: []
+  action:
+  - service: timer.cancel
+    data:
+      entity_id: timer.zigbee_permit_join
+  - service: switch.turn_off
+    entity_id: switch.zigbee2mqtt_main_join
   mode: single
-- id: "1666079854150"
+- id: '1666079842056'
+  alias: Zigbee Join Enabled
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.zigbee2mqtt_main_join
+    to: 'on'
+  condition: []
+  action:
+  - service: timer.start
+    entity_id: timer.zigbee_permit_join
+  mode: single
+- id: '1666079854150'
   alias: Zigbee2mqtt Log Level
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: input_select.zigbee2mqtt_log_level
+  - platform: state
+    entity_id: input_select.zigbee2mqtt_log_level
   condition: []
   action:
-    - service: mqtt.publish
-      data:
-        payload_template: "{{ states('input_select.zigbee2mqtt_log_level') }}"
-        topic: zigbee2mqtt/bridge/config/log_level
+  - service: mqtt.publish
+    data:
+      payload_template: '{{ states(''input_select.zigbee2mqtt_log_level'') }}'
+      topic: zigbee2mqtt/bridge/config/log_level
   mode: single
-  initial_state: "on"
-- id: "1666348293270"
+  initial_state: 'on'
+- id: '1666348293270'
   alias: Set Electricity Price
-  description: ""
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.electricity_day_tariff_start
-      id: day-start
-    - platform: time
-      at: input_datetime.electricity_night_tariff_start
-      id: night-start
+  - platform: time
+    at: input_datetime.electricity_day_tariff_start
+    id: day-start
+  - platform: time
+    at: input_datetime.electricity_night_tariff_start
+    id: night-start
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: day-start
-          sequence:
-            - service: input_number.set_value
-              data:
-                value:
-                  "{{ states.input_number.electricity_day_tariff.state | float }}
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: day-start
+      sequence:
+      - service: input_number.set_value
+        data:
+          value: '{{ states.input_number.electricity_day_tariff.state | float }}
 
-                  "
-              target:
-                entity_id: input_number.electricity_price
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.night_electricity_tariff_on
-        - conditions:
-            - condition: trigger
-              id: night-start
-          sequence:
-            - service: input_number.set_value
-              data:
-                value:
-                  "{{ states.input_number.electricity_night_tariff.state | float }}
+            '
+        target:
+          entity_id: input_number.electricity_price
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.night_electricity_tariff_on
+    - conditions:
+      - condition: trigger
+        id: night-start
+      sequence:
+      - service: input_number.set_value
+        data:
+          value: '{{ states.input_number.electricity_night_tariff.state | float }}
 
-                  "
-              target:
-                entity_id: input_number.electricity_price
-            - service: input_boolean.turn_on
-              data: {}
-              target:
-                entity_id: input_boolean.night_electricity_tariff_on
+            '
+        target:
+          entity_id: input_number.electricity_price
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.night_electricity_tariff_on
   mode: single
-- id: "1666357170120"
+- id: '1666357170120'
   alias: Office Strip as slave from Office Bulb
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - light.office_bulp
-      attribute: brightness
-      id: brightness
-    - platform: state
-      entity_id:
-        - light.office_bulp
-      attribute: hs_color
-      id: color
+  - platform: state
+    entity_id:
+    - light.office_bulp
+    attribute: brightness
+    id: brightness
+  - platform: state
+    entity_id:
+    - light.office_bulp
+    attribute: hs_color
+    id: color
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: brightness
-          sequence:
-            - service: light.turn_on
-              data:
-                brightness:
-                  "{% set color = state_attr('light.office_bulp', 'brightness')
-                  | float %}
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: brightness
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: '{% set color = state_attr(''light.office_bulp'', ''brightness'')
+            | float %}
 
-                  {{ color }}
+            {{ color }}
 
-                  "
-              target:
-                entity_id: light.office_strip
-        - conditions:
-            - condition: trigger
-              id: color
-          sequence:
-            - service: light.turn_on
-              data:
-                hs_color:
-                  "{% set color = state_attr('light.office_bulp', 'hs_color')
-                  %}
+            '
+        target:
+          entity_id: light.office_strip
+    - conditions:
+      - condition: trigger
+        id: color
+      sequence:
+      - service: light.turn_on
+        data:
+          hs_color: '{% set color = state_attr(''light.office_bulp'', ''hs_color'')
+            %}
 
-                  {{ color }}
+            {{ color }}
 
-                  "
-              target:
-                entity_id: light.office_strip
+            '
+        target:
+          entity_id: light.office_strip
   mode: single
-- id: "1666359702996"
+- id: '1666359702996'
   alias: Hall Dimmer
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - sensor.hall_dimmer_brightness
-      id: brightness
-    - platform: state
-      entity_id:
-        - sensor.hall_dimmer_action
-      to: "on"
-      id: "on"
-    - platform: state
-      entity_id:
-        - sensor.hall_dimmer_action
-      id: "off"
-      to: "off"
+  - platform: state
+    entity_id:
+    - sensor.hall_dimmer_brightness
+    id: brightness
+  - platform: state
+    entity_id:
+    - sensor.hall_dimmer_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.hall_dimmer_action
+    id: 'off'
+    to: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: "on"
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.hall_lights
-              data:
-                brightness:
-                  "{{ states.sensor.hall_dimmer_brightness.state | float }}
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_lights
+        data:
+          brightness: '{{ states.sensor.hall_dimmer_brightness.state | float }}
 
-                  "
-        - conditions:
-            - condition: trigger
-              id: "off"
-          sequence:
-            - service: light.turn_off
-              data: {}
-              target:
-                entity_id: light.hall_lights
-        - conditions:
-            - condition: trigger
-              id: brightness
-          sequence:
-            - service: light.turn_on
-              data:
-                brightness:
-                  "{{ state_attr('sensor.hall_dimmer_brightness', 'state')
-                  | float }}
+            '
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id: light.hall_lights
+    - conditions:
+      - condition: trigger
+        id: brightness
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: '{{ state_attr(''sensor.hall_dimmer_brightness'', ''state'')
+            | float }}
 
-                  "
+            '
   mode: single
-- id: "1666360971602"
+- id: '1666360971602'
   alias: Rotater
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - sensor.rotater_brightness
-      id: brightness
-    - platform: state
-      entity_id:
-        - sensor.rotater_action_2
-      to: toggle
-      id: toggle
+  - platform: state
+    entity_id:
+    - sensor.rotater_brightness
+    id: brightness
+  - platform: state
+    entity_id:
+    - sensor.rotater_action_2
+    to: toggle
+    id: toggle
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: brightness
-            - condition: state
-              entity_id: light.bedside_bulb
-              state: "on"
-          sequence:
-            - service: light.turn_on
-              data:
-                brightness:
-                  "{{ states.sensor.rotater_brightness.state | float }}
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: brightness
+      - condition: state
+        entity_id: light.bedside_bulb
+        state: 'on'
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness: '{{ states.sensor.rotater_brightness.state | float }}
 
-                  "
-              target:
-                entity_id: light.bedside_bulb
-        - conditions:
-            - condition: trigger
-              id: toggle
-          sequence:
-            - service: light.toggle
-              data: {}
-              target:
-                entity_id: light.bedside_bulb
+            '
+        target:
+          entity_id: light.bedside_bulb
+    - conditions:
+      - condition: trigger
+        id: toggle
+      sequence:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.bedside_bulb
   mode: single
-- id: "1670168839221"
+- id: '1670168839221'
   alias: Notify When A Device Has Low Battery
-  description: ""
+  description: ''
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.low_battery_devices
-      above: 0
-      id: "on"
+  - platform: numeric_state
+    entity_id: sensor.low_battery_devices
+    above: 0
+    id: 'on'
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_notify_when_a_device_has_low_battery_automation
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_notify_when_a_device_has_low_battery_automation
+    state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: "on"
-          sequence:
-            - service: notify.mobile_app_klgn_phone
-              data:
-                message:
-                  "Low battery detected in these devices:\n  {{ state_attr('sensor.low_battery_devices',
-                  'sensors') | join(', ') }}\n"
-                data:
-                  persisent: true
-                  tag: battery
-                  actions:
-                    - action: BATTERY_CHANGED
-                      title: Changed it
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: notify.mobile_app_klgn_phone
+        data:
+          message: "Low battery detected in these devices:\n  {{ state_attr('sensor.low_battery_devices',
+            'sensors') | join(', ') }}\n"
+          data:
+            persisent: true
+            tag: battery
+            actions:
+            - action: BATTERY_CHANGED
+              title: Changed it
   mode: single
-- id: "1670179192592"
+- id: '1670179192592'
   alias: Kitchen button
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - sensor.kitchen_button_action
-      to: "on"
+  - platform: state
+    entity_id:
+    - sensor.kitchen_button_action
+    to: 'on'
   condition: []
   action:
-    - service: light.toggle
-      data: {}
-      target:
-        entity_id: light.kitchen_strip
+  - service: light.toggle
+    data: {}
+    target:
+      entity_id: light.kitchen_strip
   mode: single
-- id: "1673040731243"
+- id: '1673040731243'
   alias: Set electricity tarfiffs
-  description: ""
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.electricity_day_tariff_start
-      id: day-start
-      variables:
-        tariff: day
-    - platform: time
-      at: input_datetime.electricity_night_tariff_start
-      id: night-start
-      variables:
-        tariff: night
+  - platform: time
+    at: input_datetime.electricity_day_tariff_start
+    id: day-start
+    variables:
+      tariff: day
+  - platform: time
+    at: input_datetime.electricity_night_tariff_start
+    id: night-start
+    variables:
+      tariff: night
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: day-start
-          sequence:
-            - service: select.select_option
-              data:
-                option: day
-              target:
-                entity_id: select.daily_electricity
-            - service: select.select_option
-              data:
-                option: day
-              target:
-                entity_id: select.monthly_electricity
-        - conditions:
-            - condition: trigger
-              id: night-start
-          sequence:
-            - service: select.select_option
-              data:
-                option: night
-              target:
-                entity_id: select.daily_electricity
-            - service: select.select_option
-              data:
-                option: night
-              target:
-                entity_id: select.monthly_electricity
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: day-start
+      sequence:
+      - service: select.select_option
+        data:
+          option: day
+        target:
+          entity_id: select.daily_electricity
+      - service: select.select_option
+        data:
+          option: day
+        target:
+          entity_id: select.monthly_electricity
+    - conditions:
+      - condition: trigger
+        id: night-start
+      sequence:
+      - service: select.select_option
+        data:
+          option: night
+        target:
+          entity_id: select.daily_electricity
+      - service: select.select_option
+        data:
+          option: night
+        target:
+          entity_id: select.monthly_electricity
   mode: single
-- id: "1677350763501"
+- id: '1677350763501'
   alias: Update hourly tariffs
   description: Sets the tariff to the currently hourly tariff
   trigger:
-    - platform: time
-      at: 00:00:00
-      id: hour00
-      variables:
-        tariff: hour00
-    - platform: time
-      at: 01:00:00
-      id: hour01
-      variables:
-        tariff: hour01
-    - platform: time
-      at: 02:00:00
-      id: hour02
-      variables:
-        tariff: hour02
-    - platform: time
-      at: 03:00:00
-      id: hour03
-      variables:
-        tariff: hour03
-    - platform: time
-      at: 04:00:00
-      id: hour04
-      variables:
-        tariff: hour04
-    - platform: time
-      at: 05:00:00
-      id: hour05
-      variables:
-        tariff: hour05
-    - platform: time
-      at: 06:00:00
-      id: hour06
-      variables:
-        tariff: hour06
-    - platform: time
-      at: 07:00:00
-      id: hour07
-      variables:
-        tariff: hour07
-    - platform: time
-      at: 08:00:00
-      id: hour08
-      variables:
-        tariff: hour08
-    - platform: time
-      at: 09:00:00
-      id: hour09
-      variables:
-        tariff: hour09
-    - platform: time
-      at: "10:00:00"
-      id: hour10
-      variables:
-        tariff: hour10
-    - platform: time
-      at: "11:00:00"
-      id: hour11
-      variables:
-        tariff: hour11
-    - platform: time
-      at: "12:00:00"
-      id: hour12
-      variables:
-        tariff: hour12
-    - platform: time
-      at: "13:00:00"
-      id: hour13
-      variables:
-        tariff: hour13
-    - platform: time
-      at: "14:00:00"
-      id: hour14
-      variables:
-        tariff: hour14
-    - platform: time
-      at: "15:00:00"
-      id: hour15
-      variables:
-        tariff: hour15
-    - platform: time
-      at: "16:00:00"
-      id: hour16
-      variables:
-        tariff: hour16
-    - platform: time
-      at: "17:00:00"
-      id: hour17
-      variables:
-        tariff: hour17
-    - platform: time
-      at: "18:00:00"
-      id: hour18
-      variables:
-        tariff: hour18
-    - platform: time
-      at: "19:00:00"
-      id: hour19
-      variables:
-        tariff: hour19
-    - platform: time
-      at: "20:00:00"
-      id: hour20
-      variables:
-        tariff: hour20
-    - platform: time
-      at: "21:00:00"
-      id: hour21
-      variables:
-        tariff: hour21
-    - platform: time
-      at: "22:00:00"
-      id: hour22
-      variables:
-        tariff: hour22
-    - platform: time
-      at: "23:00:00"
-      id: hour23
-      variables:
-        tariff: hour23
+  - platform: time
+    at: 00:00:00
+    id: hour00
+    variables:
+      tariff: hour00
+  - platform: time
+    at: 01:00:00
+    id: hour01
+    variables:
+      tariff: hour01
+  - platform: time
+    at: 02:00:00
+    id: hour02
+    variables:
+      tariff: hour02
+  - platform: time
+    at: 03:00:00
+    id: hour03
+    variables:
+      tariff: hour03
+  - platform: time
+    at: 04:00:00
+    id: hour04
+    variables:
+      tariff: hour04
+  - platform: time
+    at: 05:00:00
+    id: hour05
+    variables:
+      tariff: hour05
+  - platform: time
+    at: 06:00:00
+    id: hour06
+    variables:
+      tariff: hour06
+  - platform: time
+    at: 07:00:00
+    id: hour07
+    variables:
+      tariff: hour07
+  - platform: time
+    at: 08:00:00
+    id: hour08
+    variables:
+      tariff: hour08
+  - platform: time
+    at: 09:00:00
+    id: hour09
+    variables:
+      tariff: hour09
+  - platform: time
+    at: '10:00:00'
+    id: hour10
+    variables:
+      tariff: hour10
+  - platform: time
+    at: '11:00:00'
+    id: hour11
+    variables:
+      tariff: hour11
+  - platform: time
+    at: '12:00:00'
+    id: hour12
+    variables:
+      tariff: hour12
+  - platform: time
+    at: '13:00:00'
+    id: hour13
+    variables:
+      tariff: hour13
+  - platform: time
+    at: '14:00:00'
+    id: hour14
+    variables:
+      tariff: hour14
+  - platform: time
+    at: '15:00:00'
+    id: hour15
+    variables:
+      tariff: hour15
+  - platform: time
+    at: '16:00:00'
+    id: hour16
+    variables:
+      tariff: hour16
+  - platform: time
+    at: '17:00:00'
+    id: hour17
+    variables:
+      tariff: hour17
+  - platform: time
+    at: '18:00:00'
+    id: hour18
+    variables:
+      tariff: hour18
+  - platform: time
+    at: '19:00:00'
+    id: hour19
+    variables:
+      tariff: hour19
+  - platform: time
+    at: '20:00:00'
+    id: hour20
+    variables:
+      tariff: hour20
+  - platform: time
+    at: '21:00:00'
+    id: hour21
+    variables:
+      tariff: hour21
+  - platform: time
+    at: '22:00:00'
+    id: hour22
+    variables:
+      tariff: hour22
+  - platform: time
+    at: '23:00:00'
+    id: hour23
+    variables:
+      tariff: hour23
   action:
-    - service: select.select_option
-      target:
-        entity_id: select.daily_electricity_hourly_tariffs
-      data:
-        option: "{{ trigger.id }}"
+  - service: select.select_option
+    target:
+      entity_id: select.daily_electricity_hourly_tariffs
+    data:
+      option: '{{ trigger.id }}'
   mode: single
-- id: "1679759653400"
+- id: '1679759653400'
   alias: Toggle Bedroom Lights
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - sensor.bedroom_button_action
-      to: "on"
+  - platform: state
+    entity_id:
+    - sensor.bedroom_button_action
+    to: 'on'
   condition: []
   action:
-    - service: light.toggle
-      data: {}
-      target:
-        entity_id: light.bedroom_lights
+  - service: light.toggle
+    data:
+      brightness_pct: 100
+    target:
+      entity_id: light.bedroom_lights
   mode: single
-- id: "1679760064468"
+- id: '1679760064468'
   alias: Toggle Phone Charging Automation
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - sensor.phone_charge_trigger_action
-      to: "on"
-      id: "on"
-    - platform: state
-      entity_id:
-        - sensor.phone_charge_trigger_action
-      id: "off"
-      to: "off"
+  - platform: state
+    entity_id:
+    - sensor.phone_charge_trigger_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.phone_charge_trigger_action
+    id: 'off'
+    to: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: "on"
-          sequence:
-            - service: input_boolean.turn_on
-              data: {}
-              target:
-                entity_id: input_boolean.charge_phones
-            - service: input_datetime.set_datetime
-              data:
-                time:
-                  "{{ as_timestamp(state_attr('sensor.energy_prices','recommended_phone_charge_start'))
-                  |timestamp_custom('%H:%M:%S') }}"
-              target:
-                entity_id: input_datetime.phone_charge_start
-            - service: input_datetime.set_datetime
-              data:
-                time:
-                  "{{as_timestamp(state_attr('sensor.energy_prices','recommended_phone_charge_end'))|
-                  timestamp_custom('%H:%M:%S') }}"
-              target:
-                entity_id: input_datetime.phone_charge_end
-            - service: script.notify_klgn
-              data:
-                title: Charging Turned On
-                message:
-                  Phone charging will start at {{ as_timestamp(state_attr('sensor.energy_prices',
-                  'recommended_phone_charge_start')) | timestamp_custom('%H:%M') }}
-        - conditions:
-            - condition: trigger
-              id: "off"
-          sequence:
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.charge_phones
-            - service: script.notify_klgn
-              data:
-                title: Charging Turned Off
-                message: Phone charging has been disabled
-  mode: single
-- id: "1679763740841"
-  alias: Phone Charging
-  description: ""
-  trigger:
-    - platform: time
-      at: input_datetime.phone_charge_start
-      id: start
-    - platform: time
-      at: input_datetime.phone_charge_end
-      id: end
-  condition:
-    - condition: state
-      entity_id: input_boolean.charge_phones
-      state: "on"
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: start
-          sequence:
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.charge_unit_l1
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.charge_unit_l2
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.charge_unit_l3
-        - conditions:
-            - condition: trigger
-              id: end
-          sequence:
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id:
-                  - switch.charge_unit_l1
-                  - switch.charge_unit_l2
-                  - switch.charge_unit_l3
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.charge_phones
-  mode: single
-- id: "1679934803929"
-  alias: Set next Sun Rise
-  description: ""
-  trigger:
-    - platform: sun
-      event: sunset
-      offset: 0
-      id: sun-set
-      enabled: true
-  condition: []
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: sun-set
-          sequence:
-            - service: input_datetime.set_datetime
-              data:
-                datetime:
-                  "{{as_timestamp(state_attr('sun.sun', 'next_rising')) | timestamp_custom('%Y-%m-%d
-                  %H:%M:%S') }}"
-              target:
-                entity_id: input_datetime.next_sun_rise
-  mode: single
-- id: "1686590810156"
-  alias: Notify Heat Pump Reminder
-  description: ""
-  trigger:
-    - platform: time
-      at: input_datetime.heat_pump_alert_time
-      id: trigger
-  condition:
-    - condition: time
-      weekday:
-        - mon
-    - condition: state
-      entity_id: input_boolean.enable_notify_heat_pump_reminder_automation
-      state: "on"
-  action:
-    - service: script.notify_klgn
-      data:
-        message: Remember to turn on Heat Pump for a short while
-        title: Turn On Heat Pump
-  mode: single
-- id: "1690714897214"
-  alias: Workshop button
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - sensor.workshop_dimmer_action
-      to: "on"
-      id: "on"
-    - platform: state
-      entity_id:
-        - sensor.workshop_dimmer_action
-      to: "off"
-      id: "off"
-    - platform: state
-      entity_id:
-        - sensor.workshop_dimmer_action
-      to: brightness_move_up
-      id: hold_up
-    - platform: state
-      entity_id:
-        - sensor.workshop_dimmer_action
-      to: brightness_move_down
-      id: hold_down
-  condition: []
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - "on"
-          sequence:
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.control_unit_1
-        - conditions:
-            - condition: trigger
-              id:
-                - "off"
-          sequence:
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id: switch.control_unit_1
-        - conditions:
-            - condition: trigger
-              id:
-                - hold_up
-          sequence:
-            - service: input_boolean.turn_on
-              data: {}
-              target:
-                entity_id: input_boolean.charge_mower
-            - service: input_datetime.set_datetime
-              data:
-                time:
-                  "{{ as_timestamp(state_attr('sensor.energy_prices','recommended_mower_charge_start'))
-                  |timestamp_custom('%H:%M:%S') }}"
-              target:
-                entity_id: input_datetime.mower_charge_start
-            - service: input_datetime.set_datetime
-              data:
-                time:
-                  "{{ as_timestamp(state_attr('sensor.energy_prices','recommended_mower_charge_end'))
-                  |timestamp_custom('%H:%M:%S') }}"
-              target:
-                entity_id: input_datetime.mower_charge_end
-            - service: script.notify_klgn
-              data:
-                title: Charging Turned On
-                message:
-                  Mower charging will start at {{ as_timestamp(state_attr('sensor.energy_prices',
-                  'recommended_mower_charge_start')) | timestamp_custom('%H:%M') }}
-        - conditions:
-            - condition: trigger
-              id:
-                - hold_down
-          sequence:
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.charge_mower
-            - service: script.notify_klgn
-              data:
-                title: Charging Turned Off
-                message: Mower charging has been disabled
-  mode: single
-- id: "1690796014218"
-  alias: Mower Charging
-  description: ""
-  trigger:
-    - platform: time
-      at: input_datetime.mower_charge_start
-      id: start
-    - platform: time
-      at: input_datetime.mower_charge_end
-      id: end
-  condition:
-    - condition: state
-      entity_id: input_boolean.charge_mower
-      state: "on"
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: start
-          sequence:
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.control_unit_1
-        - conditions:
-            - condition: trigger
-              id: end
-          sequence:
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id: switch.control_unit_1
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.charge_mower
-  mode: single
-- id: "1691155582820"
-  alias: Astrids Strip Button
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - sensor.astrids_strip_button_action
-      to: "on"
-      id: "on"
-    - platform: state
-      entity_id:
-        - sensor.astrids_strip_button_action
-      id: "off"
-      to: "off"
-  condition: []
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: "on"
-          sequence:
-            - service: light.toggle
-              data: {}
-              target:
-                entity_id: light.astrids_strip
-        - conditions:
-            - condition: trigger
-              id: "off"
-          sequence:
-            - service: light.toggle
-              data: {}
-              target:
-                entity_id: light.astrids_strip
-  mode: single
-- id: "1691599751865"
-  alias: New Washing Machine Switch Monitor
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - switch.washing_machine
-      to: "off"
-      id: "off"
-  condition: []
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - "off"
-          sequence:
-            - service: script.notify_klgn
-              data:
-                title: Switch turned off
-                message:
-                  The New Washing machine switch turned off. Was automatically turned
-                  on again
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.washing_machine
-  mode: single
-- id: "1692520858625"
-  alias: Dishwasher Switch Monitor
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - switch.dishwasher
-      to: "off"
-      id: "off"
-  condition: []
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - "off"
-          sequence:
-            - service: script.notify_klgn
-              data:
-                title: Switch turned off
-                message: Dishwasher switch turned off. Was automatically turned on again
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.dishwasher
-  mode: single
-- id: "1692532084892"
-  alias: Set Dishwasher states
-  description: ""
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.dishwasher_current_consumption
-      id: "off"
-      for:
-        hours: 0
-        minutes: 5
-        seconds: 0
-      below: "1"
-    - platform: numeric_state
-      entity_id: sensor.dishwasher_current_consumption
-      id: running
-      above: "1"
-  condition: []
-  action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: "off"
-          sequence:
-            - service: input_select.select_option
-              data:
-                option: "Off"
-              target:
-                entity_id: input_select.dishwasher_states
-        - conditions:
-            - condition: trigger
-              id: "off"
-            - condition: state
-              state: Running
-              entity_id: input_select.dishwasher_states
-          sequence:
-            - service: input_select.select_option
-              data:
-                option: Finished
-              target:
-                entity_id: input_select.dishwasher_states
-        - conditions:
-            - condition: trigger
-              id: running
-          sequence:
-            - service: input_select.select_option
-              data:
-                option: Running
-              target:
-                entity_id: input_select.dishwasher_states
-      default: []
-  mode: single
-- id: "1692966744028"
-  alias: Notify Dishwasher Is Done
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - input_select.dishwasher_states
-      to: "Off"
-      from: Running
-  condition:
-    - condition: state
-      entity_id: input_boolean.enable_notify_dishwasher_is_done_automation
-      state: "on"
-  action:
-    - service: notify.mobile_app_klgn_phone
-      data:
-        message: Dishwasher is done
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.charge_phones
+      - service: input_datetime.set_datetime
         data:
-          persisent: true
-          tag: dishwasher
-          actions:
-            - action: MACHINE_EMPTIED
-              title: It's done
-    - service: input_boolean.turn_on
-      data: {}
-      target:
-        entity_id: input_boolean.dishwasher_emptied
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_phone_charge_start''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.phone_charge_start
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{as_timestamp(state_attr(''sensor.energy_prices'',''recommended_phone_charge_end''))|
+            timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.phone_charge_end
+      - service: script.notify_klgn
+        data:
+          title: Charging Turned On
+          message: Phone charging will start at {{ as_timestamp(state_attr('sensor.energy_prices',
+            'recommended_phone_charge_start')) | timestamp_custom('%H:%M') }}
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_phones
+      - service: script.notify_klgn
+        data:
+          title: Charging Turned Off
+          message: Phone charging has been disabled
   mode: single
-- id: "1694352160039"
+- id: '1679763740841'
+  alias: Phone Charging
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.phone_charge_start
+    id: start
+  - platform: time
+    at: input_datetime.phone_charge_end
+    id: end
+  condition:
+  - condition: state
+    entity_id: input_boolean.charge_phones
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: start
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.charge_unit_l1
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.charge_unit_l2
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.charge_unit_l3
+    - conditions:
+      - condition: trigger
+        id: end
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.charge_unit_l1
+          - switch.charge_unit_l2
+          - switch.charge_unit_l3
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_phones
+  mode: single
+- id: '1679934803929'
+  alias: Set next Sun Rise
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 0
+    id: sun-set
+    enabled: true
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: sun-set
+      sequence:
+      - service: input_datetime.set_datetime
+        data:
+          datetime: '{{as_timestamp(state_attr(''sun.sun'', ''next_rising'')) | timestamp_custom(''%Y-%m-%d
+            %H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.next_sun_rise
+  mode: single
+- id: '1686590810156'
+  alias: Notify Heat Pump Reminder
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.heat_pump_alert_time
+    id: trigger
+  condition:
+  - condition: time
+    weekday:
+    - mon
+  - condition: state
+    entity_id: input_boolean.enable_notify_heat_pump_reminder_automation
+    state: 'on'
+  action:
+  - service: script.notify_klgn
+    data:
+      message: Remember to turn on Heat Pump for a short while
+      title: Turn On Heat Pump
+  mode: single
+- id: '1690714897214'
+  alias: Workshop button
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.workshop_dimmer_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.workshop_dimmer_action
+    to: 'off'
+    id: 'off'
+  - platform: state
+    entity_id:
+    - sensor.workshop_dimmer_action
+    to: brightness_move_up
+    id: hold_up
+  - platform: state
+    entity_id:
+    - sensor.workshop_dimmer_action
+    to: brightness_move_down
+    id: hold_down
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.control_unit_1
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.control_unit_1
+    - conditions:
+      - condition: trigger
+        id:
+        - hold_up
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.charge_mower
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_mower_charge_start''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.mower_charge_start
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_mower_charge_end''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.mower_charge_end
+      - service: script.notify_klgn
+        data:
+          title: Charging Turned On
+          message: Mower charging will start at {{ as_timestamp(state_attr('sensor.energy_prices',
+            'recommended_mower_charge_start')) | timestamp_custom('%H:%M') }}
+    - conditions:
+      - condition: trigger
+        id:
+        - hold_down
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_mower
+      - service: script.notify_klgn
+        data:
+          title: Charging Turned Off
+          message: Mower charging has been disabled
+  mode: single
+- id: '1690796014218'
+  alias: Mower Charging
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.mower_charge_start
+    id: start
+  - platform: time
+    at: input_datetime.mower_charge_end
+    id: end
+  condition:
+  - condition: state
+    entity_id: input_boolean.charge_mower
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: start
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.control_unit_1
+    - conditions:
+      - condition: trigger
+        id: end
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.control_unit_1
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_mower
+  mode: single
+- id: '1691155582820'
+  alias: Astrids Strip Button
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.astrids_strip_button_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.astrids_strip_button_action
+    id: 'off'
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.astrids_strip
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.astrids_strip
+  mode: single
+- id: '1691599751865'
+  alias: New Washing Machine Switch Monitor
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.washing_machine
+    to: 'off'
+    id: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Switch turned off
+          message: The New Washing machine switch turned off. Was automatically turned
+            on again
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.washing_machine
+  mode: single
+- id: '1692520858625'
+  alias: Dishwasher Switch Monitor
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.dishwasher
+    to: 'off'
+    id: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Switch turned off
+          message: Dishwasher switch turned off. Was automatically turned on again
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.dishwasher
+  mode: single
+- id: '1692532084892'
+  alias: Set Dishwasher states
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.dishwasher_current_consumption
+    id: 'off'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    below: '1'
+  - platform: numeric_state
+    entity_id: sensor.dishwasher_current_consumption
+    id: running
+    above: '1'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: 'Off'
+        target:
+          entity_id: input_select.dishwasher_states
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      - condition: state
+        state: Running
+        entity_id: input_select.dishwasher_states
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Finished
+        target:
+          entity_id: input_select.dishwasher_states
+    - conditions:
+      - condition: trigger
+        id: running
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Running
+        target:
+          entity_id: input_select.dishwasher_states
+    default: []
+  mode: single
+- id: '1692966744028'
+  alias: Notify Dishwasher Is Done
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.dishwasher_states
+    to: 'Off'
+    from: Running
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_notify_dishwasher_is_done_automation
+    state: 'on'
+  action:
+  - service: notify.mobile_app_klgn_phone
+    data:
+      message: Dishwasher is done
+      data:
+        persisent: true
+        tag: dishwasher
+        actions:
+        - action: MACHINE_EMPTIED
+          title: It's done
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.dishwasher_emptied
+  mode: single
+- id: '1694352160039'
   alias: Vacuum Charger Start Timer
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - switch.vacuum_charger
-      id: "on"
-      to: "on"
-    - platform: state
-      entity_id:
-        - switch.vacuum_charger
-      to: "off"
-      id: "off"
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    id: 'on'
+    to: 'on'
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'off'
+    id: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - "on"
-          sequence:
-            - service: timer.start
-              data: {}
-              target:
-                entity_id: timer.vacuum_charger_time_remaining
-        - conditions:
-            - condition: trigger
-              id:
-                - "off"
-          sequence:
-            - service: timer.cancel
-              data: {}
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.charge_vacuum
-            - service: script.notify_klgn_mb
-              data:
-                message: Vaccum Charge Ended
-                title: Vacuum Charge Ended
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - service: timer.start
+        data: {}
+        target:
+          entity_id: timer.vacuum_charger_time_remaining
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: timer.cancel
+        data: {}
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_vacuum
+      - service: script.notify_klgn_mb
+        data:
+          message: Vaccum Charge Ended
+          title: Vacuum Charge Ended
   mode: single
-- id: "1694352356652"
+- id: '1694352356652'
   alias: Stop Vacuum Charger
-  description: ""
+  description: ''
   trigger:
-    - platform: event
-      event_type: timer.finished
-      event_data:
-        entity_id: timer.vacuum_charger_time_remaining
-    - platform: state
-      entity_id:
-        - switch.vacuum_charger
-      to: "off"
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.vacuum_charger_time_remaining
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'off'
   condition: []
   action:
-    - service: timer.cancel
-      data: {}
-      target:
-        entity_id: timer.vacuum_charger_time_remaining
-    - service: switch.turn_off
-      data: {}
-      target:
-        entity_id: switch.vacuum_charger
+  - service: timer.cancel
+    data: {}
+    target:
+      entity_id: timer.vacuum_charger_time_remaining
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.vacuum_charger
   mode: single
-- id: "1694352427718"
+- id: '1694352427718'
   alias: Toggle Vacuum Charging
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - sensor.vacuum_button_action
-      to: "on"
-      id: "on"
-    - platform: state
-      entity_id:
-        - sensor.vacuum_button_action
-      to: brightness_move_up
-      id: hold
+  - platform: state
+    entity_id:
+    - sensor.vacuum_button_action
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - sensor.vacuum_button_action
+    to: brightness_move_up
+    id: hold
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - "on"
-          sequence:
-            - service: switch.toggle
-              data: {}
-              target:
-                entity_id: switch.vacuum_charger
-        - conditions:
-            - condition: trigger
-              id:
-                - hold
-          sequence:
-            - service: input_boolean.toggle
-              data: {}
-              target:
-                entity_id: input_boolean.charge_vacuum
-            - service: input_datetime.set_datetime
-              data:
-                time:
-                  "{{ as_timestamp(state_attr('sensor.energy_prices','recommended_vacuum_charge_start'))
-                  |timestamp_custom('%H:%M:%S') }}"
-              target:
-                entity_id: input_datetime.vacuum_charging_start
-            - service: input_datetime.set_datetime
-              data:
-                time:
-                  "{{ as_timestamp(state_attr('sensor.energy_prices','recommended_vacuum_charge_end'))
-                  |timestamp_custom('%H:%M:%S') }}"
-              target:
-                entity_id: input_datetime.vacuum_charging_end
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - service: switch.toggle
+        data: {}
+        target:
+          entity_id: switch.vacuum_charger
+    - conditions:
+      - condition: trigger
+        id:
+        - hold
+      sequence:
+      - service: input_boolean.toggle
+        data: {}
+        target:
+          entity_id: input_boolean.charge_vacuum
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_vacuum_charge_start''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.vacuum_charging_start
+      - service: input_datetime.set_datetime
+        data:
+          time: '{{ as_timestamp(state_attr(''sensor.energy_prices'',''recommended_vacuum_charge_end''))
+            |timestamp_custom(''%H:%M:%S'') }}'
+        target:
+          entity_id: input_datetime.vacuum_charging_end
   mode: single
-- id: "1694353641135"
+- id: '1694353641135'
   alias: Charge Vacuum
-  description: ""
+  description: ''
   trigger:
-    - platform: time
-      at: input_datetime.vacuum_charging_start
-      id: start
-    - platform: time
-      at: input_datetime.vacuum_charging_end
-      id: end
+  - platform: time
+    at: input_datetime.vacuum_charging_start
+    id: start
+  - platform: time
+    at: input_datetime.vacuum_charging_end
+    id: end
   condition:
-    - condition: state
-      entity_id: input_boolean.charge_vacuum
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.charge_vacuum
+    state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: start
-          sequence:
-            - service: switch.turn_on
-              data: {}
-              target:
-                entity_id: switch.vacuum_charger
-        - conditions:
-            - condition: trigger
-              id: end
-          sequence:
-            - service: switch.turn_off
-              data: {}
-              target:
-                entity_id: switch.vacuum_charger
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id: input_boolean.charge_vacuum
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: start
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.vacuum_charger
+    - conditions:
+      - condition: trigger
+        id: end
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.vacuum_charger
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.charge_vacuum
   mode: single
-- id: "1694360120636"
+- id: '1694360120636'
   alias: Notify Vacuum Cleaner Charging
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - input_boolean.charge_vacuum
-      to: "on"
-      id: scheduled-on
-    - platform: state
-      entity_id:
-        - input_boolean.charge_vacuum
-      to: "off"
-      id: scheduled-off
-    - platform: state
-      entity_id:
-        - switch.vacuum_charger
-      to: "off"
-      id: end
-    - platform: state
-      entity_id:
-        - switch.vacuum_charger
-      to: "on"
-      id: start
+  - platform: state
+    entity_id:
+    - input_boolean.charge_vacuum
+    to: 'on'
+    id: scheduled-on
+  - platform: state
+    entity_id:
+    - input_boolean.charge_vacuum
+    to: 'off'
+    id: scheduled-off
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'off'
+    id: end
+    from: 'on'
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'on'
+    id: start
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_vacuum_cleaner_notifications
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_vacuum_cleaner_notifications
+    state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - scheduled-on
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                title: Vacuum Charging Scheduled
-                message:
-                  Vacuum will start charging at {{ as_timestamp(state_attr('sensor.energy_prices',
-                  'recommended_vacuum_charge_start')) | timestamp_custom('%d/%m %H:%M')
-                  }}
-        - conditions:
-            - condition: trigger
-              id:
-                - scheduled-off
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                title: Vacuum Cleaner Scheduled Charging Turned off
-                message: The scheduled charging of the vacuum cleaner was turned off
-        - conditions:
-            - condition: trigger
-              id:
-                - start
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                message: The battery of the Vacuum cleaner started charging
-                title: Vacuum charge started
-        - conditions:
-            - condition: trigger
-              id:
-                - end
-          sequence:
-            - service: script.notify_klgn_mb
-              data:
-                title: Vacuum charge ended
-                message: Vacuum charger stopped charging
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - scheduled-on
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          title: Vacuum Charging Scheduled
+          message: Vacuum will start charging at {{ as_timestamp(state_attr('sensor.energy_prices',
+            'recommended_vacuum_charge_start')) | timestamp_custom('%d/%m %H:%M')
+            }}
+    - conditions:
+      - condition: trigger
+        id:
+        - scheduled-off
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          title: Vacuum Cleaner Scheduled Charging Turned off
+          message: The scheduled charging of the vacuum cleaner was turned off
+    - conditions:
+      - condition: trigger
+        id:
+        - start
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          message: The battery of the Vacuum cleaner started charging
+          title: Vacuum charge started
+    - conditions:
+      - condition: trigger
+        id:
+        - end
+      sequence:
+      - service: script.notify_klgn_mb
+        data:
+          title: Vacuum charge ended
+          message: Vacuum charger stopped charging
   mode: single
-- id: "1694622838535"
+- id: '1694622838535'
   alias: Toggle automations when activation vacation mode
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - input_boolean.vacation
-      to: "on"
-      id: "on"
-    - platform: state
-      entity_id:
-        - input_boolean.vacation
-      id: "off"
-      to: "off"
+  - platform: state
+    entity_id:
+    - input_boolean.vacation
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.vacation
+    id: 'off'
+    to: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - "on"
-          sequence:
-            - if:
-                - condition: state
-                  entity_id: input_boolean.guestmode
-                  state: "off"
-              then:
-                - service: input_boolean.turn_off
-                  data: {}
-                  target:
-                    entity_id:
-                      - input_boolean.enable_living_room_morning_schedule_automation
-                      - input_boolean.enable_arm_alarm_in_the_morning_automation
-            - service: input_boolean.turn_off
-              data: {}
-              target:
-                entity_id:
-                  - input_boolean.enable_sonos_living_room_morning_schedule
-                  - input_boolean.enable_ask_if_working_remotely_automation
-                  - input_boolean.enable_astrid_morning_alarm_automation
-        - conditions:
-            - condition: trigger
-              id:
-                - "off"
-          sequence:
-            - if:
-                - condition: state
-                  entity_id: input_boolean.guestmode
-                  state: "off"
-              then:
-                - service: input_boolean.turn_on
-                  data: {}
-                  target:
-                    entity_id:
-                      - input_boolean.enable_living_room_morning_schedule_automation
-                      - input_boolean.enable_arm_alarm_in_the_morning_automation
-            - service: input_boolean.turn_on
-              data: {}
-              target:
-                entity_id:
-                  - input_boolean.enable_sonos_living_room_morning_schedule
-                  - input_boolean.enable_ask_if_working_remotely_automation
-                  - input_boolean.enable_astrid_morning_alarm_automation
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.guestmode
+          state: 'off'
+        then:
+        - service: input_boolean.turn_off
+          data: {}
+          target:
+            entity_id:
+            - input_boolean.enable_living_room_morning_schedule_automation
+            - input_boolean.enable_arm_alarm_in_the_morning_automation
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id:
+          - input_boolean.enable_sonos_living_room_morning_schedule
+          - input_boolean.enable_ask_if_working_remotely_automation
+          - input_boolean.enable_astrid_morning_alarm_automation
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.guestmode
+          state: 'off'
+        then:
+        - service: input_boolean.turn_on
+          data: {}
+          target:
+            entity_id:
+            - input_boolean.enable_living_room_morning_schedule_automation
+            - input_boolean.enable_arm_alarm_in_the_morning_automation
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id:
+          - input_boolean.enable_sonos_living_room_morning_schedule
+          - input_boolean.enable_ask_if_working_remotely_automation
+          - input_boolean.enable_astrid_morning_alarm_automation
   mode: single
-- id: "1694623101121"
+- id: '1694623101121'
   alias: Toggle automations when using guestmode shortcut
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - input_boolean.guestmode
-      to: "on"
-      id: "on"
-    - platform: state
-      entity_id:
-        - input_boolean.guestmode
-      id: "off"
-      to: "off"
+  - platform: state
+    entity_id:
+    - input_boolean.guestmode
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.guestmode
+    id: 'off'
+    to: 'off'
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - "on"
-          sequence:
-            - if:
-                - condition: state
-                  entity_id: input_boolean.vacation
-                  state: "off"
-              then:
-                - service: input_boolean.turn_off
-                  data: {}
-                  target:
-                    entity_id:
-                      - input_boolean.enable_living_room_morning_schedule_automation
-                      - input_boolean.enable_arm_alarm_in_the_morning_automation
-        - conditions:
-            - condition: trigger
-              id:
-                - "off"
-          sequence:
-            - if:
-                - condition: state
-                  entity_id: input_boolean.vacation
-                  state: "off"
-              then:
-                - service: input_boolean.turn_on
-                  data: {}
-                  target:
-                    entity_id:
-                      - input_boolean.enable_living_room_morning_schedule_automation
-                      - input_boolean.enable_arm_alarm_in_the_morning_automation
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - 'on'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.vacation
+          state: 'off'
+        then:
+        - service: input_boolean.turn_off
+          data: {}
+          target:
+            entity_id:
+            - input_boolean.enable_living_room_morning_schedule_automation
+            - input_boolean.enable_arm_alarm_in_the_morning_automation
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.vacation
+          state: 'off'
+        then:
+        - service: input_boolean.turn_on
+          data: {}
+          target:
+            entity_id:
+            - input_boolean.enable_living_room_morning_schedule_automation
+            - input_boolean.enable_arm_alarm_in_the_morning_automation
   mode: single
-- id: "1694958243458"
+- id: '1694958243458'
   alias: Notify Mower Charging
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - input_boolean.charge_mower
-      to: "on"
-      id: scheduled-on
-    - platform: state
-      entity_id:
-        - input_boolean.charge_mower
-      to: "off"
-      id: scheduled-off
-    - platform: state
-      entity_id:
-        - switch.control_unit_1
-      to: "off"
-      id: "off"
+  - platform: state
+    entity_id:
+    - input_boolean.charge_mower
+    to: 'on'
+    id: scheduled-on
+  - platform: state
+    entity_id:
+    - input_boolean.charge_mower
+    to: 'off'
+    id: scheduled-off
+  - platform: state
+    entity_id:
+    - switch.control_unit_1
+    to: 'off'
+    id: 'off'
   condition:
-    - condition: state
-      entity_id: input_boolean.enable_mower_charger_notifications
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.enable_mower_charger_notifications
+    state: 'on'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - scheduled-on
-          sequence:
-            - service: script.notify_klgn
-              data:
-                title: Mower Charging Scheduled
-                message:
-                  Mower will start charging at {{ as_timestamp(state_attr('sensor.energy_prices',
-                  'recommended_mower_charge_start')) | timestamp_custom('%d/%m %H:%M') }}
-        - conditions:
-            - condition: trigger
-              id:
-                - scheduled-off
-          sequence:
-            - service: script.notify_klgn
-              data:
-                title: Scheduled Mower Charging Cancelled
-                message: Scheduled Mower Charge was cancelled
-        - conditions:
-            - condition: trigger
-              id:
-                - "off"
-          sequence:
-            - service: script.notify_klgn
-              data:
-                title: Charging stopped
-                message: Mower battery charge has ended
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - scheduled-on
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Mower Charging Scheduled
+          message: Mower will start charging at {{ as_timestamp(state_attr('sensor.energy_prices',
+            'recommended_mower_charge_start')) | timestamp_custom('%d/%m %H:%M') }}
+    - conditions:
+      - condition: trigger
+        id:
+        - scheduled-off
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Scheduled Mower Charging Cancelled
+          message: Scheduled Mower Charge was cancelled
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - service: script.notify_klgn
+        data:
+          title: Charging stopped
+          message: Mower battery charge has ended
   mode: single
-- id: "1694960152775"
+- id: '1694960152775'
   alias: Turn On Vacuum charger for 4 hours
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - switch.vacuum_charger
-      to: "on"
+  - platform: state
+    entity_id:
+    - switch.vacuum_charger
+    to: 'on'
   condition: []
   action:
-    - service: timer.start
-      data: {}
-      target:
-        entity_id: timer.vacuum_charger_time_remaining
+  - service: timer.start
+    data: {}
+    target:
+      entity_id: timer.vacuum_charger_time_remaining
+  mode: single
+- id: '1703778207765'
+  alias: Play DR P1 on Office
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.office
+    data:
+      media_content_id: media-source://radio_browser/28b58640-e317-4778-9bba-a1992f8f0bf7
+      media_content_type: audio/mpeg
+      metadata:
+        title: DR P1
+        thumbnail: https://upload.wikimedia.org/wikipedia/en/d/d7/DR_P1_logo_2020.svg
+        media_class: talk
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://radio_browser
+        - media_content_type: talk
+          media_content_id: media-source://radio_browser/country/DK
   mode: single
