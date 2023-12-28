@@ -1,0 +1,7 @@
+---
+type: "custom:button-card"
+template: card_input_boolean
+entity: input_boolean.astrid_up_for_work
+variables:
+  ulm_card_input_boolean_name: Astrid Up For Work
+  ulm_card_input_boolean_color: green

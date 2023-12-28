@@ -32,7 +32,7 @@ cards:
     cards:
       - type: "custom:button-card"
         template: card_generic_swap
-        entity: sensor.cpu_temperature
+        entity: sensor.cpu_temperature_2
   - type: "custom:button-card"
     template: card_title
     name: Car

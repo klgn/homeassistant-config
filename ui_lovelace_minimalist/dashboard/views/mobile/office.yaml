@@ -62,3 +62,16 @@ cards:
           ulm_card_media_player_enable_volume_slider: true
           ulm_card_media_player_collapsible: true
           ulm_card_media_player_enable_popup: true
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_navigate
+        tap_action:
+          action: call-service
+          service: automation.trigger
+          service_data:
+            entity_id: automation.play_dr_p1_on_office
+        variables:
+          ulm_card_navigate_path: ""
+          ulm_card_navigate_title: "Play P1"
+          ulm_card_navigate_icon: "mdi:music"

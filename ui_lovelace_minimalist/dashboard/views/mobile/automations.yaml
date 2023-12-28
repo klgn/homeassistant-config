@@ -1,0 +1,28 @@
+title: Automations
+path: "automations"
+cards:
+  - type: "custom:button-card"
+    template: chip_back
+    variables:
+      ulm_chip_back_path: house
+  - type: "custom:button-card"
+    template: card_title
+    label: Shortcuts
+  - type: grid
+    columns: 2
+    square: false
+    cards: !include_dir_list ../common/automations/shortcuts
+  - type: "custom:button-card"
+    template: card_title
+    label: Toggles
+  - type: grid
+    square: false
+    columns: 1
+    cards: !include_dir_list ../common/automations/toggles
+  - type: "custom:button-card"
+    template: card_title
+    label: Times
+  - type: grid
+    square: false
+    columns: 1
+    cards: !include_dir_list ../common/automations/times
