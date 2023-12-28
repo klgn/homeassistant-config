@@ -5,7 +5,7 @@ sequence:
     data:
       title: "{{ title }}"
       message: "{{ message }}"
-  - service: notify.mobile_app_sm_a405fn
+  - service: notify.mobile_app_pixel_7a
     data:
       title: "{{ title }}"
       message: "{{ message }}"
